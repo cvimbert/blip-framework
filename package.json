@@ -1,0 +1,35 @@
+{
+  "name": "blip-framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "rxjs": "5.0.0-beta.12",
+    "systemjs": "0.19.39"
+  },
+  "devDependencies": {
+    "concurrently": "^3.0.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-systemjs-builder": "^0.2.7",
+    "typedoc": "^0.5.1",
+    "typescript": "^2.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && concurrently \"tsc -w\" \"grunt watch\" ",
+    "lite": "lite-server",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cvimbert/blip-framework.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cvimbert/blip-framework/issues"
+  },
+  "homepage": "https://github.com/cvimbert/blip-framework#readme"
+}
