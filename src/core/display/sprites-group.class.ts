@@ -8,4 +8,16 @@ export class SpritesGroup {
     constructor(
         public sprites:Sprite[]
     ) {}
+
+    show() {
+        this.sprites.forEach(sprite => sprite.show());
+    }
+
+    hide() {
+        this.sprites.forEach(sprite => sprite.hide());
+    }
+
+    toggle() {
+        this.sprites.forEach(sprite => sprite.toggle());
+    }
 }
