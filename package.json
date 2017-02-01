@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "rxjs": "5.0.0-beta.12",
-    "systemjs": "0.19.39"
+    "systemjs": "0.19.39",
+    "core-js": "^2.4.1"
   },
   "devDependencies": {
     "concurrently": "^3.0.0",
@@ -17,7 +18,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && concurrently \"tsc -w\" \"grunt watch\" ",
+    "start": "tsc && tsc -w",
     "lite": "lite-server",
     "tsc": "tsc",
     "tsc:w": "tsc -w"
