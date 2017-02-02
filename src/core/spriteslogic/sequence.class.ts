@@ -4,6 +4,7 @@
 import {SpritesGroup} from "../display/sprites-group.class";
 import {IState} from "../interfaces/IState.interface";
 import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Events} from "../common/events.class";
 
 export class Sequence extends EventDispatcher {
     
@@ -37,7 +38,7 @@ export class Sequence extends EventDispatcher {
         this._currentIndex = index;
         this.states[index].display();
 
-        this.dispatchEvent("enterstate", this.states[index]);
+        this.dispatchEvent(Events.EVENT_ENTER_STATE, this.states[index]);
 
         return true;
     }
