@@ -4,5 +4,5 @@
 
 export interface ICondition {
 
-    eval();
+    eval():boolean;
 }

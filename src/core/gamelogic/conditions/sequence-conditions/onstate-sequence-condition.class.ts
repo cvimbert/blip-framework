@@ -6,8 +6,8 @@ import {ICondition} from "../../../interfaces/ICondition.interface";
 
 export class OnStateSequenceCondition extends SequenceCondition implements ICondition {
 
-    eval() {
-        
+    eval():boolean {
+        return true;
     }
 
 }
