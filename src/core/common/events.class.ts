@@ -4,5 +4,10 @@
 
 export class Events {
 
-    static EVENT_ENTER_STATE:string = "event_enterstate";
+    static SEQUENCE_ENTER_STATE:string = "event_enterstate";
+    
+    static ANIMATION_ITERATION_END:string = "animation_iteration_end";
+    static ANIMATION_END:string = "animation_end";
+    
+    static CLOCK_PERIOD:string = "clock_period";
 }

@@ -38,7 +38,7 @@ export class Sequence extends EventDispatcher {
         this._currentIndex = index;
         this.states[index].display();
 
-        this.dispatchEvent(Events.EVENT_ENTER_STATE, this.states[index]);
+        this.dispatchEvent(Events.SEQUENCE_ENTER_STATE, this.states[index]);
 
         return true;
     }
@@ -74,6 +74,10 @@ export class Sequence extends EventDispatcher {
             this.states[this._currentIndex].hide();
         }
 
+        this._currentIndex = -1;
+    }
+
+    resetIndex() {
         this._currentIndex = -1;
     }
 }

@@ -4,7 +4,7 @@
 
 export class EventDispatcher {
 
-    dispatchEvent(eventType:string, param:any) {
+    dispatchEvent(eventType:string, param:any = null) {
         
     }
 
