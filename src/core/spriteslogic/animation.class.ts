@@ -15,7 +15,7 @@ export class Animation extends EventDispatcher {
         public sequence:Sequence,
         public iterations:number,
         public period:number,
-        public interruptable:boolean
+        public interruptable:boolean = true
     ) {
         super();
     }
@@ -33,9 +33,9 @@ export class Animation extends EventDispatcher {
 
         this._isPlaying = true;
 
-        // attention, il semblerait que animationInterval ne soit pas défini avant la première itération
-
         this._animationInterval = setInterval(() => {
+
+            console.log("loop");
 
             if (this._isPlaying === false) return;
 
@@ -43,6 +43,7 @@ export class Animation extends EventDispatcher {
                 this.dispatchEvent(Events.ANIMATION_ITERATION_END, occurencesCounter);
                 occurencesCounter++;
 
+                console.log("--> " + occurencesCounter + " " + this.iterations);
                 if (occurencesCounter >= this.iterations) {
 
                     clearInterval(this._animationInterval);

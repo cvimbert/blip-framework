@@ -12,7 +12,7 @@ export class Sequence extends EventDispatcher {
     static LOOP_TYPE_RESET:string = "reset";
 
     private _direction:number = 1;
-    private _currentIndex:number = 0;
+    private _currentIndex:number = -1;
 
     constructor(
         public group:SpritesGroup,

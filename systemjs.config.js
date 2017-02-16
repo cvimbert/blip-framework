@@ -5,8 +5,12 @@
 (function (global) {
     System.config({
         defaultJSExtensions: true,
+        paths: {
+            'npm:': 'node_modules/'
+        },
         map: {
-            src: "src"
+            src: "src",
+            'rxjs': 'npm:rxjs'
         },
         packages: {
             src: {
