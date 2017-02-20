@@ -27,8 +27,8 @@ export class Sprite {
         image["src"] = this.file.path;
         div.appendChild(image);
         div.className = "game-element";
-        div.style.left = String(this.x) + "px";
-        div.style.top = String(this.y) + "px";
+        div.style.left = this.x + "px";
+        div.style.top = this.y + "px";
         return div;
     }
 

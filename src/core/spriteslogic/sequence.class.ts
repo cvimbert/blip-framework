@@ -7,8 +7,11 @@ import {EventDispatcher} from "../common/event-dispatcher.class";
 import {Events} from "../common/events.class";
 
 export class Sequence extends EventDispatcher {
-    
+
+    // 1 2 3 4 3 2 1 2 3 4
     static LOOP_TYPE_CIRCLE:string = "circle";
+
+    // 1 2 3 4 1 2 3 4 1 2 3 4
     static LOOP_TYPE_RESET:string = "reset";
 
     private _direction:number = 1;
@@ -30,8 +33,32 @@ export class Sequence extends EventDispatcher {
         this.states.forEach(state => state.hide());
     }
 
-    displayAtIndex(index:number):boolean {
-        if (!this._isIndexValid(index)) return false;
+    displayAtIndex(index:number, forced:boolean = false):boolean {
+        //if (!this._isIndexValid(index)) return false;
+
+        if (!forced && (index <= -1 || index >= this.states.length)){
+            return false;
+        }
+
+        if (index <= -1) {
+
+            if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                this.reverse();
+                return this.displayAtIndex(1);
+            } else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
+                return this.displayAtIndex(this.states.length - 1);
+            }
+
+        } else if (index >= this.states.length) {
+
+            if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                this.reverse();
+                return this.displayAtIndex(this.states.length - 1);
+            } else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
+                return this.displayAtIndex(0);
+            }
+
+        }
 
         this.hide();
 
@@ -47,23 +74,31 @@ export class Sequence extends EventDispatcher {
         this._direction *= -1;
     }
 
-    displayNext() {
-        let done = this.displayAtIndex(this._currentIndex + this._direction);
-
-        if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
-            this.reverse();
-            done = this.displayNext();
+    /*inverse() {
+        if (this._currentIndex === -1) {
+            this._currentIndex = this.states.length;
         }
+    }*/
+
+    displayNext(forced:boolean = false) {
+        let done = this.displayAtIndex(this._currentIndex + this._direction, forced);
+
+        /*if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+            this.reverse();
+        }*/
 
         return done;
     }
 
-    displayPrevious() {
-        let done = this.displayAtIndex(this._currentIndex - this._direction);
+    displayPrevious(forced:boolean = false) {
+        let done = this.displayAtIndex(this._currentIndex - this._direction, forced);
 
-        if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+        /*if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
             this.reverse();
-            done = this.displayPrevious();
+        }*/
+
+        if (!done && this.loopType === Sequence.LOOP_TYPE_RESET) {
+            this.resetIndex();
         }
 
         return done;

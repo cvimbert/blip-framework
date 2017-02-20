@@ -26,15 +26,17 @@ var spritep4:Sprite = new Sprite(p4, 35, 200, 1);
 spritep4.displayInDOMElement(document.body);
 var spritep5:Sprite = new Sprite(p5, 90, 200, 1);
 spritep5.displayInDOMElement(document.body);
+var spritep6:Sprite = new Sprite(p6, 145, 200, 1);
+spritep6.displayInDOMElement(document.body);
 
 // test des SpritesGroup
-var group1:SpritesGroup = new SpritesGroup([spriteBody, spritep4, spritep5]);
+var group1:SpritesGroup = new SpritesGroup([spritep4, spritep5, spritep6]);
 //group1.show();
 
 // test des SpritesGroupState
-var state1:SpritesGroupState = new SpritesGroupState(group1, [spritep4, spritep5]);
-var state2:SpritesGroupState = new SpritesGroupState(group1, [spriteBody]);
-var state3:SpritesGroupState = new SpritesGroupState(group1, [spritep5]);
+var state1:SpritesGroupState = new SpritesGroupState(group1, [spritep4]);
+var state2:SpritesGroupState = new SpritesGroupState(group1, [spritep5]);
+var state3:SpritesGroupState = new SpritesGroupState(group1, [spritep6]);
 /*delay(2, () => state1.display());
 delay(4, () => state1.hide());
 delay(6, () => state1.display());*/

@@ -35,15 +35,12 @@ export class Animation extends EventDispatcher {
 
         this._animationInterval = setInterval(() => {
 
-            console.log("loop");
-
             if (this._isPlaying === false) return;
 
             if (!this.sequence.displayNext()) {
                 this.dispatchEvent(Events.ANIMATION_ITERATION_END, occurencesCounter);
                 occurencesCounter++;
 
-                console.log("--> " + occurencesCounter + " " + this.iterations);
                 if (occurencesCounter >= this.iterations) {
 
                     clearInterval(this._animationInterval);
@@ -53,8 +50,9 @@ export class Animation extends EventDispatcher {
                 }
                 else {
                     // on repart à zéro
-                    this.sequence.resetIndex();
+                    //this.sequence.resetIndex();
                     this.sequence.displayNext();
+                    this.sequence.reverse();
                 }
             }
 
