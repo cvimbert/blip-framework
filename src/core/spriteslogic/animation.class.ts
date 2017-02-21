@@ -27,7 +27,7 @@ export class Animation extends EventDispatcher {
         }
 
         this.sequence.reset();
-        this.sequence.displayNext();
+        this.sequence.displayNext(true);
 
         var occurencesCounter = 0;
 
@@ -37,7 +37,7 @@ export class Animation extends EventDispatcher {
 
             if (this._isPlaying === false) return;
 
-            if (!this.sequence.displayNext()) {
+            if (!this.sequence.displayNext(occurencesCounter < this.iterations - 1)) {
                 this.dispatchEvent(Events.ANIMATION_ITERATION_END, occurencesCounter);
                 occurencesCounter++;
 
@@ -51,8 +51,8 @@ export class Animation extends EventDispatcher {
                 else {
                     // on repart à zéro
                     //this.sequence.resetIndex();
-                    this.sequence.displayNext();
-                    this.sequence.reverse();
+                    //this.sequence.displayNext(true);
+                    //this.sequence.reverse();
                 }
             }
 

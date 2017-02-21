@@ -35,29 +35,38 @@ export class Sequence extends EventDispatcher {
 
     displayAtIndex(index:number, forced:boolean = false):boolean {
         //if (!this._isIndexValid(index)) return false;
+        console.log(index);
 
         if (!forced && (index <= -1 || index >= this.states.length)){
+            console.log("pas forcé");
             return false;
         }
 
         if (index <= -1) {
 
+            console.log("min");
+
             if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
                 this.reverse();
-                return this.displayAtIndex(1);
+                this.displayAtIndex(1);
             } else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
-                return this.displayAtIndex(this.states.length - 1);
+                this.displayAtIndex(this.states.length - 1);
             }
+
+            return false;
 
         } else if (index >= this.states.length) {
 
+            console.log("max");
+
             if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
                 this.reverse();
-                return this.displayAtIndex(this.states.length - 1);
+                this.displayAtIndex(this.states.length - 2);
             } else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
-                return this.displayAtIndex(0);
+                this.displayAtIndex(0);
             }
 
+            return false;
         }
 
         this.hide();
@@ -80,6 +89,11 @@ export class Sequence extends EventDispatcher {
         }
     }*/
 
+    hasNext() {
+        var nextIndex:number = this._currentIndex + this._direction;
+        return !(nextIndex <= -1 || nextIndex >= this.states.length);
+    }
+
     displayNext(forced:boolean = false) {
         let done = this.displayAtIndex(this._currentIndex + this._direction, forced);
 
@@ -88,6 +102,11 @@ export class Sequence extends EventDispatcher {
         }*/
 
         return done;
+    }
+
+    hasPrevious() {
+        var previousIndex:number = this._currentIndex - this._direction;
+        return !(previousIndex <= -1 || previousIndex >= this.states.length);
     }
 
     displayPrevious(forced:boolean = false) {

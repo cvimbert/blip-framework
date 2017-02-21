@@ -42,7 +42,7 @@ delay(4, () => state1.hide());
 delay(6, () => state1.display());*/
 
 // test des Sequence
-var sequence1:Sequence = new Sequence(group1, Sequence.LOOP_TYPE_CIRCLE, [state1, state2, state3]);
+var sequence1:Sequence = new Sequence(group1, Sequence.LOOP_TYPE_RESET, [state1, state2, state3]);
 /*sequence1.displayNext();
 delay(1, () => sequence1.displayNext());
 delay(2, () => sequence1.displayNext());
@@ -52,5 +52,5 @@ delay(4, () => {
     sequence1.displayNext();
 });*/
 
-var animation1:Animation = new Animation(sequence1, 3, 1, true);
+var animation1:Animation = new Animation(sequence1, 3, 1);
 animation1.play();

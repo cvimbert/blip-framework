@@ -2,11 +2,11 @@
  * Created by Christophe on 01/02/2017.
  */
 import {File} from "../files/file.class";
-import {BehaviorSubject} from "rxjs/Rx";
+//import {BehaviorSubject} from "rxjs/Rx";
 
 export class Sprite {
 
-    public visibility:BehaviorSubject<boolean>;
+    //public visibility:BehaviorSubject<boolean>;
     private _visible:boolean;
     private _DOMElement:HTMLElement;
 
@@ -17,7 +17,7 @@ export class Sprite {
         public scale:number = 1,
         initVisibility:boolean = false
     ) {
-        this.visibility = new BehaviorSubject<boolean>(initVisibility);
+        //this.visibility = new BehaviorSubject<boolean>(initVisibility);
         this._visible = initVisibility;
     }
 
@@ -44,7 +44,7 @@ export class Sprite {
     }
 
     show() {
-        this.visibility.next(true);
+        //this.visibility.next(true);
 
         if (this._DOMElement) {
             this._DOMElement.style.display = "block";
@@ -54,7 +54,7 @@ export class Sprite {
     }
 
     hide() {
-        this.visibility.next(false);
+        //this.visibility.next(false);
 
         if (this._DOMElement) {
             this._DOMElement.style.display = "none";

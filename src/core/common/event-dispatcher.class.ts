@@ -7,6 +7,9 @@ export class EventDispatcher {
     private _eventCallbacks:{[key:string]:Function[]} = {};
 
     dispatchEvent(eventType:string, param:any = null) {
+
+        console.log("Event: " + eventType);
+
         if (this._eventCallbacks[eventType]) {
             this._eventCallbacks[eventType].forEach((callback:Function) => {
                 callback(param);
