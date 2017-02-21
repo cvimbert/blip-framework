@@ -10,4 +10,7 @@ export class Events {
     static ANIMATION_END:string = "animation_end";
     
     static CLOCK_PERIOD:string = "clock_period";
+    
+    static CONTROL_UP:string = "control_up";
+    static CONTROL_DOWN:string = "control_down";
 }

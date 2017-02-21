@@ -2,39 +2,29 @@
  * Created by Christophe on 01/02/2017.
  */
 import {File} from "../files/file.class";
+import {DisplayElement} from "./display-element.class";
 //import {BehaviorSubject} from "rxjs/Rx";
 
-export class Sprite {
+export class Sprite extends DisplayElement {
 
     //public visibility:BehaviorSubject<boolean>;
     private _visible:boolean;
-    private _DOMElement:HTMLElement;
 
     constructor(
-        public file:File,
-        public x:number,
-        public y:number,
-        public scale:number = 1,
+        file:File,
+        x:number,
+        y:number,
+        scale:number = 1,
         initVisibility:boolean = false
     ) {
         //this.visibility = new BehaviorSubject<boolean>(initVisibility);
+        super(file, x, y, scale);
         this._visible = initVisibility;
     }
 
-    getDOMElement():HTMLElement {
-        var div:HTMLElement = document.createElement("div");
-        var image:HTMLElement = document.createElement("img");
-        image["src"] = this.file.path;
-        div.appendChild(image);
-        div.className = "game-element";
-        div.style.left = this.x + "px";
-        div.style.top = this.y + "px";
-        return div;
-    }
-
     displayInDOMElement(container:HTMLElement) {
-        this._DOMElement = this.getDOMElement();
-        container.appendChild(this._DOMElement);
+        
+        super.displayInDOMElement(container);
 
         if (this._visible) {
             this.show();
