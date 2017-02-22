@@ -7,17 +7,23 @@ import {SpritesGroup} from "./core/display/sprites-group.class";
 import {SpritesGroupState} from "./core/display/sprites-group-state.class";
 import {Sequence} from "./core/spriteslogic/sequence.class";
 import {Animation} from "./core/spriteslogic/animation.class";
+import {ControlSprite} from "./core/display/control-sprite.class";
+import {Control} from "./core/gamelogic/control.class";
+import {Events} from "./core/common/events.class";
 
 function delay(time:number, action:Function) {
     setTimeout(() => action(), time * 1000);
 }
 
 // test des File
-var body:File = new File("files/o-body.png");
-var p4:File = new File("files/p4-body.png");
-var p5:File = new File("files/p5-body.png");
-var p6:File = new File("files/p6-body.png");
-var p7:File = new File("files/p7-body.png");
+var body:File = new File("files/sprites/o-body.png");
+var p4:File = new File("files/sprites/p4-body.png");
+var p5:File = new File("files/sprites/p5-body.png");
+var p6:File = new File("files/sprites/p6-body.png");
+var p7:File = new File("files/sprites/p7-body.png");
+
+var controlAFile:File = new File("files/controls/buttonA.png");
+var controlBFile:File = new File("files/controls/buttonB.png");
 
 // test des Sprite
 var spriteBody:Sprite = new Sprite(body, 35, 35, 1);
@@ -28,6 +34,20 @@ var spritep5:Sprite = new Sprite(p5, 90, 200, 1);
 spritep5.displayInDOMElement(document.body);
 var spritep6:Sprite = new Sprite(p6, 145, 200, 1);
 spritep6.displayInDOMElement(document.body);
+
+var spriteControlA:ControlSprite = new ControlSprite(controlAFile, 35, 300, 1);
+spriteControlA.displayInDOMElement(document.body);
+var spriteControlB:ControlSprite = new ControlSprite(controlBFile, 150, 300, 1);
+spriteControlB.displayInDOMElement(document.body);
+
+var controlA:Control = new Control(spriteControlA);
+controlA.enable();
+controlA.setZone(0, 0, 15, 15);
+controlA.on(Events.CONTROL_DOWN, () => alert ("control A"));
+
+var controlB:Control = new Control(spriteControlB);
+controlB.enable();
+controlB.on(Events.CONTROL_DOWN, () => alert ("control B"));
 
 // test des SpritesGroup
 var group1:SpritesGroup = new SpritesGroup([spritep4, spritep5, spritep6]);

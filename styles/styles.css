@@ -1,3 +1,7 @@
 .game-element {
     position: absolute;
 }
+
+.control {
+    cursor: pointer;
+}

@@ -19,16 +19,41 @@ export class Control extends EventDispatcher {
 
     constructor(
         public sprite:ControlSprite,
-        public zones:ControlZone = null
+        public zone:ControlZone = null
     ) {
         super();
     }
-    
-    // todo: tenir compte des zones, on oublie pour le moment
+
+    setZone(x:number, y:number, width:number, height:number) {
+        this.zone = new ControlZone(x, y, width, height);
+    }
+
+    checkZoneEvent(eventName:string, event:MouseEvent) {
+
+        if (this.zone) {
+            let x:number = event.offsetX;
+            let y:number = event.offsetY;
+
+            if (
+                x >= this.zone.x
+                &&
+                x <= this.zone.x + this.zone.width
+                &&
+                y >= this.zone.y
+                &&
+                y <= this.zone.y + this.zone.height
+            ) {
+                this.dispatchEvent(eventName);
+            }
+
+        } else {
+            this.dispatchEvent(eventName);
+        }
+    }
 
     enable() {
-        this.sprite.DOMElement.onmousedown = () => this.dispatchEvent(Events.CONTROL_DOWN);
-        this.sprite.DOMElement.onmouseup = () => this.dispatchEvent(Events.CONTROL_UP);
+        this.sprite.DOMElement.onmousedown = (evt:MouseEvent) => this.checkZoneEvent(Events.CONTROL_DOWN, evt);
+        this.sprite.DOMElement.onmouseup = (evt:MouseEvent) => this.checkZoneEvent(Events.CONTROL_UP, evt);
     }
 
     disable() {

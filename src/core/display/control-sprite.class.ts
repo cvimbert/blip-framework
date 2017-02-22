@@ -15,6 +15,12 @@ export class ControlSprite extends DisplayElement {
         super(file, x, y, scale);
     }
 
+    getDOMElement():HTMLElement {
+        var div:HTMLElement = super.getDOMElement();
+        div.classList.add("control");
+        return div;
+    }
+
     get DOMElement():HTMLElement {
         return this._DOMElement;
     }
