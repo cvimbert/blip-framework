@@ -10,10 +10,15 @@ import {Animation} from "./core/spriteslogic/animation.class";
 import {ControlSprite} from "./core/display/control-sprite.class";
 import {Control} from "./core/gamelogic/control.class";
 import {Events} from "./core/common/events.class";
+import {Clock} from "./core/gamelogic/clock.class";
+import {LcdDisplayer} from "./modules/lcd-displayer";
 
 function delay(time:number, action:Function) {
     setTimeout(() => action(), time * 1000);
 }
+
+var mainClock:Clock = new Clock(0.6);
+mainClock.start();
 
 // test des File
 var body:File = new File("files/sprites/o-body.png");
@@ -43,11 +48,11 @@ spriteControlB.displayInDOMElement(document.body);
 var controlA:Control = new Control(spriteControlA);
 controlA.enable();
 controlA.setZone(0, 0, 15, 15);
-controlA.on(Events.CONTROL_DOWN, () => alert ("control A"));
+//controlA.on(Events.CONTROL_DOWN, () => alert ("control A"));
 
 var controlB:Control = new Control(spriteControlB);
 controlB.enable();
-controlB.on(Events.CONTROL_DOWN, () => alert ("control B"));
+//controlB.on(Events.CONTROL_DOWN, () => alert ("control B"));
 
 // test des SpritesGroup
 var group1:SpritesGroup = new SpritesGroup([spritep4, spritep5, spritep6]);
@@ -62,7 +67,7 @@ delay(4, () => state1.hide());
 delay(6, () => state1.display());*/
 
 // test des Sequence
-var sequence1:Sequence = new Sequence(group1, Sequence.LOOP_TYPE_RESET, [state1, state2, state3]);
+var sequence1:Sequence = new Sequence(group1, [state1, state2, state3]);
 /*sequence1.displayNext();
 delay(1, () => sequence1.displayNext());
 delay(2, () => sequence1.displayNext());
@@ -73,4 +78,12 @@ delay(4, () => {
 });*/
 
 var animation1:Animation = new Animation(sequence1, 3, 1);
-animation1.play();
+//animation1.play();
+
+controlA.on(Events.CONTROL_DOWN, () => sequence1.displayPrevious());
+controlB.on(Events.CONTROL_DOWN, () => sequence1.displayNext());
+
+//mainClock.on(Events.CLOCK_PERIOD, () => sequence1.displayNext());
+
+var lcdDisplay:LcdDisplayer = new LcdDisplayer(30, 30);
+lcdDisplay.displayInDOMElement(document.body);

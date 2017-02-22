@@ -2,9 +2,9 @@
  * Created by Christophe on 01/02/2017.
  */
 import {File} from "../files/file.class";
-import {DisplayElement} from "./display-element.class";
+import {ImageDisplayElement} from "./image-display-element";
 
-export class ControlSprite extends DisplayElement {
+export class ControlSprite extends ImageDisplayElement {
 
     constructor(
         file:File,

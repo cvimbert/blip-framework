@@ -13,4 +13,6 @@ export class Events {
     
     static CONTROL_UP:string = "control_up";
     static CONTROL_DOWN:string = "control_down";
+
+    static VARIABLE_CHANGE:string = "variable_change";
 }

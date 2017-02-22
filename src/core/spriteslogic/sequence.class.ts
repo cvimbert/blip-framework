@@ -19,8 +19,8 @@ export class Sequence extends EventDispatcher {
 
     constructor(
         public group:SpritesGroup,
-        public loopType:string,
-        public states:IState[] = []
+        public states:IState[] = [],
+        public loopType:string = ""
     ) {
         super();
     }

@@ -2,10 +2,10 @@
  * Created by Christophe on 01/02/2017.
  */
 import {File} from "../files/file.class";
-import {DisplayElement} from "./display-element.class";
+import {ImageDisplayElement} from "./image-display-element";
 //import {BehaviorSubject} from "rxjs/Rx";
 
-export class Sprite extends DisplayElement {
+export class Sprite extends ImageDisplayElement {
 
     //public visibility:BehaviorSubject<boolean>;
     private _visible:boolean;

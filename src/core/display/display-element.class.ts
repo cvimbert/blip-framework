@@ -8,7 +8,6 @@ export class DisplayElement {
     protected _DOMElement:HTMLElement;
     
     constructor(
-        public file:File,
         public x:number,
         public y:number,
         public scale:number = 1
@@ -16,23 +15,15 @@ export class DisplayElement {
 
     getDOMElement():HTMLElement {
         var div:HTMLElement = document.createElement("div");
-        var image:HTMLElement = document.createElement("img");
-        image["src"] = this.file.path;
-        div.appendChild(image);
         div.className = "game-element";
         div.style.left = this.x + "px";
         div.style.top = this.y + "px";
+        div.style.transform = "scale(" + this.scale + ")";
         return div;
     }
 
     displayInDOMElement(container:HTMLElement) {
         this._DOMElement = this.getDOMElement();
         container.appendChild(this._DOMElement);
-
-        /*if (this._visible) {
-            this.show();
-        } else {
-            this.hide();
-        }*/
     }
 }
