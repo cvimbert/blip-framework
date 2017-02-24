@@ -12,13 +12,14 @@ import {Control} from "./core/gamelogic/control.class";
 import {Events} from "./core/common/events.class";
 import {Clock} from "./core/gamelogic/clock.class";
 import {LcdDisplayer} from "./modules/lcd-displayer";
+import {Variable} from "./core/gamelogic/variable.class";
 
 function delay(time:number, action:Function) {
     setTimeout(() => action(), time * 1000);
 }
 
 var mainClock:Clock = new Clock(0.6);
-mainClock.start();
+//mainClock.start();
 
 // test des File
 var body:File = new File("files/sprites/o-body.png");
@@ -47,7 +48,7 @@ spriteControlB.displayInDOMElement(document.body);
 
 var controlA:Control = new Control(spriteControlA);
 controlA.enable();
-controlA.setZone(0, 0, 15, 15);
+//controlA.setZone(0, 0, 15, 15);
 //controlA.on(Events.CONTROL_DOWN, () => alert ("control A"));
 
 var controlB:Control = new Control(spriteControlB);
@@ -85,5 +86,9 @@ controlB.on(Events.CONTROL_DOWN, () => sequence1.displayNext());
 
 //mainClock.on(Events.CLOCK_PERIOD, () => sequence1.displayNext());
 
-var lcdDisplay:LcdDisplayer = new LcdDisplayer(30, 30);
+var var1:Variable = new Variable(Variable.NUMBER_TYPE, 6);
+
+var lcdDisplay:LcdDisplayer = new LcdDisplayer(30, 30, 1, var1);
 lcdDisplay.displayInDOMElement(document.body);
+
+controlB.on(Events.CONTROL_DOWN, () => var1.increment());

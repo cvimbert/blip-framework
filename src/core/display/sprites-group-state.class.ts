@@ -3,7 +3,7 @@
  */
 import {Sprite} from "./sprite.class";
 import {SpritesGroup} from "./sprites-group.class";
-import {IState} from "../interfaces/IState.interface";
+import {IState} from "../interfaces/IDisplayable.interface";
 
 export class SpritesGroupState implements IState {
 

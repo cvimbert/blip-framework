@@ -1,7 +1,6 @@
 /**
  * Created by Christophe on 21/02/2017.
  */
-import {File} from "../files/file.class";
 
 export class DisplayElement {
 

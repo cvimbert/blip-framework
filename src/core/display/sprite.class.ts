@@ -3,9 +3,10 @@
  */
 import {File} from "../files/file.class";
 import {ImageDisplayElement} from "./image-display-element";
+import {IState} from "../interfaces/IDisplayable.interface";
 //import {BehaviorSubject} from "rxjs/Rx";
 
-export class Sprite extends ImageDisplayElement {
+export class Sprite extends ImageDisplayElement implements IState{
 
     //public visibility:BehaviorSubject<boolean>;
     private _visible:boolean;
@@ -41,6 +42,10 @@ export class Sprite extends ImageDisplayElement {
         }
 
         this._visible = true;
+    }
+
+    display() {
+        this.show();
     }
 
     hide() {

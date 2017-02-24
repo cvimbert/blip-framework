@@ -3,7 +3,7 @@
  */
 import {EventDispatcher} from "../common/event-dispatcher.class";
 import {SpritesGroup} from "./sprites-group.class";
-import {IState} from "../interfaces/IState.interface";
+import {IState} from "../interfaces/IDisplayable.interface";
 import {ConditionalSpritesGroupState} from "./conditional-sprites-group-state.class";
 
 export class ConditionalSpritesGroupStateSet extends EventDispatcher {

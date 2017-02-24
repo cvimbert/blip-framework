@@ -2,7 +2,7 @@
  * Created by Christophe on 14/02/2017.
  */
 import {EventDispatcher} from "../common/event-dispatcher.class";
-import {IState} from "../interfaces/IState.interface";
+import {IState} from "../interfaces/IDisplayable.interface";
 import {GraphLink} from "./graph-link.class";
 
 export class GraphNode extends EventDispatcher {

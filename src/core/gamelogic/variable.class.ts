@@ -14,7 +14,7 @@ export class Variable extends EventDispatcher {
 
     constructor(
         public type:string,
-        public initValue:any
+        public initValue:any = null
     ) {
         super();
         this._currentValue = initValue;
@@ -26,7 +26,7 @@ export class Variable extends EventDispatcher {
 
     set value(value:any) {
         this._currentValue = value;
-        this.dispatchEvent(Events.VARIABLE_CHANGE);
+        this.dispatchEvent(Events.VARIABLE_CHANGE, this.value);
     }
 
     getType():string {
@@ -45,7 +45,7 @@ export class Variable extends EventDispatcher {
         }
     }
 
-    reset(newInitValue:any) {
+    reset(newInitValue:any = null) {
 
         if (newInitValue) {
             this.initValue = newInitValue;
