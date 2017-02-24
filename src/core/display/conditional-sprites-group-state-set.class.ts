@@ -3,7 +3,7 @@
  */
 import {EventDispatcher} from "../common/event-dispatcher.class";
 import {SpritesGroup} from "./sprites-group.class";
-import {IState} from "../interfaces/IDisplayable.interface";
+import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {ConditionalSpritesGroupState} from "./conditional-sprites-group-state.class";
 
 export class ConditionalSpritesGroupStateSet extends EventDispatcher {
@@ -11,7 +11,7 @@ export class ConditionalSpritesGroupStateSet extends EventDispatcher {
     constructor(
         public group:SpritesGroup,
         public conditionalStates:ConditionalSpritesGroupState[] = [],
-        public defaultState:IState
+        public defaultState:IDisplayable
     ) {
         super();
     }

@@ -3,9 +3,9 @@
  */
 import {Sprite} from "./sprite.class";
 import {SpritesGroup} from "./sprites-group.class";
-import {IState} from "../interfaces/IDisplayable.interface";
+import {IDisplayable} from "../interfaces/IDisplayable.interface";
 
-export class SpritesGroupState implements IState {
+export class SpritesGroupState implements IDisplayable {
 
     constructor(
         public group:SpritesGroup,

@@ -3,12 +3,12 @@
  */
 import {EventDispatcher} from "../common/event-dispatcher.class";
 import {ICondition} from "../interfaces/ICondition.interface";
-import {IState} from "../interfaces/IDisplayable.interface";
+import {IDisplayable} from "../interfaces/IDisplayable.interface";
 
 export class ConditionalSpritesGroupState extends EventDispatcher {
 
     constructor(
-        public state:IState,
+        public state:IDisplayable,
         public condition:ICondition
     ) {
         super();

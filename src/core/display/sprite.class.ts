@@ -3,10 +3,10 @@
  */
 import {File} from "../files/file.class";
 import {ImageDisplayElement} from "./image-display-element";
-import {IState} from "../interfaces/IDisplayable.interface";
+import {IDisplayable} from "../interfaces/IDisplayable.interface";
 //import {BehaviorSubject} from "rxjs/Rx";
 
-export class Sprite extends ImageDisplayElement implements IState{
+export class Sprite extends ImageDisplayElement implements IDisplayable{
 
     //public visibility:BehaviorSubject<boolean>;
     private _visible:boolean;

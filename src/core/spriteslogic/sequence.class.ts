@@ -2,7 +2,7 @@
  * Created by Christophe on 01/02/2017.
  */
 import {SpritesGroup} from "../display/sprites-group.class";
-import {IState} from "../interfaces/IDisplayable.interface";
+import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {EventDispatcher} from "../common/event-dispatcher.class";
 import {Events} from "../common/events.class";
 
@@ -19,7 +19,7 @@ export class Sequence extends EventDispatcher {
 
     constructor(
         public group:SpritesGroup,
-        public states:IState[] = [],
+        public states:IDisplayable[] = [],
         public loopType:string = ""
     ) {
         super();
