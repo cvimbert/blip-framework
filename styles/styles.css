@@ -17,11 +17,19 @@
     transform-origin: 0 0;
 }
 
+.game-element.active {
+    opacity: 1;
+}
+
+.game-element.inactive {
+    opacity: 0.2;
+}
+
 .control {
     cursor: pointer;
 }
 
-.lcd-displayer {
+.seg7-displayer {
     font-family: Digital-7;
     font-size: 40px;
 }

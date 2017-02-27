@@ -25,21 +25,26 @@ export class Sprite extends ImageDisplayElement implements IDisplayable{
 
     displayInDOMElement(container:HTMLElement) {
         
-        super.displayInDOMElement(container);
+        var elem:HTMLElement = super.displayInDOMElement(container);
 
         if (this._visible) {
             this.show();
         } else {
             this.hide();
         }
+
+        return elem;
     }
 
     show() {
         //this.visibility.next(true);
 
-        if (this._DOMElement) {
+        /*if (this._DOMElement) {
             this._DOMElement.style.display = "block";
-        }
+        }*/
+
+        this._DOMElement.classList.remove("inactive");
+        this._DOMElement.classList.add("active");
 
         this._visible = true;
     }
@@ -51,9 +56,12 @@ export class Sprite extends ImageDisplayElement implements IDisplayable{
     hide() {
         //this.visibility.next(false);
 
-        if (this._DOMElement) {
+        /*if (this._DOMElement) {
             this._DOMElement.style.display = "none";
-        }
+        }*/
+
+        this._DOMElement.classList.add("inactive");
+        this._DOMElement.classList.remove("active");
 
         this._visible = false;
     }

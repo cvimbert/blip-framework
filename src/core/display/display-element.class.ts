@@ -13,16 +13,23 @@ export class DisplayElement {
     ) {}
 
     getDOMElement():HTMLElement {
-        var div:HTMLElement = document.createElement("div");
-        div.className = "game-element";
-        div.style.left = this.x + "px";
-        div.style.top = this.y + "px";
-        div.style.transform = "scale(" + this.scale + ")";
-        return div;
+        if (this._DOMElement) {
+            return this._DOMElement;
+        }
+        else {
+            var div:HTMLElement = document.createElement("div");
+            div.className = "game-element";
+            div.style.left = this.x + "px";
+            div.style.top = this.y + "px";
+            div.style.transform = "scale(" + this.scale + ")";
+            this._DOMElement = div;
+            return div;
+        }
     }
 
-    displayInDOMElement(container:HTMLElement) {
+    displayInDOMElement(container:HTMLElement):HTMLElement {
         this._DOMElement = this.getDOMElement();
         container.appendChild(this._DOMElement);
+        return this._DOMElement;
     }
 }

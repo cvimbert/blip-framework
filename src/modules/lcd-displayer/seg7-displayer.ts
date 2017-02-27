@@ -1,11 +1,11 @@
 /**
  * Created by Christophe on 22/02/2017.
  */
-import {DisplayElement} from "../core/display/display-element.class";
-import {Variable} from "../core/gamelogic/variable.class";
-import {Events} from "../core/common/events.class";
+import {DisplayElement} from "../../core/display/display-element.class";
+import {Variable} from "../../core/gamelogic/variable.class";
+import {Events} from "../../core/common/events.class";
 
-export class LcdDisplayer extends DisplayElement {
+export class Seg7Displayer extends DisplayElement {
 
     txtDiv:HTMLElement;
     private _currentValue:number = null;
@@ -21,16 +21,20 @@ export class LcdDisplayer extends DisplayElement {
     }
 
     getDOMElement():HTMLElement {
-        var div:HTMLElement = super.getDOMElement();
-        this.txtDiv = document.createElement("div");
-        div.appendChild(this.txtDiv);
-        div.classList.add("lcd-displayer");
+        if (this._DOMElement) {
+            return this._DOMElement;
+        } else {
+            var div:HTMLElement = super.getDOMElement();
+            this.txtDiv = document.createElement("div");
+            div.appendChild(this.txtDiv);
+            div.classList.add("seg7-displayer");
 
-        if (this.value) {
-            this.value = this._currentValue;
+            if (this.value) {
+                this.value = this._currentValue;
+            }
+
+            return div;
         }
-
-        return div;
     }
 
     bindVariable(variable:Variable) {

@@ -11,8 +11,9 @@ import {ControlSprite} from "./core/display/control-sprite.class";
 import {Control} from "./core/gamelogic/control.class";
 import {Events} from "./core/common/events.class";
 import {Clock} from "./core/gamelogic/clock.class";
-import {LcdDisplayer} from "./modules/lcd-displayer";
+import {Seg7Displayer} from "./modules/lcd-displayer/seg7-displayer";
 import {Variable} from "./core/gamelogic/variable.class";
+import {LcdDisplayer} from "./modules/lcd-displayer/lcd-displayer.class";
 
 function delay(time:number, action:Function) {
     setTimeout(() => action(), time * 1000);
@@ -88,7 +89,11 @@ controlB.on(Events.CONTROL_DOWN, () => sequence1.displayNext());
 
 var var1:Variable = new Variable(Variable.NUMBER_TYPE, 6);
 
-var lcdDisplay:LcdDisplayer = new LcdDisplayer(30, 30, 1, var1);
+var lcdDisplay:Seg7Displayer = new Seg7Displayer(30, 30, 1, var1);
 lcdDisplay.displayInDOMElement(document.body);
 
-controlB.on(Events.CONTROL_DOWN, () => var1.increment());
+var dd:LcdDisplayer = new LcdDisplayer(67, 500, 3);
+dd.displayInDOMElement(document.body);
+dd.value = 783;
+
+controlB.on(Events.CONTROL_DOWN, () => dd.value++);
