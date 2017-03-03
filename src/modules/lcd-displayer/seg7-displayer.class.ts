@@ -42,7 +42,7 @@ export class Seg7Displayer extends DisplayElement {
 
         if (variable.value !== null) this.value = +variable.value;
 
-        variable.on(Events.VARIABLE_CHANGE, (value:any) => this.value = +value);
+        variable.subscribe(Events.VARIABLE_CHANGE, (value:any) => this.value = +value);
     }
 
     set value(value:number) {
