@@ -3,12 +3,11 @@
  */
 import {File} from "../files/file.class";
 
-//window["AudioContext"] = window["AudioContext"] || window["webkitAudioContext"];
-var context = new AudioContext();
+var context:AudioContext = new AudioContext();
 
 export class Sound {
 
-    buffer:AudioBuffer;
+    private _buffer:AudioBuffer;
 
     constructor(
         public file:File
@@ -17,14 +16,13 @@ export class Sound {
     }
 
     load() {
-        var request = new XMLHttpRequest();
+        var request:XMLHttpRequest = new XMLHttpRequest();
         request.open('GET', this.file.path, true);
         request.responseType = 'arraybuffer';
 
         request.onload = () => {
             context.decodeAudioData(request.response, (buffer:AudioBuffer) => {
-                this.buffer = buffer;
-                console.log(buffer);
+                this._buffer = buffer;
             }, () => console.log("Sound loading failed"));
         };
 
@@ -33,7 +31,7 @@ export class Sound {
 
     play() {
         var source = context.createBufferSource();
-        source.buffer = this.buffer;
+        source.buffer = this._buffer;
         source.connect(context.destination);
         source.start(0);
     }
