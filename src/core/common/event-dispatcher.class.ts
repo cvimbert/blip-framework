@@ -4,13 +4,13 @@
 import {EventSubscription} from "./event-subscription.class";
 
 export class EventDispatcher {
-    
+
     private _subscriptions:EventSubscription[] = [];
 
     dispatchEvent(eventType:string, param:any = null) {
-        this._subscriptions.forEach((subs:EventSubscription) => {
-            if (subs.eventName === eventType) {
-                subs.call(param);
+        this._subscriptions.forEach((subscription:EventSubscription) => {
+            if (subscription.eventName === eventType) {
+                subscription.call(param);
             }
         });
     }

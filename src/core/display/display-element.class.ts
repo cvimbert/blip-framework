@@ -12,6 +12,7 @@ export class DisplayElement {
         public scale:number = 1
     ) {}
 
+    
     getDOMElement():HTMLElement {
         if (this._DOMElement) {
             return this._DOMElement;

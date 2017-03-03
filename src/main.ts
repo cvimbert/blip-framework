@@ -15,6 +15,7 @@ import {Seg7Displayer} from "./modules/lcd-displayer/seg7-displayer.class";
 import {Variable} from "./core/gamelogic/variable.class";
 import {LcdDisplayer} from "./modules/lcd-displayer/lcd-displayer.class";
 import {Trigger} from "./core/triggers/trigger.class";
+import {Sound} from "./core/sound/sound.class";
 
 function delay(time:number, action:Function) {
     setTimeout(() => action(), time * 1000);
@@ -29,6 +30,12 @@ var p4:File = new File("files/sprites/p4-body.png");
 var p5:File = new File("files/sprites/p5-body.png");
 var p6:File = new File("files/sprites/p6-body.png");
 var p7:File = new File("files/sprites/p7-body.png");
+
+var soundFile1:File = new File("files/sounds/blip.mp3");
+var soundFile2:File = new File("files/sounds/end.mp3");
+
+var sound1:Sound = new Sound(soundFile1);
+var sound2:Sound = new Sound(soundFile2);
 
 var controlAFile:File = new File("files/controls/buttonA.png");
 var controlBFile:File = new File("files/controls/buttonB.png");
@@ -83,7 +90,7 @@ delay(4, () => {
 var animation1:Animation = new Animation(sequence1, 1, 1);
 //animation1.play();
 
-controlA.subscribe(Events.CONTROL_DOWN, () => sequence1.displayPrevious());
+controlA.subscribe(Events.CONTROL_DOWN, () => sound1.play());
 controlB.subscribe(Events.CONTROL_DOWN, () => sequence1.displayNext());
 
 //mainClock.on(Events.CLOCK_PERIOD, () => sequence1.displayNext());
@@ -93,9 +100,9 @@ var var1:Variable = new Variable(Variable.NUMBER_TYPE, 6);
 var lcdDisplay:Seg7Displayer = new Seg7Displayer(30, 30, 1, var1);
 lcdDisplay.displayInDOMElement(document.body);
 
-var dd:LcdDisplayer = new LcdDisplayer(67, 500, 3);
+var dd:LcdDisplayer = new LcdDisplayer(67, 500, 5);
 dd.displayInDOMElement(document.body);
-dd.value = 783;
+dd.value = 67549;
 
 controlB.subscribe(Events.CONTROL_DOWN, () => animation1.play());
 
