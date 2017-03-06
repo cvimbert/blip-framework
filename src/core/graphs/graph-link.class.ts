@@ -16,13 +16,11 @@ export class GraphLink extends EventDispatcher {
 
     enableTrigger(callback:Function) {
         this.trigger.enable();
-
-        // TODO: temporary parameters
-        this.trigger.bind("temp", () => callback(this.destNode));
+        this.trigger.bind(() => callback(this.destNode));
     }
 
     disableTrigger() {
         // TODO: temporary parameters
-        this.trigger.unbind("temp");
+        this.trigger.unbind();
     }
 }

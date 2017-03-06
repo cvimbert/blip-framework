@@ -80,7 +80,7 @@ crossControlLeft.setZone(0, 28, 28, 28);
 crossControlLeft.subscribe(Events.CONTROL_DOWN, () => console.log ("left"));
 crossControlLeft.enable();
 
-crossControlUp.disable();
+//crossControlUp.disable();
 
 var controlA:Control = new Control(spriteControlA);
 controlA.enable();
@@ -135,3 +135,4 @@ controlB.subscribe(Events.CONTROL_DOWN, () => animation1.play());
 
 var trigger1:Trigger = new Trigger(animation1, Events.ANIMATION_END, () => alert ("ok"));
 trigger1.enable();
+

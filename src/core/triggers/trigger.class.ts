@@ -3,8 +3,9 @@
  */
 import {EventDispatcher} from "../common/event-dispatcher.class";
 import {EventSubscription} from "../common/event-subscription.class";
+import {ITrigger} from "../interfaces/ITrigger.interface";
 
-export class Trigger {
+export class Trigger implements ITrigger {
     
     _enabled:boolean = true;
     subscription:EventSubscription;
@@ -12,7 +13,7 @@ export class Trigger {
     constructor(
         public dispatcher:EventDispatcher,
         public eventName:string,
-        public callback:Function,
+        public callback:Function = null,
         public argument:any = null
     ) {}
 
@@ -55,5 +56,13 @@ export class Trigger {
         }
 
         this._enabled = false;
+    }
+
+    bind(callback:Function) {
+
+    }
+
+    unbind() {
+
     }
 }

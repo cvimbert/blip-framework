@@ -56,10 +56,6 @@ export class Sprite extends ImageDisplayElement implements IDisplayable{
     hide() {
         //this.visibility.next(false);
 
-        /*if (this._DOMElement) {
-            this._DOMElement.style.display = "none";
-        }*/
-
         this._DOMElement.classList.add("inactive");
         this._DOMElement.classList.remove("active");
 

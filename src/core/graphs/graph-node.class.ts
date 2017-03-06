@@ -9,9 +9,13 @@ export class GraphNode extends EventDispatcher {
 
     constructor(
         public state:IDisplayable,
-        public links:GraphLink[]
+        public links:GraphLink[] = []
     ) {
         super();
+    }
+
+    addLink(link:GraphLink) {
+        this.links.push(link);
     }
     
     display() {

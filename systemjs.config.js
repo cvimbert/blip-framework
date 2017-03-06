@@ -14,7 +14,7 @@
         },
         packages: {
             src: {
-                main: '../compiled/main.js',
+                main: '../compiled/graphs.js',
                 defaultExtension: 'js'
             }
         }
