@@ -60,22 +60,22 @@ spriteControlB.displayInDOMElement(document.body);
 var crossControlSprite:ControlSprite = new ControlSprite(crossControlFile, 350, 100, 1);
 crossControlSprite.displayInDOMElement(document.body);
 
-var crossControlUp:Control = new Control(crossControlSprite, null, "up");
+var crossControlUp:Control = new Control(crossControlSprite, null);
 crossControlUp.setZone(28, 0, 28, 28);
 crossControlUp.subscribe(Events.CONTROL_DOWN, () => console.log ("up"));
 crossControlUp.enable();
 
-var crossControlDown:Control = new Control(crossControlSprite, null, "down");
+var crossControlDown:Control = new Control(crossControlSprite, null);
 crossControlDown.setZone(28, 57, 28, 28);
 crossControlDown.subscribe(Events.CONTROL_DOWN, () => console.log ("down"));
 crossControlDown.enable();
 
-var crossControlRight:Control = new Control(crossControlSprite, null, "right");
+var crossControlRight:Control = new Control(crossControlSprite, null);
 crossControlRight.setZone(56, 28, 28, 28);
 crossControlRight.subscribe(Events.CONTROL_DOWN, () => console.log ("right"));
 crossControlRight.enable();
 
-var crossControlLeft:Control = new Control(crossControlSprite, null, "left");
+var crossControlLeft:Control = new Control(crossControlSprite, null);
 crossControlLeft.setZone(0, 28, 28, 28);
 crossControlLeft.subscribe(Events.CONTROL_DOWN, () => console.log ("left"));
 crossControlLeft.enable();

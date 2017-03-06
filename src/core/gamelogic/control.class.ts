@@ -17,12 +17,24 @@ export class ControlZone {
 
 export class Control extends EventDispatcher {
 
+    upHandler;
+    downHandler;
+
     constructor(
         public sprite:ControlSprite,
-        public zone:ControlZone = null,
-        public name:string = ""
+        public zone:ControlZone = null
     ) {
         super();
+
+        var self = this;
+
+        this.upHandler = (evt:MouseEvent) => {
+            self.checkZoneEvent(Events.CONTROL_UP, evt);
+        };
+
+        this.downHandler = (evt:MouseEvent) => {
+            self.checkZoneEvent(Events.CONTROL_DOWN, evt);
+        }
     }
 
     setZone(x:number, y:number, width:number, height:number) {
@@ -61,12 +73,12 @@ export class Control extends EventDispatcher {
     }
 
     enable() {
-        this.sprite.DOMElement.addEventListener("mousedown", (evt:MouseEvent) => this._onMouseDown(evt));
-        this.sprite.DOMElement.addEventListener("mouseup", (evt:MouseEvent) => this._onMouseUp(evt));
+        this.sprite.DOMElement.addEventListener("mousedown", this.downHandler);
+        this.sprite.DOMElement.addEventListener("mouseup", this.upHandler);
     }
 
     disable() {
-        this.sprite.DOMElement.removeEventListener("mousedown", (evt:MouseEvent) => this._onMouseDown(evt));
-        this.sprite.DOMElement.removeEventListener("mouseup", (evt:MouseEvent) => this._onMouseUp(evt));
+        this.sprite.DOMElement.removeEventListener("mousedown", this.downHandler);
+        this.sprite.DOMElement.removeEventListener("mouseup", this.upHandler);
     }
 }
