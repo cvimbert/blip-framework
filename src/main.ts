@@ -40,6 +40,8 @@ var sound2:Sound = new Sound(soundFile2);
 var controlAFile:File = new File("files/controls/buttonA.png");
 var controlBFile:File = new File("files/controls/buttonB.png");
 
+var crossControlFile:File = new File("files/controls/cross.png");
+
 // test des Sprite
 var spriteBody:Sprite = new Sprite(body, 35, 35, 1);
 spriteBody.displayInDOMElement(document.body);
@@ -54,6 +56,31 @@ var spriteControlA:ControlSprite = new ControlSprite(controlAFile, 35, 300, 1);
 spriteControlA.displayInDOMElement(document.body);
 var spriteControlB:ControlSprite = new ControlSprite(controlBFile, 150, 300, 1);
 spriteControlB.displayInDOMElement(document.body);
+
+var crossControlSprite:ControlSprite = new ControlSprite(crossControlFile, 350, 100, 1);
+crossControlSprite.displayInDOMElement(document.body);
+
+var crossControlUp:Control = new Control(crossControlSprite, null, "up");
+crossControlUp.setZone(28, 0, 28, 28);
+crossControlUp.subscribe(Events.CONTROL_DOWN, () => console.log ("up"));
+crossControlUp.enable();
+
+var crossControlDown:Control = new Control(crossControlSprite, null, "down");
+crossControlDown.setZone(28, 57, 28, 28);
+crossControlDown.subscribe(Events.CONTROL_DOWN, () => console.log ("down"));
+crossControlDown.enable();
+
+var crossControlRight:Control = new Control(crossControlSprite, null, "right");
+crossControlRight.setZone(56, 28, 28, 28);
+crossControlRight.subscribe(Events.CONTROL_DOWN, () => console.log ("right"));
+crossControlRight.enable();
+
+var crossControlLeft:Control = new Control(crossControlSprite, null, "left");
+crossControlLeft.setZone(0, 28, 28, 28);
+crossControlLeft.subscribe(Events.CONTROL_DOWN, () => console.log ("left"));
+crossControlLeft.enable();
+
+crossControlUp.disable();
 
 var controlA:Control = new Control(spriteControlA);
 controlA.enable();

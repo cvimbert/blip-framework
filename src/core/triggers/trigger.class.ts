@@ -6,7 +6,7 @@ import {EventSubscription} from "../common/event-subscription.class";
 
 export class Trigger {
     
-    enabled:boolean = true;
+    _enabled:boolean = true;
     subscription:EventSubscription;
 
     constructor(
@@ -18,7 +18,7 @@ export class Trigger {
 
     private _callback(arg:any) {
         
-        if (!this.enabled) return;
+        if (!this._enabled) return;
         
         if (this.argument) {
             if (arg !== this.argument) {
@@ -26,14 +26,34 @@ export class Trigger {
             }
         }
 
-        this.callback();
+        this.callback(arg);
+    }
+
+    set enabled(value:boolean) {
+        if (value) {
+            this.enable();
+        } else {
+            this.disable();
+        }
+    }
+    
+    get enabled():boolean {
+        return this._enabled;
     }
 
     enable() {
-        this.subscription = this.dispatcher.subscribe(this.eventName, (arg:any) => this._callback(arg));
+        if (!this._enabled) {
+            this.subscription = this.dispatcher.subscribe(this.eventName, (arg:any) => this._callback(arg));
+        }
+
+        this._enabled = true;
     }
 
     disable() {
-        this.subscription.unsubscribe();
+        if (this._enabled) {
+            this.subscription.unsubscribe();
+        }
+
+        this._enabled = false;
     }
 }
