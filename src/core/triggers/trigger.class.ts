@@ -7,7 +7,7 @@ import {ITrigger} from "../interfaces/ITrigger.interface";
 
 export class Trigger implements ITrigger {
     
-    _enabled:boolean = true;
+    _enabled:boolean = false;
     subscription:EventSubscription;
 
     constructor(
@@ -19,7 +19,7 @@ export class Trigger implements ITrigger {
 
     private _callback(arg:any) {
         
-        if (!this._enabled) return;
+        if (!this._enabled || !this.callback) return;
         
         if (this.argument) {
             if (arg !== this.argument) {
@@ -44,7 +44,9 @@ export class Trigger implements ITrigger {
 
     enable() {
         if (!this._enabled) {
-            this.subscription = this.dispatcher.subscribe(this.eventName, (arg:any) => this._callback(arg));
+            this.subscription = this.dispatcher.subscribe(this.eventName, (arg:any) => {
+                this._callback(arg);
+            });
         }
 
         this._enabled = true;
@@ -59,10 +61,12 @@ export class Trigger implements ITrigger {
     }
 
     bind(callback:Function) {
-
+        this.callback = callback;
+        this.enabled = true;
     }
 
     unbind() {
-
+        this.callback = null;
+        this.enabled = false;
     }
 }

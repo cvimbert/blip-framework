@@ -5,9 +5,7 @@ export interface ITrigger {
 
     enable();
 
-    // TODO: temporary parameters
     bind(callback:Function);
-
-    // TODO: temporary parameters
+    
     unbind();
 }

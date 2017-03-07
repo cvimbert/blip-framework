@@ -20,7 +20,6 @@ export class GraphLink extends EventDispatcher {
     }
 
     disableTrigger() {
-        // TODO: temporary parameters
         this.trigger.unbind();
     }
 }
