@@ -4,20 +4,22 @@
 import {EventDispatcher} from "../common/event-dispatcher.class";
 import {EventSubscription} from "../common/event-subscription.class";
 import {ITrigger} from "../interfaces/ITrigger.interface";
+import {BaseTrigger} from "./base-trigger.class";
 
-export class Trigger implements ITrigger {
-    
-    _enabled:boolean = false;
+export class Trigger extends BaseTrigger implements ITrigger {
+
     subscription:EventSubscription;
 
     constructor(
         public dispatcher:EventDispatcher,
         public eventName:string,
-        public callback:Function = null,
+        callback:Function = null,
         public argument:any = null
-    ) {}
+    ) {
+        super(callback);
+    }
 
-    private _callback(arg:any) {
+    protected _callback(arg:any) {
         
         if (!this._enabled || !this.callback) return;
         
@@ -58,15 +60,5 @@ export class Trigger implements ITrigger {
         }
 
         this._enabled = false;
-    }
-
-    bind(callback:Function) {
-        this.callback = callback;
-        this.enabled = true;
-    }
-
-    unbind() {
-        this.callback = null;
-        this.enabled = false;
     }
 }

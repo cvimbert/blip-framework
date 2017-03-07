@@ -1,17 +1,21 @@
 /**
  * Created by Christophe on 07/03/2017.
  */
-import {Trigger} from "./trigger.class";
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {ITrigger} from "../interfaces/ITrigger.interface";
+import {BaseTrigger} from "./base-trigger.class";
 
-export class TimeTrigger extends Trigger {
+export class TimeTrigger extends BaseTrigger implements ITrigger {
 
     constructor(
-        dispatcher:EventDispatcher,
-        eventName:string,
-        callback:Function = null,
-        argument:any = null
+        public time:number,
+        callback:Function = null
     ) {
-        super(dispatcher, eventName, callback, argument);
+        super(callback);
+    }
+
+    enable() {
+        setTimeout(() => {
+            if (this.callback) this.callback()
+        }, this.time * 1000);
     }
 }
