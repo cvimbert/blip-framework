@@ -3,7 +3,7 @@
  */
 import {EventDispatcher} from "./event-dispatcher.class";
 
-export class EventSubscription {
+export class EventListener {
 
     constructor(
         public  eventName:string,
@@ -15,7 +15,7 @@ export class EventSubscription {
         this._callback(param);
     }
 
-    unsubscribe() {
-        this._dispatcher.deleteSubscription(this);
+    stoplisten() {
+        this._dispatcher.deleteListener(this);
     }
 }

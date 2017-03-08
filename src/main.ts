@@ -62,22 +62,22 @@ crossControlSprite.displayInDOMElement(document.body);
 
 var crossControlUp:Control = new Control(crossControlSprite, null);
 crossControlUp.setZone(28, 0, 28, 28);
-crossControlUp.subscribe(Events.CONTROL_DOWN, () => console.log ("up"));
+crossControlUp.listen(Events.CONTROL_DOWN, () => console.log ("up"));
 crossControlUp.enable();
 
 var crossControlDown:Control = new Control(crossControlSprite, null);
 crossControlDown.setZone(28, 57, 28, 28);
-crossControlDown.subscribe(Events.CONTROL_DOWN, () => console.log ("down"));
+crossControlDown.listen(Events.CONTROL_DOWN, () => console.log ("down"));
 crossControlDown.enable();
 
 var crossControlRight:Control = new Control(crossControlSprite, null);
 crossControlRight.setZone(56, 28, 28, 28);
-crossControlRight.subscribe(Events.CONTROL_DOWN, () => console.log ("right"));
+crossControlRight.listen(Events.CONTROL_DOWN, () => console.log ("right"));
 crossControlRight.enable();
 
 var crossControlLeft:Control = new Control(crossControlSprite, null);
 crossControlLeft.setZone(0, 28, 28, 28);
-crossControlLeft.subscribe(Events.CONTROL_DOWN, () => console.log ("left"));
+crossControlLeft.listen(Events.CONTROL_DOWN, () => console.log ("left"));
 crossControlLeft.enable();
 
 //crossControlUp.disable();
@@ -117,8 +117,8 @@ delay(4, () => {
 var animation1:Animation = new Animation(sequence1, 1, 1);
 //animation1.play();
 
-controlA.subscribe(Events.CONTROL_DOWN, () => sound1.play());
-controlB.subscribe(Events.CONTROL_DOWN, () => sequence1.displayNext());
+controlA.listen(Events.CONTROL_DOWN, () => sound1.play());
+controlB.listen(Events.CONTROL_DOWN, () => sequence1.displayNext());
 
 //mainClock.on(Events.CLOCK_PERIOD, () => sequence1.displayNext());
 
@@ -131,7 +131,7 @@ var dd:LcdDisplayer = new LcdDisplayer(67, 500, 5);
 dd.displayInDOMElement(document.body);
 dd.value = 67549;
 
-controlB.subscribe(Events.CONTROL_DOWN, () => animation1.play());
+controlB.listen(Events.CONTROL_DOWN, () => animation1.play());
 
 var trigger1:Trigger = new Trigger(animation1, Events.ANIMATION_END, () => alert ("ok"));
 trigger1.enable();

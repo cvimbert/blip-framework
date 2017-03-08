@@ -1,4 +1,4 @@
-import {EventSubscription} from "../common/event-subscription.class";
+import {EventListener} from "../common/event-listener.class";
 /**
  * Created by Christophe on 07/03/2017.
  */

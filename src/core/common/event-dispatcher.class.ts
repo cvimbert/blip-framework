@@ -1,31 +1,31 @@
 /**
  * Created by Christophe on 01/02/2017.
  */
-import {EventSubscription} from "./event-subscription.class";
+import {EventListener} from "./event-listener.class";
 
 export class EventDispatcher {
 
-    private _subscriptions:EventSubscription[] = [];
+    private _listeners:EventListener[] = [];
 
     dispatchEvent(eventType:string, param:any = null) {
-        this._subscriptions.forEach((subscription:EventSubscription) => {
+        this._listeners.forEach((subscription:EventListener) => {
             if (subscription.eventName === eventType) {
                 subscription.call(param);
             }
         });
     }
 
-    subscribe(eventName:string, callback:Function):EventSubscription {
-        var subscription:EventSubscription = new EventSubscription(eventName, callback, this);
-        this._subscriptions.push(subscription);
-        return subscription;
+    listen(eventName:string, callback:Function):EventListener {
+        var listener:EventListener = new EventListener(eventName, callback, this);
+        this._listeners.push(listener);
+        return listener;
     }
 
-    deleteSubscription(subscription:EventSubscription) {
-        var index:number = this._subscriptions.indexOf(subscription);
+    deleteListener(listener:EventListener) {
+        var index:number = this._listeners.indexOf(listener);
 
         if (index !== -1) {
-            this._subscriptions.splice(index, 1);
+            this._listeners.splice(index, 1);
         }
     }
 }

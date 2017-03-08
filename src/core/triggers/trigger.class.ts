@@ -2,13 +2,13 @@
  * Created by Christophe on 27/02/2017.
  */
 import {EventDispatcher} from "../common/event-dispatcher.class";
-import {EventSubscription} from "../common/event-subscription.class";
+import {EventListener} from "../common/event-listener.class";
 import {ITrigger} from "../interfaces/ITrigger.interface";
 import {BaseTrigger} from "./base-trigger.class";
 
 export class Trigger extends BaseTrigger implements ITrigger {
 
-    subscription:EventSubscription;
+    subscription:EventListener;
 
     constructor(
         public dispatcher:EventDispatcher,
@@ -46,7 +46,7 @@ export class Trigger extends BaseTrigger implements ITrigger {
 
     enable() {
         if (!this._enabled) {
-            this.subscription = this.dispatcher.subscribe(this.eventName, (arg:any) => {
+            this.subscription = this.dispatcher.listen(this.eventName, (arg:any) => {
                 this._callback(arg);
             });
         }
@@ -56,7 +56,7 @@ export class Trigger extends BaseTrigger implements ITrigger {
 
     disable() {
         if (this._enabled) {
-            this.subscription.unsubscribe();
+            this.subscription.stoplisten();
         }
 
         this._enabled = false;
