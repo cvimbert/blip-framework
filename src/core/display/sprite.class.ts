@@ -4,6 +4,7 @@
 import {File} from "../files/file.class";
 import {ImageDisplayElement} from "./image-display-element";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
+import {Events} from "../common/events.class";
 //import {BehaviorSubject} from "rxjs/Rx";
 
 export class Sprite extends ImageDisplayElement implements IDisplayable{
@@ -43,6 +44,8 @@ export class Sprite extends ImageDisplayElement implements IDisplayable{
             this._DOMElement.style.display = "block";
         }*/
 
+        this.dispatchEvent(Events.DISPLAYED);
+
         this._DOMElement.classList.remove("inactive");
         this._DOMElement.classList.add("active");
 
@@ -55,6 +58,8 @@ export class Sprite extends ImageDisplayElement implements IDisplayable{
 
     hide() {
         //this.visibility.next(false);
+
+        this.dispatchEvent(Events.HIDDEN);
 
         this._DOMElement.classList.add("inactive");
         this._DOMElement.classList.remove("active");

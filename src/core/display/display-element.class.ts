@@ -1,8 +1,9 @@
 /**
  * Created by Christophe on 21/02/2017.
  */
+import {EventDispatcher} from "../common/event-dispatcher.class";
 
-export class DisplayElement {
+export class DisplayElement extends EventDispatcher {
 
     protected _DOMElement:HTMLElement;
     
@@ -10,7 +11,9 @@ export class DisplayElement {
         public x:number,
         public y:number,
         public scale:number = 1
-    ) {}
+    ) {
+        super();
+    }
 
     
     getDOMElement():HTMLElement {

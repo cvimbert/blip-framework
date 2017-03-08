@@ -8,7 +8,7 @@ export class BaseTrigger {
     protected _enabled:boolean = false;
 
     constructor(
-        public callback:Function
+        public callback:Function = null
     ) {}
 
     set enabled(value:boolean) {
