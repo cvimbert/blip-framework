@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "core-js": "^2.4.1",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.39",
-    "core-js": "^2.4.1"
+    "systemjs-builder": "^0.16.3"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.35",
@@ -22,7 +23,9 @@
     "start": "tsc && tsc -w",
     "lite": "lite-server",
     "tsc": "tsc",
-    "tsc:w": "tsc -w"
+    "tsc:w": "tsc -w",
+    "build": "node build.js",
+    "postinstall": "build"
   },
   "repository": {
     "type": "git",

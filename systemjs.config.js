@@ -10,11 +10,10 @@
         },
         map: {
             src: "src",
-            'rxjs': 'npm:rxjs'
         },
         packages: {
             src: {
-                main: '../compiled/graphs.js',
+                main: '../compiled/main.js',
                 defaultExtension: 'js'
             }
         }
