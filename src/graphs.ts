@@ -95,6 +95,7 @@ node2.addLink(new GraphLink(node1, leftTrigger));
 node3.addLink(new GraphLink(node2, upTrigger));
 node3.addLink(new GraphLink(node4, leftTrigger));
 
+
 node4.addLink(new GraphLink(node3, rightTrigger));
 node4.addLink(new GraphLink(node1, upTrigger));
 
