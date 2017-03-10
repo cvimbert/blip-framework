@@ -16,6 +16,6 @@ export class StatusSubscription {
     }
     
     unsubscribe() {
-        
+        this._dispatcher.deleteSubscription(this)
     }
 }

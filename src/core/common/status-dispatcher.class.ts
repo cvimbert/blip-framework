@@ -9,13 +9,13 @@ export class StatusDispatcher {
     private _statusValues:{[key:string]:any} = {};
 
     setStatus(statusName:string, value:any) {
-        this._statusValues[statusName] = value;
-
         this._subscriptions.forEach((subscription:StatusSubscription) => {
-            if (subscription.statusName === statusName) {
+            if (subscription.statusName === statusName && value != this._statusValues[statusName]) {
                 subscription.call(value);
             }
         });
+
+        this._statusValues[statusName] = value;
     }
 
     subscribe(statusName:string, callback:Function):StatusSubscription {

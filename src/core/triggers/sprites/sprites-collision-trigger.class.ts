@@ -37,19 +37,19 @@ export class SpritesCollisionTrigger extends BaseTrigger implements ITrigger {
 
             // dans un sens
             
-            this.baseSprite.listen(this.onEvent, () => {
+            /*this.baseSprite.listen(this.onEvent, () => {
                 this._baseSpriteStatus = this.ON;
             });
 
             this._baseSpriteSubscription1 = this.baseSprite.listen(this.onEvent, () => {
                 this._targetSpriteSubscription1 = this.targetSprite.listen(this.onEvent, () => this.callback());
-            });
+            });*/
 
             // et dans l'autre
 
-            this._targetSpriteSubscription2 = this.targetSprite.listen(this.onEvent, () => {
+            /*this._targetSpriteSubscription2 = this.targetSprite.listen(this.onEvent, () => {
                 this._baseSpriteSubscription2 = this.baseSprite.listen(this.onEvent, () => this.callback());
-            });
+            });*/
 
 
         }

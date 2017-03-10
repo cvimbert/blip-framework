@@ -13,6 +13,7 @@ import {GraphNode} from "./core/graphs/graph-node.class";
 import {GraphLink} from "./core/graphs/graph-link.class";
 import {Graph} from "./core/graphs/graph.class";
 import {TimeTrigger} from "./core/triggers/time-trigger.class";
+import {Status} from "./core/common/status.class";
 
 var p4:File = new File("files/sprites/p4-body.png");
 var p5:File = new File("files/sprites/p5-body.png");
@@ -99,3 +100,7 @@ node4.addLink(new GraphLink(node1, upTrigger));
 
 var graph:Graph = new Graph([node1, node2, node3, node4]);
 graph.setNodeAsCurrent(node1);
+
+sprite4.subscribe(Status.VISIBILITY, (status:string) => {
+    //alert (status);
+});
