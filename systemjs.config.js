@@ -10,7 +10,7 @@
         },
         map: {
             examples: "examples",
-            'blip-framework/core': 'src/core/bundles/core.umd.js',
+            'core': 'core/bundles/core.umd.js',
         },
         packages: {
             examples: {
