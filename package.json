@@ -36,5 +36,6 @@
   "bugs": {
     "url": "https://github.com/cvimbert/blip-framework/issues"
   },
+  "typings": "compiled/core/index.d.ts",
   "homepage": "https://github.com/cvimbert/blip-framework#readme"
 }

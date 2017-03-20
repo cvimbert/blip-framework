@@ -15,6 +15,13 @@
     ],
     "types": [
       "core-js"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "*",
+        "compiled/*"
+      ]
+    }
   }
 }
