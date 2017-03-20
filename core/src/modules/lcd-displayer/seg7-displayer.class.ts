@@ -1,9 +1,9 @@
 /**
  * Created by Christophe on 22/02/2017.
  */
-import {DisplayElement} from "../../core/display/display-element.class";
-import {Variable} from "../../core/gamelogic/variable.class";
-import {Events} from "../../core/common/events.class";
+import {DisplayElement} from "../../display/display-element.class";
+import {Variable} from "../../gamelogic/variable.class";
+import {Events} from "../../common/events.class";
 
 export class Seg7Displayer extends DisplayElement {
 

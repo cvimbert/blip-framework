@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var seg7_displayer_class_1 = require("./seg7-displayer.class");
-var display_element_class_1 = require("../../core/display/display-element.class");
+var display_element_class_1 = require("../../display/display-element.class");
 var LcdDisplayer = (function (_super) {
     __extends(LcdDisplayer, _super);
     function LcdDisplayer(x, y, digitNumber, stepWidth, scale, variable) {

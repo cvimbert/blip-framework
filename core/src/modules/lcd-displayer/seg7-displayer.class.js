@@ -7,8 +7,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 /**
  * Created by Christophe on 22/02/2017.
  */
-var display_element_class_1 = require("../../core/display/display-element.class");
-var events_class_1 = require("../../core/common/events.class");
+var display_element_class_1 = require("../../display/display-element.class");
+var events_class_1 = require("../../common/events.class");
 var Seg7Displayer = (function (_super) {
     __extends(Seg7Displayer, _super);
     function Seg7Displayer(x, y, scale, variable) {

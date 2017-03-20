@@ -1,9 +1,9 @@
 /**
  * Created by Christophe on 24/02/2017.
  */
-import {Variable} from "../../core/gamelogic/variable.class";
+import {Variable} from "../../gamelogic/variable.class";
 import {Seg7Displayer} from "./seg7-displayer.class";
-import {DisplayElement} from "../../core/display/display-element.class";
+import {DisplayElement} from "../../display/display-element.class";
 
 export class LcdDisplayer extends DisplayElement {
 

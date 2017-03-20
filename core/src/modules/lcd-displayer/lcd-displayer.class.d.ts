@@ -1,8 +1,8 @@
 /**
  * Created by Christophe on 24/02/2017.
  */
-import { Variable } from "../../core/gamelogic/variable.class";
-import { DisplayElement } from "../../core/display/display-element.class";
+import { Variable } from "../../gamelogic/variable.class";
+import { DisplayElement } from "../../display/display-element.class";
 export declare class LcdDisplayer extends DisplayElement {
     digitNumber: number;
     stepWidth: number;
