@@ -9,7 +9,7 @@ var Builder = require('systemjs-builder');
 var builder = new Builder('.', './systemjs.config.js');
 
 builder
-    .bundle('compiled/main.js', 'bundles/blip-framework.umd.js', { minify: true, sourceMaps: true })
+    .bundle('src/core/index.js', 'src/core/bundles/core.umd.js', { minify: true, sourceMaps: true })
     .then(function() {
         console.log('Build complete');
     })

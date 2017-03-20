@@ -9,11 +9,12 @@
             'npm:': 'node_modules/'
         },
         map: {
-            src: "src",
+            examples: "examples",
+            'blip-framework/core': 'src/core/bundles/core.umd.js',
         },
         packages: {
-            src: {
-                main: '../compiled/main.js',
+            examples: {
+                main: 'examples/main.js',
                 defaultExtension: 'js'
             }
         }
