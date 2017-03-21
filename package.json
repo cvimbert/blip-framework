@@ -1,6 +1,6 @@
 {
   "name": "blip-framework",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "compiled/core/index.js",
   "dependencies": {
@@ -25,8 +25,7 @@
     "lite": "lite-server",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "build": "node build.js",
-    "postinstall": "node ../typescript/bin/tsc && npm run build"
+    "build": "node build.js"
   },
   "repository": {
     "type": "git",
