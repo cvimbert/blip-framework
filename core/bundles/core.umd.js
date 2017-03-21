@@ -1,2 +1,1838 @@
-System.registerDynamic("src/core/gamelogic/clock.class.js",["../common/event-dispatcher.class","../common/events.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=a("../common/events.class"),g=function(a){function b(b){var c=a.call(this)||this;return c.period=b,c}return d(b,a),b.prototype.start=function(){var a=this;this.stop(),this._interval=setInterval(function(){a.dispatchEvent(f.Events.CLOCK_PERIOD)},1e3*this.period)},b.prototype.stop=function(){this._interval&&(clearInterval(this._interval),this._interval=null)},b}(e.EventDispatcher);b.Clock=g}),System.registerDynamic("src/core/files/file.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(a){this.path=a}return a}());b.File=d}),System.registerDynamic("src/core/gamelogic/control.class.js",["../common/event-dispatcher.class","../common/events.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=a("../common/events.class"),g=function(){function a(a,b,c,d){this.x=a,this.y=b,this.width=c,this.height=d}return a}();b.ControlZone=g;var h=function(a){function b(b,c){void 0===c&&(c=null);var d=a.call(this)||this;d.sprite=b,d.zone=c;var e=d;return d.upHandler=function(a){e.checkZoneEvent(f.Events.CONTROL_UP,a)},d.downHandler=function(a){e.checkZoneEvent(f.Events.CONTROL_DOWN,a)},d}return d(b,a),b.prototype.setZone=function(a,b,c,d){this.zone=new g(a,b,c,d)},b.prototype.checkZoneEvent=function(a,b){if(this.zone){var c=b.offsetX,d=b.offsetY;c>=this.zone.x&&c<=this.zone.x+this.zone.width&&d>=this.zone.y&&d<=this.zone.y+this.zone.height&&this.dispatchEvent(a)}else this.dispatchEvent(a)},b.prototype._onMouseDown=function(a){this.checkZoneEvent(f.Events.CONTROL_DOWN,a)},b.prototype._onMouseUp=function(a){this.checkZoneEvent(f.Events.CONTROL_UP,a)},b.prototype.enable=function(){this.sprite.DOMElement.addEventListener("mousedown",this.downHandler),this.sprite.DOMElement.addEventListener("mouseup",this.upHandler)},b.prototype.disable=function(){this.sprite.DOMElement.removeEventListener("mousedown",this.downHandler),this.sprite.DOMElement.removeEventListener("mouseup",this.upHandler)},b}(e.EventDispatcher);b.Control=h}),System.registerDynamic("src/core/gamelogic/variable.class.js",["../common/event-dispatcher.class","../common/events.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=a("../common/events.class"),g=function(a){function b(b,c){void 0===c&&(c=null);var d=a.call(this)||this;return d.type=b,d.initValue=c,d._currentValue=c,d}return d(b,a),Object.defineProperty(b.prototype,"value",{get:function(){return this._currentValue},set:function(a){this._currentValue=a,this.dispatchEvent(f.Events.VARIABLE_CHANGE,this.value)},enumerable:!0,configurable:!0}),b.prototype.getType=function(){return typeof this._currentValue},b.prototype.increment=function(){this.type===b.NUMBER_TYPE&&(this.value+=1)},b.prototype.decrement=function(){this.type===b.NUMBER_TYPE&&(this.value-=1)},b.prototype.reset=function(a){void 0===a&&(a=null),a&&(this.initValue=a),this.value=this.initValue},b}(e.EventDispatcher);g.STRING_TYPE="string",g.NUMBER_TYPE="number",g.BOOLEAN_TYPE="boolean",b.Variable=g}),System.registerDynamic("src/core/gamelogic/condition.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(a){this.type=a}return a}());b.Condition=d}),System.registerDynamic("src/core/gamelogic/conditions/condition-types.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(){}return a}());d.SEQUENCE_CONDITION="sequence_condition",d.VARIABLE_CONDITION="variable_condition",b.ConditionTypes=d}),System.registerDynamic("src/core/gamelogic/conditions/sequence-condition.class.js",["../condition.class","./condition-types.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../condition.class"),f=a("./condition-types.class"),g=function(a){function b(b,c,d){var e=a.call(this,f.ConditionTypes.SEQUENCE_CONDITION)||this;return e.sequence=b,e.operator=c,e.sequenceConditionType=d,e}return d(b,a),b}(e.Condition);b.SequenceCondition=g}),System.registerDynamic("src/core/gamelogic/conditions/sequence-conditions/onstate-sequence-condition.class.js",["../sequence-condition.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../sequence-condition.class"),f=function(a){function b(){return null!==a&&a.apply(this,arguments)||this}return d(b,a),b.prototype.eval=function(){return!0},b}(e.SequenceCondition);b.OnStateSequenceCondition=f}),System.registerDynamic("src/core/graphs/graph.class.js",["../common/event-dispatcher.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=function(a){function b(b){var c=a.call(this)||this;return c.nodes=b,c}return d(b,a),b.prototype.hide=function(){this.nodes.forEach(function(a){return a.hide()})},b.prototype.setCurrentNodeIndex=function(a){void 0===a&&(a=0),this.setNodeAsCurrent(this.nodes[a])},b.prototype.setNodeAsCurrent=function(a){var b=this;this._currentNode&&this._currentNode.disable(),this._currentNode=a,this.hide(),a.display(),a.enable(function(a){b.setNodeAsCurrent(a)})},b}(e.EventDispatcher);b.Graph=f}),System.registerDynamic("src/core/graphs/graph-link.class.js",["../common/event-dispatcher.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=function(a){function b(b,c){var d=a.call(this)||this;return d.destNode=b,d.trigger=c,d}return d(b,a),b.prototype.enableTrigger=function(a){var b=this;this.trigger.enable(),this.trigger.bind(function(){return a(b.destNode)})},b.prototype.disableTrigger=function(){this.trigger.unbind()},b}(e.EventDispatcher);b.GraphLink=f}),System.registerDynamic("src/core/graphs/graph-node.class.js",["../common/event-dispatcher.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=function(a){function b(b,c){void 0===c&&(c=[]);var d=a.call(this)||this;return d.state=b,d.links=c,d}return d(b,a),b.prototype.addLink=function(a){this.links.push(a)},b.prototype.display=function(){this.state.display()},b.prototype.hide=function(){this.state.hide()},b.prototype.enable=function(a){this.links.forEach(function(b){return b.enableTrigger(a)})},b.prototype.disable=function(){this.links.forEach(function(a){return a.disableTrigger()})},b}(e.EventDispatcher);b.GraphNode=f}),System.registerDynamic("src/core/sound/sound.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,new AudioContext),e=function(){function a(a){this.file=a,this.load()}return a.prototype.load=function(){var a=this,b=new XMLHttpRequest;b.open("GET",this.file.path,!0),b.responseType="arraybuffer",b.onload=function(){d.decodeAudioData(b.response,function(b){a._buffer=b},function(){return console.log("Sound loading failed")})},b.send()},a.prototype.play=function(){var a=d.createBufferSource();a.buffer=this._buffer,a.connect(d.destination),a.start(0)},a.prototype.stop=function(){},a.prototype.pause=function(){},a}();b.Sound=e}),System.registerDynamic("src/core/spriteslogic/animation.class.js",["../common/event-dispatcher.class","../common/events.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=a("../common/events.class"),g=function(a){function b(b,c,d,e){void 0===e&&(e=!0);var f=a.call(this)||this;return f.sequence=b,f.iterations=c,f.period=d,f.interruptable=e,f._isPlaying=!1,f}return d(b,a),b.prototype.play=function(){var a=this;if(this.interruptable===!1&&this._isPlaying)return void(b=0);this.sequence.reset(),this.sequence.displayNext(!0);var b=0;this._isPlaying=!0,this._animationInterval=setInterval(function(){a._isPlaying!==!1&&(a.sequence.displayNext(b<a.iterations-1)||(a.dispatchEvent(f.Events.ANIMATION_ITERATION_END,b),b++,b>=a.iterations&&(clearInterval(a._animationInterval),a.dispatchEvent(f.Events.ANIMATION_END),a._isPlaying=!1)))},1e3*this.period)},b.prototype.stop=function(){},b.prototype.reset=function(){this.sequence.reset(),void 0!==this._animationInterval&&(clearInterval(this._animationInterval),this._animationInterval=void 0)},b}(e.EventDispatcher);b.Animation=g}),System.registerDynamic("src/core/spriteslogic/sequence.class.js",["../common/event-dispatcher.class","../common/events.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=a("../common/events.class"),g=function(a){function b(b,c,d){void 0===c&&(c=[]),void 0===d&&(d="");var e=a.call(this)||this;return e.group=b,e.states=c,e.loopType=d,e._direction=1,e._currentIndex=-1,e}return d(b,a),b.prototype._isIndexValid=function(a){return a>=0&&a<this.states.length},b.prototype.hide=function(){this.states.forEach(function(a){return a.hide()})},b.prototype.displayAtIndex=function(a,c){return void 0===c&&(c=!1),console.log(a),!c&&(a<=-1||a>=this.states.length)?(console.log("pas forcé"),!1):a<=-1?(console.log("min"),this.loopType===b.LOOP_TYPE_CIRCLE?(this.reverse(),this.displayAtIndex(1)):this.loopType===b.LOOP_TYPE_RESET&&this.displayAtIndex(this.states.length-1),!1):a>=this.states.length?(console.log("max"),this.loopType===b.LOOP_TYPE_CIRCLE?(this.reverse(),this.displayAtIndex(this.states.length-2)):this.loopType===b.LOOP_TYPE_RESET&&this.displayAtIndex(0),!1):(this.hide(),this._currentIndex=a,this.states[a].display(),this.dispatchEvent(f.Events.SEQUENCE_ENTER_STATE,this.states[a]),!0)},b.prototype.reverse=function(){this._direction*=-1},b.prototype.hasNext=function(){var a=this._currentIndex+this._direction;return!(a<=-1||a>=this.states.length)},b.prototype.displayNext=function(a){void 0===a&&(a=!1);var b=this.displayAtIndex(this._currentIndex+this._direction,a);return b},b.prototype.hasPrevious=function(){var a=this._currentIndex-this._direction;return!(a<=-1||a>=this.states.length)},b.prototype.displayPrevious=function(a){void 0===a&&(a=!1);var c=this.displayAtIndex(this._currentIndex-this._direction,a);return c||this.loopType!==b.LOOP_TYPE_RESET||this.resetIndex(),c},b.prototype.reset=function(){this._currentIndex!==-1&&this.states[this._currentIndex].hide(),this._currentIndex=-1},b.prototype.resetIndex=function(){this._currentIndex=-1},b}(e.EventDispatcher);g.LOOP_TYPE_CIRCLE="circle",g.LOOP_TYPE_RESET="reset",b.Sequence=g}),System.registerDynamic("src/core/triggers/time-trigger.class.js",["./base-trigger.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("./base-trigger.class"),f=function(a){function b(b,c){void 0===c&&(c=null);var d=a.call(this,c)||this;return d.time=b,d}return d(b,a),b.prototype.enable=function(){var a=this;setTimeout(function(){a.callback&&a.callback()},1e3*this.time)},b}(e.BaseTrigger);b.TimeTrigger=f}),System.registerDynamic("src/core/triggers/trigger.class.js",["./base-trigger.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("./base-trigger.class"),f=function(a){function b(b,c,d,e){void 0===d&&(d=null),void 0===e&&(e=null);var f=a.call(this,d)||this;return f.dispatcher=b,f.eventName=c,f.argument=e,f}return d(b,a),b.prototype._callback=function(a){this._enabled&&this.callback&&(this.argument&&a!==this.argument||this.callback(a))},Object.defineProperty(b.prototype,"enabled",{get:function(){return this._enabled},set:function(a){a?this.enable():this.disable()},enumerable:!0,configurable:!0}),b.prototype.enable=function(){var a=this;this._enabled||(this.subscription=this.dispatcher.listen(this.eventName,function(b){a._callback(b)})),this._enabled=!0},b.prototype.disable=function(){this._enabled&&this.subscription.stoplisten(),this._enabled=!1},b}(e.BaseTrigger);b.Trigger=f}),System.registerDynamic("src/core/triggers/base-trigger.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(a){void 0===a&&(a=null),this.callback=a,this._enabled=!1}return Object.defineProperty(a.prototype,"enabled",{get:function(){return this._enabled},set:function(a){a?this.enable():this.disable()},enumerable:!0,configurable:!0}),a.prototype.enable=function(){this._enabled=!0},a.prototype.disable=function(){this._enabled=!1},a.prototype.bind=function(a){this.callback=a,this._enabled=!0},a.prototype.unbind=function(){this.callback=null,this._enabled=!1},a}());b.BaseTrigger=d}),System.registerDynamic("src/core/triggers/sprites/sprites-collision-trigger.class.js",["../base-trigger.class","../../common/events.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../base-trigger.class"),f=a("../../common/events.class"),g=function(a){function b(b,c,d,e,g){void 0===d&&(d=null),void 0===e&&(e=f.Events.DISPLAYED),void 0===g&&(g=f.Events.HIDDEN);var h=a.call(this,d)||this;return h.baseSprite=b,h.targetSprite=c,h.onEvent=e,h.offEvent=g,h.ON="on",h.OFF="off",h}return d(b,a),b.prototype.enable=function(){!this._enabled,a.prototype.enable.call(this)},b.prototype.disable=function(){this._baseSpriteSubscription1&&this._baseSpriteSubscription1.stoplisten(),this._targetSpriteSubscription1&&this._targetSpriteSubscription1.stoplisten(),this._baseSpriteSubscription2&&this._baseSpriteSubscription2.stoplisten(),this._targetSpriteSubscription2&&this._targetSpriteSubscription2.stoplisten(),a.prototype.disable.call(this)},b}(e.BaseTrigger);b.SpritesCollisionTrigger=g}),System.registerDynamic("src/core/display/conditional-sprites-group-state.class.js",["../common/event-dispatcher.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=function(a){function b(b,c){var d=a.call(this)||this;return d.state=b,d.condition=c,d}return d(b,a),b}(e.EventDispatcher);b.ConditionalSpritesGroupState=f}),System.registerDynamic("src/core/display/conditional-sprites-group-state-set.class.js",["../common/event-dispatcher.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/event-dispatcher.class"),f=function(a){function b(b,c,d){void 0===c&&(c=[]);var e=a.call(this)||this;return e.group=b,e.conditionalStates=c,e.defaultState=d,e}return d(b,a),b.prototype.display=function(){for(var a=0,b=this.conditionalStates;a<b.length;a++){var c=b[a];if(c.condition.eval())return void c.state.display()}this.defaultState.display()},b.prototype.update=function(){this.display()},b.prototype.hide=function(){this.group.hide()},b}(e.EventDispatcher);b.ConditionalSpritesGroupStateSet=f}),System.registerDynamic("src/core/display/control-sprite.class.js",["./image-display-element"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("./image-display-element"),f=function(a){function b(b,c,d,e){return void 0===e&&(e=1),a.call(this,b,c,d,e)||this}return d(b,a),b.prototype.getDOMElement=function(){var b=a.prototype.getDOMElement.call(this);return b.classList.add("control"),b},Object.defineProperty(b.prototype,"DOMElement",{get:function(){return this._DOMElement},enumerable:!0,configurable:!0}),b}(e.ImageDisplayElement);b.ControlSprite=f}),System.registerDynamic("src/core/display/display-element.class.js",["../common/status-dispatcher.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("../common/status-dispatcher.class"),f=function(a){function b(b,c,d){void 0===d&&(d=1);var e=a.call(this)||this;return e.x=b,e.y=c,e.scale=d,e}return d(b,a),b.prototype.getDOMElement=function(){if(this._DOMElement)return this._DOMElement;var a=document.createElement("div");return a.className="game-element",a.style.left=this.x+"px",a.style.top=this.y+"px",a.style.transform="scale("+this.scale+")",this._DOMElement=a,a},b.prototype.displayInDOMElement=function(a){return this._DOMElement=this.getDOMElement(),a.appendChild(this._DOMElement),this._DOMElement},b}(e.StatusDispatcher);b.DisplayElement=f}),System.registerDynamic("src/core/display/image-display-element.js",["./display-element.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("./display-element.class"),f=function(a){function b(b,c,d,e){void 0===e&&(e=1);var f=a.call(this,c,d,e)||this;return f.file=b,f}return d(b,a),b.prototype.getDOMElement=function(){var b=a.prototype.getDOMElement.call(this),c=document.createElement("img");return c.src=this.file.path,b.appendChild(c),b},b}(e.DisplayElement);b.ImageDisplayElement=f}),System.registerDynamic("src/core/display/sprite.class.js",["./image-display-element","../common/status.class"],!0,function(a,b,c){"use strict";var d=(this||self,b&&b.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("./image-display-element"),f=a("../common/status.class"),g=function(a){function b(b,c,d,e,f){void 0===e&&(e=1),void 0===f&&(f=!1);var g=a.call(this,b,c,d,e)||this;return g._visible=f,g}return d(b,a),b.prototype.displayInDOMElement=function(b){var c=a.prototype.displayInDOMElement.call(this,b);return this._visible?this.show():this.hide(),c},b.prototype.show=function(){this.setStatus(f.Status.VISIBILITY,f.Status.VISIBLE),this._DOMElement.classList.remove("inactive"),this._DOMElement.classList.add("active"),this._visible=!0},b.prototype.display=function(){this.show()},b.prototype.hide=function(){this.setStatus(f.Status.VISIBILITY,f.Status.HIDDEN),this._DOMElement.classList.add("inactive"),this._DOMElement.classList.remove("active"),this._visible=!1},b.prototype.toggle=function(){this._visible?this.hide():this.show()},b}(e.ImageDisplayElement);b.Sprite=g}),System.registerDynamic("src/core/display/sprites-group.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(a){this.sprites=a}return a.prototype.show=function(){this.sprites.forEach(function(a){return a.show()})},a.prototype.hide=function(){this.sprites.forEach(function(a){return a.hide()})},a.prototype.toggle=function(){this.sprites.forEach(function(a){return a.toggle()})},a}());b.SpritesGroup=d}),System.registerDynamic("src/core/display/sprites-group-state.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(a,b){void 0===b&&(b=[]),this.group=a,this.sprites=b}return a.prototype.display=function(){this.group.hide(),this.sprites.forEach(function(a){return a.show()})},a.prototype.hide=function(){this.group.hide()},a}());b.SpritesGroupState=d}),System.registerDynamic("src/core/common/events.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(){}return a}());d.SEQUENCE_ENTER_STATE="event_enterstate",d.ANIMATION_ITERATION_END="animation_iteration_end",d.ANIMATION_END="animation_end",d.CLOCK_PERIOD="clock_period",d.CONTROL_UP="control_up",d.CONTROL_DOWN="control_down",d.VARIABLE_CHANGE="variable_change",d.DISPLAYED="displayed",d.HIDDEN="hidden",b.Events=d}),System.registerDynamic("src/core/common/status.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(){}return a}());d.VISIBILITY="visibility",d.VISIBLE="visible",d.HIDDEN="hidden",b.Status=d}),System.registerDynamic("src/core/common/status-dispatcher.class.js",["./status-subscription.class"],!0,function(a,b,c){"use strict";var d=(this||self,a("./status-subscription.class")),e=function(){function a(){this._subscriptions=[],this._statusValues={}}return a.prototype.setStatus=function(a,b){var c=this;this._subscriptions.forEach(function(d){d.statusName===a&&b!=c._statusValues[a]&&d.call(b)}),this._statusValues[a]=b},a.prototype.subscribe=function(a,b){var c=new d.StatusSubscription(a,b,this);return this._statusValues[a]&&c.call(this._statusValues[a]),this._subscriptions.push(c),c},a.prototype.deleteSubscription=function(a){var b=this._subscriptions.indexOf(a);b!==-1&&this._subscriptions.splice(b,1)},a}();b.StatusDispatcher=e}),System.registerDynamic("src/core/common/status-subscription.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(a,b,c){this.statusName=a,this._callback=b,this._dispatcher=c}return a.prototype.call=function(a){this._callback(a)},a.prototype.unsubscribe=function(){this._dispatcher.deleteSubscription(this)},a}());b.StatusSubscription=d}),System.registerDynamic("src/core/common/time-utils.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(){}return a.setInterval=function(a,b){return void 0===a&&(a=0),void 0===b&&(b=1),null},a}());b.TimeUtils=d}),System.registerDynamic("src/core/common/event-listener.class.js",[],!0,function(a,b,c){"use strict";var d=(this||self,function(){function a(a,b,c){this.eventName=a,this._callback=b,this._dispatcher=c}return a.prototype.call=function(a){this._callback(a)},a.prototype.stoplisten=function(){this._dispatcher.deleteListener(this)},a}());b.EventListener=d}),System.registerDynamic("src/core/common/event-dispatcher.class.js",["./event-listener.class"],!0,function(a,b,c){"use strict";var d=(this||self,a("./event-listener.class")),e=function(){function a(){this._listeners=[]}return a.prototype.dispatchEvent=function(a,b){void 0===b&&(b=null),this._listeners.forEach(function(c){c.eventName===a&&c.call(b)})},a.prototype.listen=function(a,b){var c=new d.EventListener(a,b,this);return this._listeners.push(c),c},a.prototype.deleteListener=function(a){var b=this._listeners.indexOf(a);b!==-1&&this._listeners.splice(b,1)},a}();b.EventDispatcher=e}),System.registerDynamic("src/core/index.js",["./gamelogic/clock.class","./gamelogic/condition.class","./files/file.class","./gamelogic/control.class","./gamelogic/variable.class","./gamelogic/conditions/condition-types.class","./gamelogic/conditions/sequence-condition.class","./gamelogic/conditions/sequence-conditions/onstate-sequence-condition.class","./graphs/graph.class","./graphs/graph-link.class","./graphs/graph-node.class","./sound/sound.class","./spriteslogic/animation.class","./spriteslogic/sequence.class","./triggers/base-trigger.class","./triggers/time-trigger.class","./triggers/trigger.class","./triggers/sprites/sprites-collision-trigger.class","./display/conditional-sprites-group-state.class","./display/conditional-sprites-group-state-set.class","./display/control-sprite.class","./display/display-element.class","./display/image-display-element","./display/sprite.class","./display/sprites-group.class","./display/sprites-group-state.class","./common/event-listener.class","./common/events.class","./common/status.class","./common/status-dispatcher.class","./common/status-subscription.class","./common/time-utils.class","./common/event-dispatcher.class"],!0,function(a,b,c){"use strict";var d=(this||self,a("./gamelogic/clock.class"));b.Clock=d.Clock;var e=a("./gamelogic/condition.class");b.Condition=e.Condition;var f=a("./files/file.class");b.File=f.File;var g=a("./gamelogic/control.class");b.Control=g.Control;var h=a("./gamelogic/variable.class");b.Variable=h.Variable;var i=a("./gamelogic/conditions/condition-types.class");b.ConditionTypes=i.ConditionTypes;var j=a("./gamelogic/conditions/sequence-condition.class");b.SequenceCondition=j.SequenceCondition;var k=a("./gamelogic/conditions/sequence-conditions/onstate-sequence-condition.class");b.OnStateSequenceCondition=k.OnStateSequenceCondition;var l=a("./graphs/graph.class");b.Graph=l.Graph;var m=a("./graphs/graph-link.class");b.GraphLink=m.GraphLink;var n=a("./graphs/graph-node.class");b.GraphNode=n.GraphNode;var o=a("./sound/sound.class");b.Sound=o.Sound;var p=a("./spriteslogic/animation.class");b.Animation=p.Animation;var q=a("./spriteslogic/sequence.class");b.Sequence=q.Sequence;var r=a("./triggers/base-trigger.class");b.BaseTrigger=r.BaseTrigger;var s=a("./triggers/time-trigger.class");b.TimeTrigger=s.TimeTrigger;var t=a("./triggers/trigger.class");b.Trigger=t.Trigger;var u=a("./triggers/sprites/sprites-collision-trigger.class");b.SpritesCollisionTrigger=u.SpritesCollisionTrigger;var v=a("./display/conditional-sprites-group-state.class");b.ConditionalSpritesGroupState=v.ConditionalSpritesGroupState;var w=a("./display/conditional-sprites-group-state-set.class");b.ConditionalSpritesGroupStateSet=w.ConditionalSpritesGroupStateSet;var x=a("./display/control-sprite.class");b.ControlSprite=x.ControlSprite;var y=a("./display/display-element.class");b.DisplayElement=y.DisplayElement;var z=a("./display/image-display-element");b.ImageDisplayElement=z.ImageDisplayElement;var A=a("./display/sprite.class");b.Sprite=A.Sprite;var B=a("./display/sprites-group.class");b.SpritesGroup=B.SpritesGroup;var C=a("./display/sprites-group-state.class");b.SpritesGroupState=C.SpritesGroupState;var D=a("./common/event-listener.class");b.EventListener=D.EventListener;var E=a("./common/events.class");b.Events=E.Events;var F=a("./common/status.class");b.Status=F.Status;var G=a("./common/status-dispatcher.class");b.StatusDispatcher=G.StatusDispatcher;var H=a("./common/status-subscription.class");b.StatusSubscription=H.StatusSubscription;var I=a("./common/time-utils.class");b.TimeUtils=I.TimeUtils;var J=a("./common/event-dispatcher.class");b.EventDispatcher=J.EventDispatcher});
+System.registerDynamic("core/src/modules/lcd-displayer/lcd-displayer.class.js", ["./seg7-displayer.class", "../../display/display-element.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var seg7_displayer_class_1 = $__require("./seg7-displayer.class");
+    var display_element_class_1 = $__require("../../display/display-element.class");
+    var LcdDisplayer = function (_super) {
+        __extends(LcdDisplayer, _super);
+        function LcdDisplayer(x, y, digitNumber, stepWidth, scale, variable) {
+            if (digitNumber === void 0) {
+                digitNumber = 1;
+            }
+            if (stepWidth === void 0) {
+                stepWidth = 24;
+            }
+            if (scale === void 0) {
+                scale = 1;
+            }
+            if (variable === void 0) {
+                variable = null;
+            }
+            var _this = _super.call(this, x, y, scale) || this;
+            _this.digitNumber = digitNumber;
+            _this.stepWidth = stepWidth;
+            _this.variable = variable;
+            _this._backgroundDigits = [];
+            _this._digits = [];
+            _this._xPosition = 0;
+            return _this;
+        }
+        Object.defineProperty(LcdDisplayer.prototype, "value", {
+            get: function () {
+                return this._value;
+            },
+            set: function (value) {
+                var stringifiedValue = String(value);
+                for (var index in this._digits) {
+                    if (this._digits.hasOwnProperty(index)) {
+                        this._digits[index].value = +stringifiedValue[index];
+                    }
+                }
+                this._value = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        LcdDisplayer.prototype.getDOMElement = function () {
+            if (this._DOMElement) {
+                return this._DOMElement;
+            } else {
+                var displayerDiv = _super.prototype.getDOMElement.call(this);
+                displayerDiv.classList.add("lcd-displayer");
+                for (var i = 0; i < this.digitNumber; i++) {
+                    var backgroundDigit = new seg7_displayer_class_1.Seg7Displayer(this._xPosition, 0);
+                    backgroundDigit.value = 8;
+                    var backgroundElem = backgroundDigit.displayInDOMElement(displayerDiv);
+                    backgroundElem.classList.add("inactive");
+                    this._backgroundDigits.push(backgroundDigit);
+                    var foregroundDigit = new seg7_displayer_class_1.Seg7Displayer(this._xPosition, 0);
+                    foregroundDigit.value = 4;
+                    foregroundDigit.displayInDOMElement(displayerDiv);
+                    this._digits.push(foregroundDigit);
+                    this._xPosition += this.stepWidth;
+                }
+                return displayerDiv;
+            }
+        };
+        return LcdDisplayer;
+    }(display_element_class_1.DisplayElement);
+    exports.LcdDisplayer = LcdDisplayer;
+
+});
+System.registerDynamic("core/src/modules/lcd-displayer/seg7-displayer.class.js", ["../../display/display-element.class", "../../common/events.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 22/02/2017.
+     */
+    var display_element_class_1 = $__require("../../display/display-element.class");
+    var events_class_1 = $__require("../../common/events.class");
+    var Seg7Displayer = function (_super) {
+        __extends(Seg7Displayer, _super);
+        function Seg7Displayer(x, y, scale, variable) {
+            if (scale === void 0) {
+                scale = 1;
+            }
+            if (variable === void 0) {
+                variable = null;
+            }
+            var _this = _super.call(this, x, y, scale) || this;
+            _this.variable = variable;
+            _this._currentValue = null;
+            if (variable) _this.bindVariable(variable);
+            return _this;
+        }
+        Seg7Displayer.prototype.getDOMElement = function () {
+            if (this._DOMElement) {
+                return this._DOMElement;
+            } else {
+                var div = _super.prototype.getDOMElement.call(this);
+                this.txtDiv = document.createElement("div");
+                div.appendChild(this.txtDiv);
+                div.classList.add("seg7-displayer");
+                if (this.value) {
+                    this.value = this._currentValue;
+                }
+                return div;
+            }
+        };
+        Seg7Displayer.prototype.bindVariable = function (variable) {
+            var _this = this;
+            this.variable = variable;
+            if (variable.value !== null) this.value = +variable.value;
+            variable.listen(events_class_1.Events.VARIABLE_CHANGE, function (value) {
+                return _this.value = +value;
+            });
+        };
+        Object.defineProperty(Seg7Displayer.prototype, "value", {
+            get: function () {
+                return this._currentValue;
+            },
+            set: function (value) {
+                if (this.txtDiv) this.txtDiv.innerHTML = String(value);
+                this._currentValue = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Seg7Displayer.prototype.clear = function () {
+            this.txtDiv.innerHTML = " ";
+            this._currentValue = null;
+        };
+        return Seg7Displayer;
+    }(display_element_class_1.DisplayElement);
+    exports.Seg7Displayer = Seg7Displayer;
+
+});
+System.registerDynamic("core/src/gamelogic/clock.class.js", ["../common/event-dispatcher.class", "../common/events.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 03/02/2017.
+     */
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var events_class_1 = $__require("../common/events.class");
+    var Clock = function (_super) {
+        __extends(Clock, _super);
+        function Clock(period) {
+            var _this = _super.call(this) || this;
+            _this.period = period;
+            return _this;
+        }
+        Clock.prototype.start = function () {
+            var _this = this;
+            this.stop();
+            this._interval = setInterval(function () {
+                _this.dispatchEvent(events_class_1.Events.CLOCK_PERIOD);
+            }, this.period * 1000);
+        };
+        Clock.prototype.stop = function () {
+            if (this._interval) {
+                clearInterval(this._interval);
+                this._interval = null;
+            }
+        };
+        return Clock;
+    }(event_dispatcher_class_1.EventDispatcher);
+    exports.Clock = Clock;
+
+});
+System.registerDynamic("core/src/files/file.class.js", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 01/02/2017.
+     */
+    var File = function () {
+        function File(path) {
+            this.path = path;
+        }
+        return File;
+    }();
+    exports.File = File;
+
+});
+System.registerDynamic("core/src/gamelogic/control.class.js", ["../common/event-dispatcher.class", "../common/events.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var events_class_1 = $__require("../common/events.class");
+    var ControlZone = function () {
+        function ControlZone(x, y, width, height) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+        return ControlZone;
+    }();
+    exports.ControlZone = ControlZone;
+    var Control = function (_super) {
+        __extends(Control, _super);
+        function Control(sprite, zone) {
+            if (zone === void 0) {
+                zone = null;
+            }
+            var _this = _super.call(this) || this;
+            _this.sprite = sprite;
+            _this.zone = zone;
+            var self = _this;
+            _this.upHandler = function (evt) {
+                self.checkZoneEvent(events_class_1.Events.CONTROL_UP, evt);
+            };
+            _this.downHandler = function (evt) {
+                self.checkZoneEvent(events_class_1.Events.CONTROL_DOWN, evt);
+            };
+            return _this;
+        }
+        Control.prototype.setZone = function (x, y, width, height) {
+            this.zone = new ControlZone(x, y, width, height);
+        };
+        Control.prototype.checkZoneEvent = function (eventName, event) {
+            if (this.zone) {
+                var x = event.offsetX;
+                var y = event.offsetY;
+                if (x >= this.zone.x && x <= this.zone.x + this.zone.width && y >= this.zone.y && y <= this.zone.y + this.zone.height) {
+                    this.dispatchEvent(eventName);
+                }
+            } else {
+                this.dispatchEvent(eventName);
+            }
+        };
+        Control.prototype._onMouseDown = function (evt) {
+            this.checkZoneEvent(events_class_1.Events.CONTROL_DOWN, evt);
+        };
+        Control.prototype._onMouseUp = function (evt) {
+            this.checkZoneEvent(events_class_1.Events.CONTROL_UP, evt);
+        };
+        Control.prototype.enable = function () {
+            this.sprite.DOMElement.addEventListener("mousedown", this.downHandler);
+            this.sprite.DOMElement.addEventListener("mouseup", this.upHandler);
+        };
+        Control.prototype.disable = function () {
+            this.sprite.DOMElement.removeEventListener("mousedown", this.downHandler);
+            this.sprite.DOMElement.removeEventListener("mouseup", this.upHandler);
+        };
+        return Control;
+    }(event_dispatcher_class_1.EventDispatcher);
+    exports.Control = Control;
+
+});
+System.registerDynamic("core/src/gamelogic/variable.class.js", ["../common/event-dispatcher.class", "../common/events.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var events_class_1 = $__require("../common/events.class");
+    /**
+     * Created by Christophe on 03/02/2017.
+     */
+    var Variable = function (_super) {
+        __extends(Variable, _super);
+        function Variable(type, initValue) {
+            if (initValue === void 0) {
+                initValue = null;
+            }
+            var _this = _super.call(this) || this;
+            _this.type = type;
+            _this.initValue = initValue;
+            _this._currentValue = initValue;
+            return _this;
+        }
+        Object.defineProperty(Variable.prototype, "value", {
+            get: function () {
+                return this._currentValue;
+            },
+            set: function (value) {
+                this._currentValue = value;
+                this.dispatchEvent(events_class_1.Events.VARIABLE_CHANGE, this.value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Variable.prototype.getType = function () {
+            return typeof this._currentValue;
+        };
+        Variable.prototype.increment = function () {
+            if (this.type === Variable.NUMBER_TYPE) {
+                this.value += 1;
+            }
+        };
+        Variable.prototype.decrement = function () {
+            if (this.type === Variable.NUMBER_TYPE) {
+                this.value -= 1;
+            }
+        };
+        Variable.prototype.reset = function (newInitValue) {
+            if (newInitValue === void 0) {
+                newInitValue = null;
+            }
+            if (newInitValue) {
+                this.initValue = newInitValue;
+            }
+            this.value = this.initValue;
+        };
+        return Variable;
+    }(event_dispatcher_class_1.EventDispatcher);
+    Variable.STRING_TYPE = "string";
+    Variable.NUMBER_TYPE = "number";
+    Variable.BOOLEAN_TYPE = "boolean";
+    exports.Variable = Variable;
+
+});
+System.registerDynamic("core/src/gamelogic/condition.class.js", [], true, function ($__require, exports, module) {
+    /**
+     * Created by Christophe on 03/02/2017.
+     */
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Condition = function () {
+        function Condition(type) {
+            this.type = type;
+        }
+        return Condition;
+    }();
+    exports.Condition = Condition;
+
+});
+System.registerDynamic("core/src/gamelogic/conditions/condition-types.class.js", [], true, function ($__require, exports, module) {
+    /**
+     * Created by Christophe on 03/02/2017.
+     */
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ConditionTypes = function () {
+        function ConditionTypes() {}
+        return ConditionTypes;
+    }();
+    ConditionTypes.SEQUENCE_CONDITION = "sequence_condition";
+    ConditionTypes.VARIABLE_CONDITION = "variable_condition";
+    exports.ConditionTypes = ConditionTypes;
+
+});
+System.registerDynamic("core/src/gamelogic/conditions/sequence-condition.class.js", ["../condition.class", "./condition-types.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 03/02/2017.
+     */
+    var condition_class_1 = $__require("../condition.class");
+    var condition_types_class_1 = $__require("./condition-types.class");
+    var SequenceCondition = function (_super) {
+        __extends(SequenceCondition, _super);
+        function SequenceCondition(sequence, operator, sequenceConditionType) {
+            var _this = _super.call(this, condition_types_class_1.ConditionTypes.SEQUENCE_CONDITION) || this;
+            _this.sequence = sequence;
+            _this.operator = operator;
+            _this.sequenceConditionType = sequenceConditionType;
+            return _this;
+        }
+        return SequenceCondition;
+    }(condition_class_1.Condition);
+    exports.SequenceCondition = SequenceCondition;
+
+});
+System.registerDynamic("core/src/gamelogic/conditions/sequence-conditions/onstate-sequence-condition.class.js", ["../sequence-condition.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 03/02/2017.
+     */
+    var sequence_condition_class_1 = $__require("../sequence-condition.class");
+    var OnStateSequenceCondition = function (_super) {
+        __extends(OnStateSequenceCondition, _super);
+        function OnStateSequenceCondition() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        OnStateSequenceCondition.prototype.eval = function () {
+            return true;
+        };
+        return OnStateSequenceCondition;
+    }(sequence_condition_class_1.SequenceCondition);
+    exports.OnStateSequenceCondition = OnStateSequenceCondition;
+
+});
+System.registerDynamic("core/src/graphs/graph.class.js", ["../common/event-dispatcher.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 14/02/2017.
+     */
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var Graph = function (_super) {
+        __extends(Graph, _super);
+        function Graph(nodes) {
+            var _this = _super.call(this) || this;
+            _this.nodes = nodes;
+            return _this;
+        }
+        Graph.prototype.hide = function () {
+            this.nodes.forEach(function (node) {
+                return node.hide();
+            });
+        };
+        Graph.prototype.setCurrentNodeIndex = function (index) {
+            if (index === void 0) {
+                index = 0;
+            }
+            this.setNodeAsCurrent(this.nodes[index]);
+        };
+        Graph.prototype.setNodeAsCurrent = function (node) {
+            var _this = this;
+            if (this._currentNode) {
+                this._currentNode.disable();
+            }
+            this._currentNode = node;
+            this.hide();
+            node.display();
+            node.enable(function (newNode) {
+                // callback de changement de noeud
+                _this.setNodeAsCurrent(newNode);
+            });
+        };
+        return Graph;
+    }(event_dispatcher_class_1.EventDispatcher);
+    exports.Graph = Graph;
+
+});
+System.registerDynamic("core/src/graphs/graph-link.class.js", ["../common/event-dispatcher.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 14/02/2017.
+     */
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var GraphLink = function (_super) {
+        __extends(GraphLink, _super);
+        function GraphLink(destNode, trigger) {
+            var _this = _super.call(this) || this;
+            _this.destNode = destNode;
+            _this.trigger = trigger;
+            return _this;
+        }
+        GraphLink.prototype.enableTrigger = function (callback) {
+            var _this = this;
+            this.trigger.enable();
+            this.trigger.bind(function () {
+                return callback(_this.destNode);
+            });
+        };
+        GraphLink.prototype.disableTrigger = function () {
+            this.trigger.unbind();
+        };
+        return GraphLink;
+    }(event_dispatcher_class_1.EventDispatcher);
+    exports.GraphLink = GraphLink;
+
+});
+System.registerDynamic("core/src/graphs/graph-node.class.js", ["../common/event-dispatcher.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 14/02/2017.
+     */
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var GraphNode = function (_super) {
+        __extends(GraphNode, _super);
+        function GraphNode(state, links) {
+            if (links === void 0) {
+                links = [];
+            }
+            var _this = _super.call(this) || this;
+            _this.state = state;
+            _this.links = links;
+            return _this;
+        }
+        GraphNode.prototype.addLink = function (link) {
+            this.links.push(link);
+        };
+        GraphNode.prototype.display = function () {
+            this.state.display();
+        };
+        GraphNode.prototype.hide = function () {
+            this.state.hide();
+        };
+        GraphNode.prototype.enable = function (callback) {
+            this.links.forEach(function (link) {
+                return link.enableTrigger(callback);
+            });
+        };
+        GraphNode.prototype.disable = function () {
+            this.links.forEach(function (link) {
+                return link.disableTrigger();
+            });
+        };
+        return GraphNode;
+    }(event_dispatcher_class_1.EventDispatcher);
+    exports.GraphNode = GraphNode;
+
+});
+System.registerDynamic("core/src/sound/sound.class.js", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var context = new AudioContext();
+    var Sound = function () {
+        function Sound(file) {
+            this.file = file;
+            this.load();
+        }
+        Sound.prototype.load = function () {
+            var _this = this;
+            var request = new XMLHttpRequest();
+            request.open('GET', this.file.path, true);
+            request.responseType = 'arraybuffer';
+            request.onload = function () {
+                context.decodeAudioData(request.response, function (buffer) {
+                    _this._buffer = buffer;
+                }, function () {
+                    return console.log("Sound loading failed");
+                });
+            };
+            request.send();
+        };
+        Sound.prototype.play = function () {
+            var source = context.createBufferSource();
+            source.buffer = this._buffer;
+            source.connect(context.destination);
+            source.start(0);
+        };
+        Sound.prototype.stop = function () {
+            // useful ??
+        };
+        Sound.prototype.pause = function () {
+            // useful ??
+        };
+        return Sound;
+    }();
+    exports.Sound = Sound;
+
+});
+System.registerDynamic("core/src/spriteslogic/animation.class.js", ["../common/event-dispatcher.class", "../common/events.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var events_class_1 = $__require("../common/events.class");
+    var Animation = function (_super) {
+        __extends(Animation, _super);
+        function Animation(sequence, iterations, period, interruptable) {
+            if (interruptable === void 0) {
+                interruptable = true;
+            }
+            var _this = _super.call(this) || this;
+            _this.sequence = sequence;
+            _this.iterations = iterations;
+            _this.period = period;
+            _this.interruptable = interruptable;
+            _this._isPlaying = false;
+            return _this;
+        }
+        Animation.prototype.play = function () {
+            var _this = this;
+            if (this.interruptable === false && this._isPlaying) {
+                occurencesCounter = 0;
+                return;
+            }
+            this.sequence.reset();
+            this.sequence.displayNext(true);
+            var occurencesCounter = 0;
+            this._isPlaying = true;
+            this._animationInterval = setInterval(function () {
+                if (_this._isPlaying === false) return;
+                if (!_this.sequence.displayNext(occurencesCounter < _this.iterations - 1)) {
+                    _this.dispatchEvent(events_class_1.Events.ANIMATION_ITERATION_END, occurencesCounter);
+                    occurencesCounter++;
+                    if (occurencesCounter >= _this.iterations) {
+                        clearInterval(_this._animationInterval);
+                        _this.dispatchEvent(events_class_1.Events.ANIMATION_END);
+                        _this._isPlaying = false;
+                    } else {
+                        // on repart à zéro
+                        //this.sequence.resetIndex();
+                        //this.sequence.displayNext(true);
+                        //this.sequence.reverse();
+                    }
+                }
+            }, this.period * 1000);
+        };
+        Animation.prototype.stop = function () {};
+        Animation.prototype.reset = function () {
+            this.sequence.reset();
+            if (this._animationInterval !== undefined) {
+                clearInterval(this._animationInterval);
+                this._animationInterval = undefined;
+            }
+        };
+        return Animation;
+    }(event_dispatcher_class_1.EventDispatcher);
+    exports.Animation = Animation;
+
+});
+System.registerDynamic("core/src/spriteslogic/sequence.class.js", ["../common/event-dispatcher.class", "../common/events.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var events_class_1 = $__require("../common/events.class");
+    var Sequence = function (_super) {
+        __extends(Sequence, _super);
+        function Sequence(group, states, loopType) {
+            if (states === void 0) {
+                states = [];
+            }
+            if (loopType === void 0) {
+                loopType = "";
+            }
+            var _this = _super.call(this) || this;
+            _this.group = group;
+            _this.states = states;
+            _this.loopType = loopType;
+            _this._direction = 1;
+            _this._currentIndex = -1;
+            return _this;
+        }
+        Sequence.prototype._isIndexValid = function (index) {
+            return index >= 0 && index < this.states.length;
+        };
+        Sequence.prototype.hide = function () {
+            this.states.forEach(function (state) {
+                return state.hide();
+            });
+        };
+        Sequence.prototype.displayAtIndex = function (index, forced) {
+            if (forced === void 0) {
+                forced = false;
+            }
+            //if (!this._isIndexValid(index)) return false;
+            console.log(index);
+            if (!forced && (index <= -1 || index >= this.states.length)) {
+                console.log("pas forcé");
+                return false;
+            }
+            if (index <= -1) {
+                console.log("min");
+                if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                    this.reverse();
+                    this.displayAtIndex(1);
+                } else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
+                    this.displayAtIndex(this.states.length - 1);
+                }
+                return false;
+            } else if (index >= this.states.length) {
+                console.log("max");
+                if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                    this.reverse();
+                    this.displayAtIndex(this.states.length - 2);
+                } else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
+                    this.displayAtIndex(0);
+                }
+                return false;
+            }
+            this.hide();
+            this._currentIndex = index;
+            this.states[index].display();
+            this.dispatchEvent(events_class_1.Events.SEQUENCE_ENTER_STATE, this.states[index]);
+            return true;
+        };
+        Sequence.prototype.reverse = function () {
+            this._direction *= -1;
+        };
+        /*inverse() {
+            if (this._currentIndex === -1) {
+                this._currentIndex = this.states.length;
+            }
+        }*/
+        Sequence.prototype.hasNext = function () {
+            var nextIndex = this._currentIndex + this._direction;
+            return !(nextIndex <= -1 || nextIndex >= this.states.length);
+        };
+        Sequence.prototype.displayNext = function (forced) {
+            if (forced === void 0) {
+                forced = false;
+            }
+            var done = this.displayAtIndex(this._currentIndex + this._direction, forced);
+            /*if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                this.reverse();
+            }*/
+            return done;
+        };
+        Sequence.prototype.hasPrevious = function () {
+            var previousIndex = this._currentIndex - this._direction;
+            return !(previousIndex <= -1 || previousIndex >= this.states.length);
+        };
+        Sequence.prototype.displayPrevious = function (forced) {
+            if (forced === void 0) {
+                forced = false;
+            }
+            var done = this.displayAtIndex(this._currentIndex - this._direction, forced);
+            /*if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                this.reverse();
+            }*/
+            if (!done && this.loopType === Sequence.LOOP_TYPE_RESET) {
+                this.resetIndex();
+            }
+            return done;
+        };
+        Sequence.prototype.reset = function () {
+            if (this._currentIndex !== -1) {
+                this.states[this._currentIndex].hide();
+            }
+            this._currentIndex = -1;
+        };
+        Sequence.prototype.resetIndex = function () {
+            this._currentIndex = -1;
+        };
+        return Sequence;
+    }(event_dispatcher_class_1.EventDispatcher);
+    // 1 2 3 4 3 2 1 2 3 4
+    Sequence.LOOP_TYPE_CIRCLE = "circle";
+    // 1 2 3 4 1 2 3 4 1 2 3 4
+    Sequence.LOOP_TYPE_RESET = "reset";
+    exports.Sequence = Sequence;
+
+});
+System.registerDynamic("core/src/triggers/time-trigger.class.js", ["./base-trigger.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var base_trigger_class_1 = $__require("./base-trigger.class");
+    var TimeTrigger = function (_super) {
+        __extends(TimeTrigger, _super);
+        function TimeTrigger(time, callback) {
+            if (callback === void 0) {
+                callback = null;
+            }
+            var _this = _super.call(this, callback) || this;
+            _this.time = time;
+            return _this;
+        }
+        TimeTrigger.prototype.enable = function () {
+            var _this = this;
+            setTimeout(function () {
+                if (_this.callback) _this.callback();
+            }, this.time * 1000);
+        };
+        return TimeTrigger;
+    }(base_trigger_class_1.BaseTrigger);
+    exports.TimeTrigger = TimeTrigger;
+
+});
+System.registerDynamic("core/src/triggers/trigger.class.js", ["./base-trigger.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var base_trigger_class_1 = $__require("./base-trigger.class");
+    var Trigger = function (_super) {
+        __extends(Trigger, _super);
+        function Trigger(dispatcher, eventName, callback, argument) {
+            if (callback === void 0) {
+                callback = null;
+            }
+            if (argument === void 0) {
+                argument = null;
+            }
+            var _this = _super.call(this, callback) || this;
+            _this.dispatcher = dispatcher;
+            _this.eventName = eventName;
+            _this.argument = argument;
+            return _this;
+        }
+        Trigger.prototype._callback = function (arg) {
+            if (!this._enabled || !this.callback) return;
+            if (this.argument) {
+                if (arg !== this.argument) {
+                    return;
+                }
+            }
+            this.callback(arg);
+        };
+        Object.defineProperty(Trigger.prototype, "enabled", {
+            get: function () {
+                return this._enabled;
+            },
+            set: function (value) {
+                if (value) {
+                    this.enable();
+                } else {
+                    this.disable();
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Trigger.prototype.enable = function () {
+            var _this = this;
+            if (!this._enabled) {
+                this.subscription = this.dispatcher.listen(this.eventName, function (arg) {
+                    _this._callback(arg);
+                });
+            }
+            this._enabled = true;
+        };
+        Trigger.prototype.disable = function () {
+            if (this._enabled) {
+                this.subscription.stoplisten();
+            }
+            this._enabled = false;
+        };
+        return Trigger;
+    }(base_trigger_class_1.BaseTrigger);
+    exports.Trigger = Trigger;
+
+});
+System.registerDynamic("core/src/triggers/base-trigger.class.js", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 07/03/2017.
+     */
+    var BaseTrigger = function () {
+        function BaseTrigger(callback) {
+            if (callback === void 0) {
+                callback = null;
+            }
+            this.callback = callback;
+            this._enabled = false;
+        }
+        Object.defineProperty(BaseTrigger.prototype, "enabled", {
+            get: function () {
+                return this._enabled;
+            },
+            set: function (value) {
+                if (value) {
+                    this.enable();
+                } else {
+                    this.disable();
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        BaseTrigger.prototype.enable = function () {
+            this._enabled = true;
+        };
+        BaseTrigger.prototype.disable = function () {
+            this._enabled = false;
+        };
+        BaseTrigger.prototype.bind = function (callback) {
+            this.callback = callback;
+            this._enabled = true;
+        };
+        BaseTrigger.prototype.unbind = function () {
+            this.callback = null;
+            this._enabled = false;
+        };
+        return BaseTrigger;
+    }();
+    exports.BaseTrigger = BaseTrigger;
+
+});
+System.registerDynamic("core/src/triggers/sprites/sprites-collision-trigger.class.js", ["../base-trigger.class", "../../common/events.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 08/03/2017.
+     */
+    var base_trigger_class_1 = $__require("../base-trigger.class");
+    var events_class_1 = $__require("../../common/events.class");
+    var SpritesCollisionTrigger = function (_super) {
+        __extends(SpritesCollisionTrigger, _super);
+        function SpritesCollisionTrigger(baseSprite, targetSprite, callback, onEvent, offEvent) {
+            if (callback === void 0) {
+                callback = null;
+            }
+            if (onEvent === void 0) {
+                onEvent = events_class_1.Events.DISPLAYED;
+            }
+            if (offEvent === void 0) {
+                offEvent = events_class_1.Events.HIDDEN;
+            }
+            var _this = _super.call(this, callback) || this;
+            _this.baseSprite = baseSprite;
+            _this.targetSprite = targetSprite;
+            _this.onEvent = onEvent;
+            _this.offEvent = offEvent;
+            _this.ON = "on";
+            _this.OFF = "off";
+            return _this;
+        }
+        SpritesCollisionTrigger.prototype.enable = function () {
+            if (!this._enabled) {
+                // dans un sens
+                /*this.baseSprite.listen(this.onEvent, () => {
+                    this._baseSpriteStatus = this.ON;
+                });
+                  this._baseSpriteSubscription1 = this.baseSprite.listen(this.onEvent, () => {
+                    this._targetSpriteSubscription1 = this.targetSprite.listen(this.onEvent, () => this.callback());
+                });*/
+                // et dans l'autre
+                /*this._targetSpriteSubscription2 = this.targetSprite.listen(this.onEvent, () => {
+                    this._baseSpriteSubscription2 = this.baseSprite.listen(this.onEvent, () => this.callback());
+                });*/
+            }
+            _super.prototype.enable.call(this);
+        };
+        SpritesCollisionTrigger.prototype.disable = function () {
+            if (this._baseSpriteSubscription1) this._baseSpriteSubscription1.stoplisten();
+            if (this._targetSpriteSubscription1) this._targetSpriteSubscription1.stoplisten();
+            if (this._baseSpriteSubscription2) this._baseSpriteSubscription2.stoplisten();
+            if (this._targetSpriteSubscription2) this._targetSpriteSubscription2.stoplisten();
+            _super.prototype.disable.call(this);
+        };
+        return SpritesCollisionTrigger;
+    }(base_trigger_class_1.BaseTrigger);
+    exports.SpritesCollisionTrigger = SpritesCollisionTrigger;
+
+});
+System.registerDynamic("core/src/display/conditional-sprites-group-state.class.js", ["../common/event-dispatcher.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 14/02/2017.
+     */
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var ConditionalSpritesGroupState = function (_super) {
+        __extends(ConditionalSpritesGroupState, _super);
+        function ConditionalSpritesGroupState(state, condition) {
+            var _this = _super.call(this) || this;
+            _this.state = state;
+            _this.condition = condition;
+            return _this;
+        }
+        return ConditionalSpritesGroupState;
+    }(event_dispatcher_class_1.EventDispatcher);
+    exports.ConditionalSpritesGroupState = ConditionalSpritesGroupState;
+
+});
+System.registerDynamic("core/src/display/conditional-sprites-group-state-set.class.js", ["../common/event-dispatcher.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 14/02/2017.
+     */
+    var event_dispatcher_class_1 = $__require("../common/event-dispatcher.class");
+    var ConditionalSpritesGroupStateSet = function (_super) {
+        __extends(ConditionalSpritesGroupStateSet, _super);
+        function ConditionalSpritesGroupStateSet(group, conditionalStates, defaultState) {
+            if (conditionalStates === void 0) {
+                conditionalStates = [];
+            }
+            var _this = _super.call(this) || this;
+            _this.group = group;
+            _this.conditionalStates = conditionalStates;
+            _this.defaultState = defaultState;
+            return _this;
+        }
+        ConditionalSpritesGroupStateSet.prototype.display = function () {
+            for (var _i = 0, _a = this.conditionalStates; _i < _a.length; _i++) {
+                var conditionalState = _a[_i];
+                if (conditionalState.condition.eval()) {
+                    conditionalState.state.display();
+                    return;
+                }
+            }
+            this.defaultState.display();
+        };
+        ConditionalSpritesGroupStateSet.prototype.update = function () {
+            this.display();
+        };
+        ConditionalSpritesGroupStateSet.prototype.hide = function () {
+            this.group.hide();
+        };
+        return ConditionalSpritesGroupStateSet;
+    }(event_dispatcher_class_1.EventDispatcher);
+    exports.ConditionalSpritesGroupStateSet = ConditionalSpritesGroupStateSet;
+
+});
+System.registerDynamic("core/src/display/control-sprite.class.js", ["./image-display-element"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var image_display_element_1 = $__require("./image-display-element");
+    var ControlSprite = function (_super) {
+        __extends(ControlSprite, _super);
+        function ControlSprite(file, x, y, scale) {
+            if (scale === void 0) {
+                scale = 1;
+            }
+            return _super.call(this, file, x, y, scale) || this;
+        }
+        ControlSprite.prototype.getDOMElement = function () {
+            var div = _super.prototype.getDOMElement.call(this);
+            div.classList.add("control");
+            return div;
+        };
+        Object.defineProperty(ControlSprite.prototype, "DOMElement", {
+            get: function () {
+                return this._DOMElement;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return ControlSprite;
+    }(image_display_element_1.ImageDisplayElement);
+    exports.ControlSprite = ControlSprite;
+
+});
+System.registerDynamic("core/src/display/display-element.class.js", ["../common/status-dispatcher.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 21/02/2017.
+     */
+    var status_dispatcher_class_1 = $__require("../common/status-dispatcher.class");
+    var DisplayElement = function (_super) {
+        __extends(DisplayElement, _super);
+        function DisplayElement(x, y, scale) {
+            if (scale === void 0) {
+                scale = 1;
+            }
+            var _this = _super.call(this) || this;
+            _this.x = x;
+            _this.y = y;
+            _this.scale = scale;
+            return _this;
+        }
+        DisplayElement.prototype.getDOMElement = function () {
+            if (this._DOMElement) {
+                return this._DOMElement;
+            } else {
+                var div = document.createElement("div");
+                div.className = "game-element";
+                div.style.left = this.x + "px";
+                div.style.top = this.y + "px";
+                div.style.transform = "scale(" + this.scale + ")";
+                this._DOMElement = div;
+                return div;
+            }
+        };
+        DisplayElement.prototype.displayInDOMElement = function (container) {
+            this._DOMElement = this.getDOMElement();
+            container.appendChild(this._DOMElement);
+            return this._DOMElement;
+        };
+        return DisplayElement;
+    }(status_dispatcher_class_1.StatusDispatcher);
+    exports.DisplayElement = DisplayElement;
+
+});
+System.registerDynamic("core/src/display/image-display-element.js", ["./display-element.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 22/02/2017.
+     */
+    var display_element_class_1 = $__require("./display-element.class");
+    var ImageDisplayElement = function (_super) {
+        __extends(ImageDisplayElement, _super);
+        function ImageDisplayElement(file, x, y, scale) {
+            if (scale === void 0) {
+                scale = 1;
+            }
+            var _this = _super.call(this, x, y, scale) || this;
+            _this.file = file;
+            return _this;
+        }
+        ImageDisplayElement.prototype.getDOMElement = function () {
+            var div = _super.prototype.getDOMElement.call(this);
+            var image = document.createElement("img");
+            image["src"] = this.file.path;
+            div.appendChild(image);
+            return div;
+        };
+        return ImageDisplayElement;
+    }(display_element_class_1.DisplayElement);
+    exports.ImageDisplayElement = ImageDisplayElement;
+
+});
+System.registerDynamic("core/src/display/sprite.class.js", ["./image-display-element", "../common/status.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    var __extends = exports && exports.__extends || function () {
+        var extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
+        return function (d, b) {
+            extendStatics(d, b);
+            function __() {
+                this.constructor = d;
+            }
+            d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+        };
+    }();
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var image_display_element_1 = $__require("./image-display-element");
+    var status_class_1 = $__require("../common/status.class");
+    //import {BehaviorSubject} from "rxjs/Rx";
+    var Sprite = function (_super) {
+        __extends(Sprite, _super);
+        function Sprite(file, x, y, scale, initVisibility) {
+            if (scale === void 0) {
+                scale = 1;
+            }
+            if (initVisibility === void 0) {
+                initVisibility = false;
+            }
+            var _this =
+            //this.visibility = new BehaviorSubject<boolean>(initVisibility);
+            _super.call(this, file, x, y, scale) || this;
+            _this._visible = initVisibility;
+            return _this;
+        }
+        Sprite.prototype.displayInDOMElement = function (container) {
+            var elem = _super.prototype.displayInDOMElement.call(this, container);
+            if (this._visible) {
+                this.show();
+            } else {
+                this.hide();
+            }
+            return elem;
+        };
+        Sprite.prototype.show = function () {
+            //this.visibility.next(true);
+            /*if (this._DOMElement) {
+                this._DOMElement.style.display = "block";
+            }*/
+            this.setStatus(status_class_1.Status.VISIBILITY, status_class_1.Status.VISIBLE);
+            this._DOMElement.classList.remove("inactive");
+            this._DOMElement.classList.add("active");
+            this._visible = true;
+        };
+        Sprite.prototype.display = function () {
+            this.show();
+        };
+        Sprite.prototype.hide = function () {
+            //this.visibility.next(false);
+            this.setStatus(status_class_1.Status.VISIBILITY, status_class_1.Status.HIDDEN);
+            this._DOMElement.classList.add("inactive");
+            this._DOMElement.classList.remove("active");
+            this._visible = false;
+        };
+        Sprite.prototype.toggle = function () {
+            if (this._visible) {
+                this.hide();
+            } else {
+                this.show();
+            }
+        };
+        return Sprite;
+    }(image_display_element_1.ImageDisplayElement);
+    exports.Sprite = Sprite;
+
+});
+System.registerDynamic("core/src/display/sprites-group.class.js", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var SpritesGroup = function () {
+        function SpritesGroup(sprites) {
+            this.sprites = sprites;
+        }
+        SpritesGroup.prototype.show = function () {
+            this.sprites.forEach(function (sprite) {
+                return sprite.show();
+            });
+        };
+        SpritesGroup.prototype.hide = function () {
+            this.sprites.forEach(function (sprite) {
+                return sprite.hide();
+            });
+        };
+        SpritesGroup.prototype.toggle = function () {
+            this.sprites.forEach(function (sprite) {
+                return sprite.toggle();
+            });
+        };
+        return SpritesGroup;
+    }();
+    exports.SpritesGroup = SpritesGroup;
+
+});
+System.registerDynamic("core/src/display/sprites-group-state.class.js", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var SpritesGroupState = function () {
+        function SpritesGroupState(group, sprites) {
+            if (sprites === void 0) {
+                sprites = [];
+            }
+            this.group = group;
+            this.sprites = sprites;
+        }
+        SpritesGroupState.prototype.display = function () {
+            this.group.hide();
+            this.sprites.forEach(function (sprite) {
+                return sprite.show();
+            });
+        };
+        SpritesGroupState.prototype.hide = function () {
+            this.group.hide();
+        };
+        return SpritesGroupState;
+    }();
+    exports.SpritesGroupState = SpritesGroupState;
+
+});
+System.registerDynamic("core/src/common/events.class.js", [], true, function ($__require, exports, module) {
+    /**
+     * Created by Christophe on 02/02/2017.
+     */
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Events = function () {
+        function Events() {}
+        return Events;
+    }();
+    Events.SEQUENCE_ENTER_STATE = "event_enterstate";
+    Events.ANIMATION_ITERATION_END = "animation_iteration_end";
+    Events.ANIMATION_END = "animation_end";
+    Events.CLOCK_PERIOD = "clock_period";
+    Events.CONTROL_UP = "control_up";
+    Events.CONTROL_DOWN = "control_down";
+    Events.VARIABLE_CHANGE = "variable_change";
+    Events.DISPLAYED = "displayed";
+    Events.HIDDEN = "hidden";
+    exports.Events = Events;
+
+});
+System.registerDynamic("core/src/common/status.class.js", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 08/03/2017.
+     */
+    var Status = function () {
+        function Status() {}
+        return Status;
+    }();
+    Status.VISIBILITY = "visibility";
+    Status.VISIBLE = "visible";
+    Status.HIDDEN = "hidden";
+    exports.Status = Status;
+
+});
+System.registerDynamic("core/src/common/status-dispatcher.class.js", ["./status-subscription.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 08/03/2017.
+     */
+    var status_subscription_class_1 = $__require("./status-subscription.class");
+    var StatusDispatcher = function () {
+        function StatusDispatcher() {
+            this._subscriptions = [];
+            this._statusValues = {};
+        }
+        StatusDispatcher.prototype.setStatus = function (statusName, value) {
+            var _this = this;
+            this._subscriptions.forEach(function (subscription) {
+                if (subscription.statusName === statusName && value != _this._statusValues[statusName]) {
+                    subscription.call(value);
+                }
+            });
+            this._statusValues[statusName] = value;
+        };
+        StatusDispatcher.prototype.subscribe = function (statusName, callback) {
+            var subscription = new status_subscription_class_1.StatusSubscription(statusName, callback, this);
+            if (this._statusValues[statusName]) {
+                subscription.call(this._statusValues[statusName]);
+            }
+            this._subscriptions.push(subscription);
+            return subscription;
+        };
+        StatusDispatcher.prototype.deleteSubscription = function (subscription) {
+            var index = this._subscriptions.indexOf(subscription);
+            if (index !== -1) {
+                this._subscriptions.splice(index, 1);
+            }
+        };
+        return StatusDispatcher;
+    }();
+    exports.StatusDispatcher = StatusDispatcher;
+
+});
+System.registerDynamic("core/src/common/status-subscription.class.js", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var StatusSubscription = function () {
+        function StatusSubscription(statusName, _callback, _dispatcher) {
+            this.statusName = statusName;
+            this._callback = _callback;
+            this._dispatcher = _dispatcher;
+        }
+        StatusSubscription.prototype.call = function (value) {
+            this._callback(value);
+        };
+        StatusSubscription.prototype.unsubscribe = function () {
+            this._dispatcher.deleteSubscription(this);
+        };
+        return StatusSubscription;
+    }();
+    exports.StatusSubscription = StatusSubscription;
+
+});
+System.registerDynamic("core/src/common/time-utils.class.js", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    // tout ça est à voir plus tard
+    var TimeUtils = function () {
+        function TimeUtils() {}
+        TimeUtils.setInterval = function (time, iterations) {
+            if (time === void 0) {
+                time = 0;
+            }
+            if (iterations === void 0) {
+                iterations = 1;
+            }
+            return null;
+        };
+        return TimeUtils;
+    }();
+    exports.TimeUtils = TimeUtils;
+
+});
+System.registerDynamic("core/src/common/event-listener.class.js", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var EventListener = function () {
+        function EventListener(eventName, _callback, _dispatcher) {
+            this.eventName = eventName;
+            this._callback = _callback;
+            this._dispatcher = _dispatcher;
+        }
+        EventListener.prototype.call = function (param) {
+            this._callback(param);
+        };
+        EventListener.prototype.stoplisten = function () {
+            this._dispatcher.deleteListener(this);
+        };
+        return EventListener;
+    }();
+    exports.EventListener = EventListener;
+
+});
+System.registerDynamic("core/src/common/event-dispatcher.class.js", ["./event-listener.class"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var global = this || self,
+        GLOBAL = global;
+    Object.defineProperty(exports, "__esModule", { value: true });
+    /**
+     * Created by Christophe on 01/02/2017.
+     */
+    var event_listener_class_1 = $__require("./event-listener.class");
+    var EventDispatcher = function () {
+        function EventDispatcher() {
+            this._listeners = [];
+        }
+        EventDispatcher.prototype.dispatchEvent = function (eventType, param) {
+            if (param === void 0) {
+                param = null;
+            }
+            this._listeners.forEach(function (subscription) {
+                if (subscription.eventName === eventType) {
+                    subscription.call(param);
+                }
+            });
+        };
+        EventDispatcher.prototype.listen = function (eventName, callback) {
+            var listener = new event_listener_class_1.EventListener(eventName, callback, this);
+            this._listeners.push(listener);
+            return listener;
+        };
+        EventDispatcher.prototype.deleteListener = function (listener) {
+            var index = this._listeners.indexOf(listener);
+            if (index !== -1) {
+                this._listeners.splice(index, 1);
+            }
+        };
+        return EventDispatcher;
+    }();
+    exports.EventDispatcher = EventDispatcher;
+
+});
+System.registerDynamic("core/index.js", ["./src/modules/lcd-displayer/lcd-displayer.class", "./src/modules/lcd-displayer/seg7-displayer.class", "./src/gamelogic/clock.class", "./src/gamelogic/condition.class", "./src/files/file.class", "./src/gamelogic/control.class", "./src/gamelogic/variable.class", "./src/gamelogic/conditions/condition-types.class", "./src/gamelogic/conditions/sequence-condition.class", "./src/gamelogic/conditions/sequence-conditions/onstate-sequence-condition.class", "./src/graphs/graph.class", "./src/graphs/graph-link.class", "./src/graphs/graph-node.class", "./src/sound/sound.class", "./src/spriteslogic/animation.class", "./src/spriteslogic/sequence.class", "./src/triggers/base-trigger.class", "./src/triggers/time-trigger.class", "./src/triggers/trigger.class", "./src/triggers/sprites/sprites-collision-trigger.class", "./src/display/conditional-sprites-group-state.class", "./src/display/conditional-sprites-group-state-set.class", "./src/display/control-sprite.class", "./src/display/display-element.class", "./src/display/image-display-element", "./src/display/sprite.class", "./src/display/sprites-group.class", "./src/display/sprites-group-state.class", "./src/common/event-listener.class", "./src/common/events.class", "./src/common/status.class", "./src/common/status-dispatcher.class", "./src/common/status-subscription.class", "./src/common/time-utils.class", "./src/common/event-dispatcher.class"], true, function ($__require, exports, module) {
+  "use strict";
+
+  var global = this || self,
+      GLOBAL = global;
+  Object.defineProperty(exports, "__esModule", { value: true });
+  var lcd_displayer_class_1 = $__require("./src/modules/lcd-displayer/lcd-displayer.class");
+  exports.LcdDisplayer = lcd_displayer_class_1.LcdDisplayer;
+  var seg7_displayer_class_1 = $__require("./src/modules/lcd-displayer/seg7-displayer.class");
+  exports.Seg7Displayer = seg7_displayer_class_1.Seg7Displayer;
+  var clock_class_1 = $__require("./src/gamelogic/clock.class");
+  exports.Clock = clock_class_1.Clock;
+  var condition_class_1 = $__require("./src/gamelogic/condition.class");
+  exports.Condition = condition_class_1.Condition;
+  var file_class_1 = $__require("./src/files/file.class");
+  exports.File = file_class_1.File;
+  var control_class_1 = $__require("./src/gamelogic/control.class");
+  exports.Control = control_class_1.Control;
+  var variable_class_1 = $__require("./src/gamelogic/variable.class");
+  exports.Variable = variable_class_1.Variable;
+  var condition_types_class_1 = $__require("./src/gamelogic/conditions/condition-types.class");
+  exports.ConditionTypes = condition_types_class_1.ConditionTypes;
+  var sequence_condition_class_1 = $__require("./src/gamelogic/conditions/sequence-condition.class");
+  exports.SequenceCondition = sequence_condition_class_1.SequenceCondition;
+  var onstate_sequence_condition_class_1 = $__require("./src/gamelogic/conditions/sequence-conditions/onstate-sequence-condition.class");
+  exports.OnStateSequenceCondition = onstate_sequence_condition_class_1.OnStateSequenceCondition;
+  var graph_class_1 = $__require("./src/graphs/graph.class");
+  exports.Graph = graph_class_1.Graph;
+  var graph_link_class_1 = $__require("./src/graphs/graph-link.class");
+  exports.GraphLink = graph_link_class_1.GraphLink;
+  var graph_node_class_1 = $__require("./src/graphs/graph-node.class");
+  exports.GraphNode = graph_node_class_1.GraphNode;
+  var sound_class_1 = $__require("./src/sound/sound.class");
+  exports.Sound = sound_class_1.Sound;
+  var animation_class_1 = $__require("./src/spriteslogic/animation.class");
+  exports.Animation = animation_class_1.Animation;
+  var sequence_class_1 = $__require("./src/spriteslogic/sequence.class");
+  exports.Sequence = sequence_class_1.Sequence;
+  var base_trigger_class_1 = $__require("./src/triggers/base-trigger.class");
+  exports.BaseTrigger = base_trigger_class_1.BaseTrigger;
+  var time_trigger_class_1 = $__require("./src/triggers/time-trigger.class");
+  exports.TimeTrigger = time_trigger_class_1.TimeTrigger;
+  var trigger_class_1 = $__require("./src/triggers/trigger.class");
+  exports.Trigger = trigger_class_1.Trigger;
+  var sprites_collision_trigger_class_1 = $__require("./src/triggers/sprites/sprites-collision-trigger.class");
+  exports.SpritesCollisionTrigger = sprites_collision_trigger_class_1.SpritesCollisionTrigger;
+  var conditional_sprites_group_state_class_1 = $__require("./src/display/conditional-sprites-group-state.class");
+  exports.ConditionalSpritesGroupState = conditional_sprites_group_state_class_1.ConditionalSpritesGroupState;
+  var conditional_sprites_group_state_set_class_1 = $__require("./src/display/conditional-sprites-group-state-set.class");
+  exports.ConditionalSpritesGroupStateSet = conditional_sprites_group_state_set_class_1.ConditionalSpritesGroupStateSet;
+  var control_sprite_class_1 = $__require("./src/display/control-sprite.class");
+  exports.ControlSprite = control_sprite_class_1.ControlSprite;
+  var display_element_class_1 = $__require("./src/display/display-element.class");
+  exports.DisplayElement = display_element_class_1.DisplayElement;
+  var image_display_element_1 = $__require("./src/display/image-display-element");
+  exports.ImageDisplayElement = image_display_element_1.ImageDisplayElement;
+  var sprite_class_1 = $__require("./src/display/sprite.class");
+  exports.Sprite = sprite_class_1.Sprite;
+  var sprites_group_class_1 = $__require("./src/display/sprites-group.class");
+  exports.SpritesGroup = sprites_group_class_1.SpritesGroup;
+  var sprites_group_state_class_1 = $__require("./src/display/sprites-group-state.class");
+  exports.SpritesGroupState = sprites_group_state_class_1.SpritesGroupState;
+  var event_listener_class_1 = $__require("./src/common/event-listener.class");
+  exports.EventListener = event_listener_class_1.EventListener;
+  var events_class_1 = $__require("./src/common/events.class");
+  exports.Events = events_class_1.Events;
+  var status_class_1 = $__require("./src/common/status.class");
+  exports.Status = status_class_1.Status;
+  var status_dispatcher_class_1 = $__require("./src/common/status-dispatcher.class");
+  exports.StatusDispatcher = status_dispatcher_class_1.StatusDispatcher;
+  var status_subscription_class_1 = $__require("./src/common/status-subscription.class");
+  exports.StatusSubscription = status_subscription_class_1.StatusSubscription;
+  var time_utils_class_1 = $__require("./src/common/time-utils.class");
+  exports.TimeUtils = time_utils_class_1.TimeUtils;
+  var event_dispatcher_class_1 = $__require("./src/common/event-dispatcher.class");
+  exports.EventDispatcher = event_dispatcher_class_1.EventDispatcher;
+
+});
 //# sourceMappingURL=core.umd.js.map
