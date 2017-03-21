@@ -1,8 +1,8 @@
 {
-  "name": "blip-framework",
+  "name": "core",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "compiled/core/index.js",
   "dependencies": {
     "core-js": "^2.4.1",
     "rxjs": "5.0.0-beta.12",

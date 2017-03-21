@@ -9,12 +9,11 @@
             'npm:': 'node_modules/'
         },
         map: {
-            examples: "examples",
             'core': 'core/bundles/core.umd.js',
+            //'core': 'compiled/core/index.js',
         },
         packages: {
-            examples: {
-                main: 'examples/main.js',
+            'core': {
                 defaultExtension: 'js'
             }
         }

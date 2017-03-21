@@ -11,7 +11,8 @@
     "outDir": "./compiled",
     "declaration": true,
     "typeRoots": [
-      "../node_modules/@types"
+      "../node_modules/@types",
+      "./compiled"
     ],
     "types": [
       "core-js"
@@ -19,9 +20,11 @@
     "baseUrl": ".",
     "paths": {
       "*": [
-        "*",
-        "compiled/*"
+        "*"
       ]
-    }
+    },
+    "rootDirs": [
+      "."
+    ]
   }
 }
