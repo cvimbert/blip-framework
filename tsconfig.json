@@ -11,20 +11,15 @@
     "outDir": "./compiled",
     "declaration": true,
     "typeRoots": [
-      "../node_modules/@types",
-      "./compiled"
+      "node_modules/@types"
     ],
     "types": [
       "core-js"
     ],
-    "baseUrl": ".",
-    "paths": {
-      "*": [
-        "*"
-      ]
-    },
-    "rootDirs": [
-      "."
-    ]
-  }
+    "lib": ["es2017", "dom"]
+  },
+  "exclude": [
+    "node_modules",
+    "compiled"
+  ]
 }
