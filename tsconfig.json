@@ -16,10 +16,15 @@
     "types": [
       "core-js"
     ],
-    "lib": ["es2017", "dom"]
-  },
-  "exclude": [
-    "node_modules",
-    "compiled"
-  ]
+    "lib": ["es2017", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "*"
+      ]
+    },
+    "rootDirs": [
+      "."
+    ]
+  }
 }
