@@ -9,7 +9,7 @@ var Builder = require('systemjs-builder');
 var builder = new Builder('.', './systemjs.config.js');
 
 builder
-    .bundle('compiled/core/index.js', 'core/bundles/core.umd.js', { minify: false, sourceMaps: true })
+    .bundle('core/index.js', 'core/bundles/core.umd.js', { minify: false, sourceMaps: true })
     .then(function() {
         console.log('Build complete');
     })
