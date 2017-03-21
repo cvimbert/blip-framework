@@ -26,7 +26,7 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "build": "node build.js",
-    "postinstall": "node ../node_modules/typescript/bin/tsc && npm run build"
+    "postinstall": "node ../typescript/bin/tsc && npm run build"
   },
   "repository": {
     "type": "git",
