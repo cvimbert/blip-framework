@@ -6,11 +6,9 @@ import {ImageDisplayElement} from "./image-display-element";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {Events} from "../common/events.class";
 import {Status} from "../common/status.class";
-//import {BehaviorSubject} from "rxjs/Rx";
 
 export class Sprite extends ImageDisplayElement implements IDisplayable{
-
-    //public visibility:BehaviorSubject<boolean>;
+    
     private _visible:boolean;
 
     constructor(
@@ -20,7 +18,6 @@ export class Sprite extends ImageDisplayElement implements IDisplayable{
         scale:number = 1,
         initVisibility:boolean = false
     ) {
-        //this.visibility = new BehaviorSubject<boolean>(initVisibility);
         super(file, x, y, scale);
         this._visible = initVisibility;
     }
@@ -39,11 +36,6 @@ export class Sprite extends ImageDisplayElement implements IDisplayable{
     }
 
     show() {
-        //this.visibility.next(true);
-
-        /*if (this._DOMElement) {
-            this._DOMElement.style.display = "block";
-        }*/
 
         this.setStatus(Status.VISIBILITY, Status.VISIBLE);
 
@@ -58,7 +50,6 @@ export class Sprite extends ImageDisplayElement implements IDisplayable{
     }
 
     hide() {
-        //this.visibility.next(false);
 
         this.setStatus(Status.VISIBILITY, Status.HIDDEN);
 
