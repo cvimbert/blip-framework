@@ -36,4 +36,10 @@ export class DisplayElement extends StatusDispatcher {
         container.appendChild(this._DOMElement);
         return this._DOMElement;
     }
+
+    displayInDocumentById(id:string) {
+        this._DOMElement = this.getDOMElement();
+        var container:HTMLElement = document.getElementById(id);
+        container.appendChild(this._DOMElement);
+    }
 }

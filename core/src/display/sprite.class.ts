@@ -1,13 +1,13 @@
 /**
  * Created by Christophe on 01/02/2017.
  */
-import {File} from "../files/file.class";
 import {ImageDisplayElement} from "./image-display-element";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
-import {Events} from "../common/events.class";
 import {Status} from "../common/status.class";
+import {Utils} from "../common/utils.class";
+import {File} from "../files/file.class";
 
-export class Sprite extends ImageDisplayElement implements IDisplayable{
+export class Sprite extends ImageDisplayElement implements IDisplayable {
     
     private _visible:boolean;
 
@@ -21,18 +21,42 @@ export class Sprite extends ImageDisplayElement implements IDisplayable{
         super(file, x, y, scale);
         this._visible = initVisibility;
     }
-
-    displayInDOMElement(container:HTMLElement) {
+    
+    static fromData(data:Object):Sprite {
         
+        var defaults:Object = {
+            file: "",
+            x: 0,
+            y: 0,
+            scale: 1,
+            initVisibility: false
+        };
+        
+        var param:Object = Utils.verifyAndExtend(data, defaults);
+
+        var file:File = new File(param["file"]);
+        
+        return new Sprite(file, param["x"], param["y"], param["scale"], param["initVisibility"]);
+    }
+
+    displayInDOMElement(container:HTMLElement):HTMLElement {
         var elem:HTMLElement = super.displayInDOMElement(container);
+        this._setVisibility();
+        return elem;
+    }
+
+    displayInDocumentById(id:string) {
+        super.displayInDocumentById(id);
+        this._setVisibility();
+    }
+
+    private _setVisibility() {
 
         if (this._visible) {
             this.show();
         } else {
             this.hide();
         }
-
-        return elem;
     }
 
     show() {

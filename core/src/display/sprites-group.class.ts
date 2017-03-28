@@ -2,8 +2,9 @@
  * Created by Christophe on 01/02/2017.
  */
 import {Sprite} from "./sprite.class";
+import {IDisplayable} from "../interfaces/IDisplayable.interface";
 
-export class SpritesGroup {
+export class SpritesGroup implements IDisplayable {
 
     constructor(
         public sprites:Sprite[]
@@ -11,6 +12,10 @@ export class SpritesGroup {
 
     show() {
         this.sprites.forEach(sprite => sprite.show());
+    }
+    
+    display() {
+        this.show();
     }
 
     hide() {

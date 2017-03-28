@@ -9,8 +9,7 @@
             'npm:': 'node_modules/'
         },
         map: {
-            'core': 'core/bundles/core.umd.js',
-            //'core': 'compiled/core/index.js',
+            'core': 'core/index'
         },
         packages: {
             'core': {

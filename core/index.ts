@@ -1,7 +1,9 @@
 /**
  * Created by Christophe on 20/03/2017.
  */
-import {EventDispatcher} from "./src/common/event-dispatcher.class";
+export {Utils} from "./src/common/utils.class";
+export {GameScene} from "./src/display/game-scene.class";
+export {HTMLGameScene} from "./src/display/html-game-scene.class";
 export {LcdDisplayer} from "./src/modules/lcd-displayer/lcd-displayer.class";
 export {Seg7Displayer} from "./src/modules/lcd-displayer/seg7-displayer.class";
 export {Clock} from "./src/gamelogic/clock.class";
