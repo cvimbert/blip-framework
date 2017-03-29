@@ -3,6 +3,7 @@
  */
 import {Sprite} from "./sprite.class";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
+import {Utils} from "../common/utils.class";
 
 export class SpritesGroup implements IDisplayable {
 
