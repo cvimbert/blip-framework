@@ -4,7 +4,7 @@
 
 export class Utils {
 
-    static verifyAndExtend(targetObject:Object, defaults:Object):Object {
+    static verifyAndExtends(targetObject:Object, defaults:Object):Object {
 
         var retObject:Object = {};
 

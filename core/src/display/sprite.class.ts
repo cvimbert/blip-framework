@@ -32,8 +32,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
             initVisibility: false
         };
         
-        var param:Object = Utils.verifyAndExtend(data, defaults);
-
+        var param:Object = Utils.verifyAndExtends(data, defaults);
         var file:File = new File(param["file"]);
         
         return new Sprite(file, param["x"], param["y"], param["scale"], param["initVisibility"]);

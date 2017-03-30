@@ -3,18 +3,19 @@
  */
 import {Sprite} from "./sprite.class";
 import {SpritesGroup} from "./sprites-group.class";
+import {IState} from "../interfaces/IState.interface";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
 
-export class SpritesGroupState implements IDisplayable {
+export class SpritesGroupState implements IState {
 
     constructor(
         public group:SpritesGroup,
-        public sprites:Sprite[] = []
+        public sprites:IDisplayable[] = []
     ) {}
 
     display() {
         this.group.hide();
-        this.sprites.forEach(sprite => sprite.show());
+        this.sprites.forEach(sprite => sprite.display());
     }
 
     hide() {

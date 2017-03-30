@@ -9,11 +9,9 @@ export class HTMLGameScene extends GameScene {
     protected _DOMElement:HTMLElement;
     
     constructor(
-        sprites:Object = {},
-        groups:Object = {},
-        states:Object = {}
+        data:Object = {}
     ) {
-        super(sprites, groups, states);
+        super(data);
     }
 
     getDOMElement():HTMLElement {
@@ -25,6 +23,16 @@ export class HTMLGameScene extends GameScene {
             div.className = "game-scene";
             this._DOMElement = div;
             return div;
+        }
+    }
+
+    displayIn(element:string|HTMLElement) {
+        var type:string = typeof element;
+
+        if (element instanceof String) {
+            this.displayInDOMElementById(element as string);
+        } else if (element instanceof HTMLElement) {
+            this.displayInDOMElement(element as HTMLElement);
         }
     }
 

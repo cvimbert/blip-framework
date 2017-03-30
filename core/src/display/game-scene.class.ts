@@ -4,19 +4,33 @@
 import {Sprite} from "./sprite.class";
 import {Utils} from "../common/utils.class";
 import {SpritesGroup} from "./sprites-group.class";
+import {SpritesGroupState} from "./sprites-group-state.class";
 
 export class GameScene {
     
     private _spritesDictionary:{[key:string]:Sprite} = {};
     private _groupsDictionary:{[key:string]:SpritesGroup} = {};
+    private _statesDictionary:{[key:string]:SpritesGroupState} = {};
 
     constructor(
-        sprites:Object = {},
-        groups:Object = {},
-        states:Object = {}
+        data:Object = {}
     ) {
-        this.loadSprites(sprites);
-        this.loadGroups(groups);
+        this.loadData(data);
+    }
+
+    loadData(data:Object) {
+
+        var dataDefaults:Object = {
+            sprites: {},
+            groups: {},
+            backgrounds: [],
+            foregrounds: []
+        };
+
+        var param:Object = Utils.verifyAndExtends(data, dataDefaults);
+
+        this.loadSprites(param["sprites"]);
+        this.loadGroups(param["groups"]);
     }
     
     loadSprites(sprites:Object):Sprite[] {
@@ -44,19 +58,40 @@ export class GameScene {
         return sprites;
     }
 
+    getStateId(groupId:string, stateId:string):string {
+        return groupId + "_" + stateId;
+    }
+
     loadGroups(groups:Object) {
 
         var groupDefaults:Object = {
-            sprites: []
+            sprites: [],
+            states: []
         };
 
-        for (let id in groups) {
-            if (groups.hasOwnProperty(id)) {
-                let param:Object = Utils.verifyAndExtend(groups[id], groupDefaults);
+        for (let groupId in groups) {
+            if (groups.hasOwnProperty(groupId)) {
+                let param:Object = Utils.verifyAndExtends(groups[groupId], groupDefaults);
                 let sprites:Sprite[] = this.getSprites(param["sprites"]);
-                this._groupsDictionary[id] = new SpritesGroup(sprites);
+                let group:SpritesGroup = new SpritesGroup(sprites);
+                this._groupsDictionary[groupId] = group;
+
+                for (let stateId in param["states"]) {
+                    if (param["states"].hasOwnProperty(stateId)) {
+                        let sprites:Sprite[] = this.getFromDictionary(param["states"][stateId], this._spritesDictionary);
+                        let state:SpritesGroupState = new SpritesGroupState(group, sprites);
+                        let completeStateId:string = this.getStateId(groupId, stateId);
+                        this._statesDictionary[completeStateId] = state;
+                    }
+                }
             }
         }
+    }
+
+    getFromDictionary(ids:string[], dictionnary:{[key:string]:any}):any[] {
+        var ret:any[] = [];
+        ids.forEach((id:string) => ret.push(dictionnary[id]));
+        return ret;
     }
 
     getGroup(groupId:string):SpritesGroup {
@@ -67,5 +102,24 @@ export class GameScene {
         var groups:SpritesGroup[] = [];
         groupIds.forEach((id:string) => groups.push(this.getGroup(id)));
         return groups;
+    }
+
+    getState(groupId:string, stateId:string):SpritesGroupState {
+        var completeStateId:string = this.getStateId(groupId, stateId);
+        return this._statesDictionary[completeStateId];
+    }
+
+    getStates(groupId:string, stateIds:string[]):SpritesGroupState[] {
+        var states:SpritesGroupState[] = [];
+        stateIds.forEach((id:string) => states.push(this.getState(groupId, id)));
+        return states;
+    }
+
+    loadBackgrounds(backgrounds:Object[]) {
+
+    }
+
+    loadForegrounds(foregrounds:Object[]) {
+        
     }
 }

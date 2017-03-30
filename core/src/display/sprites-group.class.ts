@@ -3,12 +3,14 @@
  */
 import {Sprite} from "./sprite.class";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
-import {Utils} from "../common/utils.class";
+import {IState} from "../interfaces/IState.interface";
+import {SpritesGroupState} from "./sprites-group-state.class";
 
 export class SpritesGroup implements IDisplayable {
 
     constructor(
-        public sprites:Sprite[]
+        public sprites:Sprite[],
+        public states:IState[] = []
     ) {}
 
     show() {
@@ -25,5 +27,19 @@ export class SpritesGroup implements IDisplayable {
 
     toggle() {
         this.sprites.forEach(sprite => sprite.toggle());
+    }
+
+    createState(sprites:IDisplayable[]):SpritesGroupState {
+
+        sprites.forEach((sprite:IDisplayable) => {
+            if (sprites.indexOf(sprite) === -1) {
+                console.error("State sprite is not in group");
+                return null;
+            }
+        });
+
+        var state:SpritesGroupState = new SpritesGroupState(this, sprites);
+        this.states.push(state);
+        return state;
     }
 }

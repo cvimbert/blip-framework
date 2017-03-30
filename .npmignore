@@ -1,4 +1,7 @@
 node_modules
+examples
+files
+fonts
 *.ts
 !*.d.ts
 tsconfig.json
