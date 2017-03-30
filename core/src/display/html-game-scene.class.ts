@@ -3,15 +3,26 @@
  */
 import {GameScene} from "./game-scene.class";
 import {Sprite} from "./sprite.class";
+import {Decoration} from "./decoration.class";
 
 export class HTMLGameScene extends GameScene {
 
-    protected _DOMElement:HTMLElement;
+    private _DOMElement:HTMLElement;
+    private _spritesContainer:HTMLElement;
+    private _backgroundsContainer:HTMLElement;
+    private _foregroundsContainer:HTMLElement;
     
     constructor(
         data:Object = {}
     ) {
         super(data);
+    }
+
+    loadData(data:Object):Object {
+        var param:Object = super.loadData(data);
+        this.loadDecorations(param["backgrounds"], this._backgroundsContainer);
+        this.loadDecorations(param["foregrounds"], this._foregroundsContainer);
+        return param;
     }
 
     getDOMElement():HTMLElement {
@@ -22,6 +33,22 @@ export class HTMLGameScene extends GameScene {
             var div:HTMLElement = document.createElement("div");
             div.className = "game-scene";
             this._DOMElement = div;
+
+            //backgrounds
+            this._backgroundsContainer = document.createElement("div");
+            this._backgroundsContainer.classList.add("backgrounds-container");
+            div.appendChild(this._backgroundsContainer);
+
+            // sprites
+            this._spritesContainer = document.createElement("div");
+            this._spritesContainer.classList.add("sprites-container");
+            div.appendChild(this._spritesContainer);
+
+            // foregrounds
+            this._foregroundsContainer = document.createElement("div");
+            this._foregroundsContainer.classList.add("foregrounds-container");
+            div.appendChild(this._foregroundsContainer);
+
             return div;
         }
     }
@@ -49,8 +76,16 @@ export class HTMLGameScene extends GameScene {
     }
 
     loadSprites(spritesData:Object):Sprite[] {
+        this.getDOMElement();
         var sprites:Sprite[] = super.loadSprites(spritesData);
-        sprites.forEach((sprite:Sprite) => sprite.displayInDOMElement(this.getDOMElement()));
+        sprites.forEach((sprite:Sprite) => sprite.displayInDOMElement(this._spritesContainer));
         return sprites;
+    }
+
+    loadDecorations(decorationDatas:Object[], container:HTMLElement = null):Decoration[] {
+        this.getDOMElement();
+        var decorations:Decoration[] = super.loadDecorations(decorationDatas);
+        decorations.forEach((decoration:Decoration) => decoration.displayInDOMElement(container));
+        return decorations;
     }
 }

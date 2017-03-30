@@ -5,6 +5,7 @@ import {Sprite} from "./sprite.class";
 import {Utils} from "../common/utils.class";
 import {SpritesGroup} from "./sprites-group.class";
 import {SpritesGroupState} from "./sprites-group-state.class";
+import {Decoration} from "./decoration.class";
 
 export class GameScene {
     
@@ -18,7 +19,7 @@ export class GameScene {
         this.loadData(data);
     }
 
-    loadData(data:Object) {
+    loadData(data:Object):Object {
 
         var dataDefaults:Object = {
             sprites: {},
@@ -31,6 +32,8 @@ export class GameScene {
 
         this.loadSprites(param["sprites"]);
         this.loadGroups(param["groups"]);
+        
+        return param;
     }
     
     loadSprites(sprites:Object):Sprite[] {
@@ -115,11 +118,9 @@ export class GameScene {
         return states;
     }
 
-    loadBackgrounds(backgrounds:Object[]) {
-
-    }
-
-    loadForegrounds(foregrounds:Object[]) {
-        
+    loadDecorations(decorationDatas:Object[]):Decoration[] {
+        var decorations:Decoration[] = [];
+        decorationDatas.forEach((data:Object) => decorations.push(Decoration.fromData(data)));
+        return decorations;
     }
 }

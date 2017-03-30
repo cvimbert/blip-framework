@@ -12,6 +12,12 @@ var gameData:Object = {
         sp2: {file: "files/sprites/p5-body.png", x: 70, y: 10},
         sp3: {file: "files/sprites/p6-body.png", x: 130, y: 10}
     },
+    backgrounds: [
+        //{file: "files/decorations/background.png"}
+    ],
+    foregrounds: [
+
+    ],
     groups: {
         g1: {
             sprites: ["sp1", "sp2", "sp3"],
