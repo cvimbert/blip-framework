@@ -13,10 +13,10 @@
     "grunt": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-systemjs-builder": "^0.2.7",
-    "typedoc": "^0.5.1",
     "systemjs-builder": "^0.16.3",
     "concurrently": "^3.0.0",
-    "systemjs": "0.19.39"
+    "systemjs": "0.19.39",
+    "typedoc": "^0.5.10"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -24,7 +24,8 @@
     "lite": "lite-server",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "build": "node build.js"
+    "build": "node build.js",
+    "doc": "typedoc --out doc core/src"
   },
   "repository": {
     "type": "git",
