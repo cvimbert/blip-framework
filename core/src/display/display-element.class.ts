@@ -30,6 +30,12 @@ export class DisplayElement extends StatusDispatcher {
             return div;
         }
     }
+    
+    updateTransforms() {
+        this._DOMElement.style.left = this.x + "px";
+        this._DOMElement.style.top = this.y + "px";
+        this._DOMElement.style.transform = "scale(" + this.scale + ")";
+    }
 
     displayInDOMElement(container:HTMLElement):HTMLElement {
         this._DOMElement = this.getDOMElement();

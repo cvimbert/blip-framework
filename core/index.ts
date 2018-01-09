@@ -2,8 +2,8 @@
  * Created by Christophe on 20/03/2017.
  */
 export {Utils} from "./src/common/utils.class";
-export {GameScene} from "./src/display/game-scene.class";
-export {HTMLGameScene} from "./src/display/html-game-scene.class";
+export {GameObject} from "./src/display/game-object.class";
+export {HTMLGameObject} from "./src/display/html-game-object.class";
 export {LcdDisplayer} from "./src/modules/lcd-displayer/lcd-displayer.class";
 export {Seg7Displayer} from "./src/modules/lcd-displayer/seg7-displayer.class";
 export {Clock} from "./src/gamelogic/clock.class";

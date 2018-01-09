@@ -1,16 +1,18 @@
 /**
  * Created by Christophe on 28/03/2017.
  */
-import {GameScene} from "./game-scene.class";
+import {GameObject} from "./game-object.class";
 import {Sprite} from "./sprite.class";
 import {Decoration} from "./decoration.class";
+import {Control} from "../gamelogic/control.class";
 
-export class HTMLGameScene extends GameScene {
+export class HTMLGameObject extends GameObject {
 
     private _DOMElement:HTMLElement;
     private _spritesContainer:HTMLElement;
     private _backgroundsContainer:HTMLElement;
     private _foregroundsContainer:HTMLElement;
+    private _controlsContainer:HTMLElement;
     
     constructor(
         data:Object = {}
@@ -22,6 +24,7 @@ export class HTMLGameScene extends GameScene {
         var param:Object = super.loadData(data);
         this.loadDecorations(param["backgrounds"], this._backgroundsContainer);
         this.loadDecorations(param["foregrounds"], this._foregroundsContainer);
+        this.loadControls(param["controls"], this._controlsContainer);
         return param;
     }
 
@@ -49,6 +52,11 @@ export class HTMLGameScene extends GameScene {
             this._foregroundsContainer.classList.add("foregrounds-container");
             div.appendChild(this._foregroundsContainer);
 
+            // controls
+            this._controlsContainer = document.createElement("div");
+            this._controlsContainer.classList.add("controls-container");
+            div.appendChild(this._controlsContainer);
+
             return div;
         }
     }
@@ -56,7 +64,7 @@ export class HTMLGameScene extends GameScene {
     displayIn(element:string|HTMLElement) {
         var type:string = typeof element;
 
-        if (element instanceof String) {
+        if (type === "string") {
             this.displayInDOMElementById(element as string);
         } else if (element instanceof HTMLElement) {
             this.displayInDOMElement(element as HTMLElement);
@@ -87,5 +95,12 @@ export class HTMLGameScene extends GameScene {
         var decorations:Decoration[] = super.loadDecorations(decorationDatas);
         decorations.forEach((decoration:Decoration) => decoration.displayInDOMElement(container));
         return decorations;
+    }
+    
+    loadControls(controlsDatas:Object[], container:HTMLElement = null):Control[] {
+        this.getDOMElement();
+        var controls:Control[] = super.loadControls(controlsDatas);
+        controls.forEach((control:Control) => control.sprite.displayInDOMElement(container));
+        return controls;
     }
 }

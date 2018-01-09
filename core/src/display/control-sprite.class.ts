@@ -21,6 +21,11 @@ export class ControlSprite extends ImageDisplayElement {
         return div;
     }
 
+    displayInDOMElement(container:HTMLElement):HTMLElement {
+        var elem:HTMLElement = super.displayInDOMElement(container);
+        return elem;
+    }
+
     get DOMElement():HTMLElement {
         return this._DOMElement;
     }

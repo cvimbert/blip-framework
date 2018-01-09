@@ -4,6 +4,8 @@
 import {ControlSprite} from "../display/control-sprite.class";
 import {EventDispatcher} from "../common/event-dispatcher.class";
 import {Events} from "../common/events.class";
+import {Utils} from "../common/utils.class";
+import {File} from "../files/file.class";
 
 export class ControlZone {
 
@@ -65,11 +67,27 @@ export class Control extends EventDispatcher {
     }
 
     private _onMouseDown(evt:MouseEvent) {
+        console.log("down");
         this.checkZoneEvent(Events.CONTROL_DOWN, evt);
     }
 
     private _onMouseUp(evt:MouseEvent) {
         this.checkZoneEvent(Events.CONTROL_UP, evt)
+    }
+    
+    static fromData(data:Object):Control {
+        
+        var defaults:Object = {
+            file: "",
+            x: 0,
+            y: 0,
+            scale: 1
+        };
+        
+        var spriteParams:Object = Utils.verifyAndExtends(data["sprite"], defaults);
+        var file:File = new File(spriteParams["file"]);
+        var controlSprite:ControlSprite = new ControlSprite(file, spriteParams["x"], spriteParams["y"], spriteParams["scale"]);
+        return new Control(controlSprite);
     }
 
     enable() {
