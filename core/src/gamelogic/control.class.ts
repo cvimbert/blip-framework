@@ -75,19 +75,35 @@ export class Control extends EventDispatcher {
         this.checkZoneEvent(Events.CONTROL_UP, evt)
     }
     
-    static fromData(data:Object):Control {
+    static fromData(data:Object):Control|{[key:string]:Control} {
         
         var defaults:Object = {
             file: "",
             x: 0,
             y: 0,
-            scale: 1
+            scale: 1,
         };
         
         var spriteParams:Object = Utils.verifyAndExtends(data["sprite"], defaults);
         var file:File = new File(spriteParams["file"]);
         var controlSprite:ControlSprite = new ControlSprite(file, spriteParams["x"], spriteParams["y"], spriteParams["scale"]);
-        return new Control(controlSprite);
+
+        if (!data["zones"] || Object.keys(data["zones"]).length === 0) {
+            return new Control(controlSprite)
+        } else if (data["zones"]) {
+
+            let multiControls:{[key:string]:Control} = {};
+
+            for (let zoneId in data["zones"]) {
+                if (data["zones"].hasOwnProperty(zoneId)) {
+                    let zoneDatas:Object = data["zones"][zoneId];
+                    let zone:ControlZone = new ControlZone(zoneDatas["x"], zoneDatas["y"], zoneDatas["width"], zoneDatas["height"]);
+                    multiControls[zoneId] = new Control(controlSprite, zone);
+                }
+            }
+
+            return multiControls;
+        }
     }
 
     enable() {

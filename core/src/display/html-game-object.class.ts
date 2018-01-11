@@ -5,6 +5,7 @@ import {GameObject} from "./game-object.class";
 import {Sprite} from "./sprite.class";
 import {Decoration} from "./decoration.class";
 import {Control} from "../gamelogic/control.class";
+import {ControlSprite} from "./control-sprite.class";
 
 export class HTMLGameObject extends GameObject {
 
@@ -97,10 +98,10 @@ export class HTMLGameObject extends GameObject {
         return decorations;
     }
     
-    loadControls(controlsDatas:Object[], container:HTMLElement = null):Control[] {
+    loadControls(controlsDatas:Object[], container:HTMLElement = null):ControlSprite[] {
         this.getDOMElement();
-        var controls:Control[] = super.loadControls(controlsDatas);
-        controls.forEach((control:Control) => control.sprite.displayInDOMElement(container));
-        return controls;
+        var sprites:ControlSprite[] = super.loadControls(controlsDatas);
+        sprites.forEach((sprite:ControlSprite) => sprite.displayInDOMElement(container));
+        return null;
     }
 }

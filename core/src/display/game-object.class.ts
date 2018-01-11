@@ -9,6 +9,7 @@ import {Decoration} from "./decoration.class";
 import {Control} from "../gamelogic/control.class";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {Sequence} from "../spriteslogic/sequence.class";
+import {ControlSprite} from "./control-sprite.class";
 
 export class GameObject {
     
@@ -114,13 +115,15 @@ export class GameObject {
 
                         let displayables:IDisplayable[] = [];
 
-                        param["sequences"][sequenceId].forEach((data:Object) => {
+                        param["sequences"][sequenceId]["states"].forEach((data:Object) => {
                             if (data["type"] === "sprite") {
                                 displayables.push(this.getSprite(data["ref"]));
                             }
                         });
+                        
+                        var loop:string = param["sequences"][sequenceId]["loop"];
 
-                        let sequence:Sequence = new Sequence(group, displayables, "");
+                        let sequence:Sequence = new Sequence(group, displayables, loop ? loop : "");
                         let id:string = this.getIdWithGroupPrefix(groupId, sequenceId);
                         this._sequencesDictionary[id] = sequence;
                     }
@@ -139,8 +142,9 @@ export class GameObject {
         return this._groupsDictionary[groupId];
     }
 
-    getControl(controlId:string):Control {
-        return this._controlsDictionary[controlId];
+    getControl(controlId:string, zoneId:string = null):Control {
+        var controlName:string = zoneId ? controlId + "_" + zoneId : controlId;
+        return this._controlsDictionary[controlName];
     }
 
     getGroups(groupIds:string[]):SpritesGroup[] {
@@ -171,17 +175,37 @@ export class GameObject {
         return decorations;
     }
     
-    loadControls(controlData:Object[]):Control[] {
-        var controls:Control[] = [];
+    loadControls(controlData:Object[]):ControlSprite[] {
+        var sprites:ControlSprite[] = [];
 
         for (let id in controlData) {
             if (controlData.hasOwnProperty(id)) {
-                let control:Control = Control.fromData(controlData[id]);
-                controls.push(control);
-                this._controlsDictionary[id] = control;
+                let controls:Control|{[key:string]:Control} = Control.fromData(controlData[id]);
+
+                if (controls instanceof Control) {
+                    sprites.push(controls.sprite);
+                    this._controlsDictionary[id] = controls;
+                } else {
+
+                    let sprite:ControlSprite;
+
+                    for (let zoneId in controls) {
+                        if (controls.hasOwnProperty(zoneId)) {
+                            let completeId:string = id + "_" + zoneId;
+
+                            if (!sprite) {
+                                sprite = controls[zoneId].sprite;
+                            }
+
+                            this._controlsDictionary[completeId] = controls[zoneId];
+                        }
+                    }
+
+                    sprites.push(sprite);
+                }
             }
         }
 
-        return controls;
+        return sprites;
     }
 }
