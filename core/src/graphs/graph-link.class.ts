@@ -15,8 +15,8 @@ export class GraphLink extends EventDispatcher {
     }
 
     enableTrigger(callback:Function) {
-        this.trigger.enable();
         this.trigger.bind(() => callback(this.destNode));
+        this.trigger.enable();
     }
 
     disableTrigger() {

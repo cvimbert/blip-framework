@@ -19,7 +19,7 @@ export class ControlTrigger extends BaseTrigger implements ITrigger {
     }
 
     enable() {
-        this._listener  = this.control.listen(this.eventName, this.callback);
+        this._listener = this.control.listen(this.eventName, this.callback);
     }
 
     disable() {

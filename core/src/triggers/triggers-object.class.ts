@@ -36,17 +36,23 @@ export class TriggersObject {
                     let trigger:BaseTrigger;
 
                     switch (type) {
-                        case "controlup":
+                        case "controldown":
                             let ctrl:Control = this.gameObject.getControl(data.triggers[id]["control"]);
-                            trigger = new ControlUpTrigger(ctrl);
+                            trigger = new ControlDownTrigger(ctrl);
                             break;
 
                         case "time":
                             trigger = new TimeTrigger(data.triggers[id]["time"]);
                             break;
                     }
+
+                    this._triggersDictionary[id] = trigger;
                 }
             }
         }
+    }
+
+    getTrigger(triggerId:string):ITrigger {
+        return this._triggersDictionary[triggerId];
     }
 }

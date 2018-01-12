@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by Christophe on 01/02/2017.
  */
-var File = (function () {
+var File = /** @class */ (function () {
     function File(path) {
         this.path = path;
     }

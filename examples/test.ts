@@ -14,6 +14,8 @@ import {SoundsData} from "../core/src/sound/interfaces/sounds-data.interface";
 import {TriggersData} from "../core/src/triggers/interfaces/triggers-data.interface";
 import {TriggersObject} from "../core/src/triggers/triggers-object.class";
 import {GraphData} from "../core/src/graphs/interfaces/graph-data.interface";
+import {GraphObject} from "../core/src/graphs/graph-object.class";
+import {Graph} from "../core/src/graphs/graph.class";
 
 var gameData:Object = {
     sprites: {
@@ -64,17 +66,17 @@ var gameData:Object = {
         ctrl2: {
             sprite: { file: "files/controls/buttonB.png", x: 664, y: 302 }
         },
-        ctrl3: {
+        cross: {
             sprite: {
                 file: "files/controls/cross.png",
                 x: 40,
                 y: 190
             },
             zones: {
-                top: { x: 0, y: 0, width: 0, height: 0},
-                bottom: {},
-                right: {},
-                left: {}
+                top: { x: 30, y: 0, width: 30, height: 30 },
+                bottom: { x: 30, y: 60, width: 30, height: 30 },
+                right: { x: 60, y: 30, width: 30, height: 30 },
+                left: { x: 0, y: 30, width: 30, height: 30 }
             }
         }
     }
@@ -90,8 +92,8 @@ var soundData:SoundsData = {
 
 var triggersData:TriggersData = {
     triggers: {
-        lclick: { type: "controldown", control: "ctrl1" },
-        rclick: { type: "controldown", control: "ctrl2" },
+        lclick: { type: "controldown", control: "cross_left" },
+        rclick: { type: "controldown", control: "cross_right" },
         trg2: { type: "time", time: 1 }
     }
 };
@@ -148,6 +150,17 @@ var sounds:SoundObject = new SoundObject(soundData);
 
 var triggers:TriggersObject = new TriggersObject(triggersData, scene);
 
+var graphObj:GraphObject = new GraphObject(graphData, triggers, scene);
+var graph:Graph = graphObj.graph;
+graph.setCurrentNodeIndex(0);
+
+var ctrlA:Control = scene.getControl("cross_left");
+ctrlA.enable();
+
+var ctrlB:Control = scene.getControl("cross_right");
+ctrlB.enable();
+
+
 // Groupes et états
 /*var sp1:Sprite = scene.getSprite("sp1");
  sp1.display();
@@ -159,7 +172,7 @@ var triggers:TriggersObject = new TriggersObject(triggersData, scene);
  s2.display();*/
 
 
-var seq1:Sequence = scene.getSequence("g1", "seq1");
+/*var seq1:Sequence = scene.getSequence("g1", "seq1");
 seq1.displayAtIndex(0);
 
 var blip:Sound = sounds.getSound("blip");
@@ -176,4 +189,4 @@ ctrl2.enable();
 ctrl2.listen(Events.CONTROL_DOWN, () => {
     seq1.displayNext(true);
     blip.play();
-});
+});*/

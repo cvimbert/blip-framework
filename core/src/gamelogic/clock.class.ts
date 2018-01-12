@@ -5,7 +5,7 @@ import {EventDispatcher} from "../common/event-dispatcher.class";
 import {Events} from "../common/events.class";
 
 export class Clock extends EventDispatcher {
-    
+
     private _interval:number;
 
     constructor(
@@ -13,7 +13,7 @@ export class Clock extends EventDispatcher {
     ) {
         super();
     }
-    
+
     start() {
         this.stop();
 
@@ -21,7 +21,7 @@ export class Clock extends EventDispatcher {
             this.dispatchEvent(Events.CLOCK_PERIOD);
         }, this.period * 1000);
     }
-    
+
     stop() {
         if (this._interval) {
             clearInterval(this._interval);
