@@ -18,5 +18,5 @@ export interface NodeData {
 }
 
 export interface GraphData {
-    nodes:{[key:string]:NodeData};
+    nodes:{[key:string]:NodeData|string};
 }

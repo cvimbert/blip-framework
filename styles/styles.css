@@ -17,16 +17,27 @@
     transform-origin: 0 0;
 }
 
+.game-container {
+    transform-origin: 0 0;
+}
+
 .game-element.active {
     opacity: 1;
 }
 
 .game-element.inactive {
-    opacity: 0.2;
+    opacity: 0.05;
 }
 
 .control {
     cursor: pointer;
+}
+
+.position-displayer {
+    font-size: 30px;
+    color: red;
+    font-weight: bold;
+    background-color: white;
 }
 
 .seg7-displayer {

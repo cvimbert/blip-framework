@@ -9,7 +9,10 @@
             'npm:': 'node_modules/'
         },
         map: {
-            'core': 'core/index'
+            'core': 'core/index',
+            'draggable': "node_modules/gsap/src/uncompressed/utils/Draggable",
+            "TweenLite": "node_modules/gsap/TweenLite",
+            "CSSPlugin": "node_modules/gsap/src/uncompressed/plugins/CSSPlugin"
         },
         packages: {
             'core': {

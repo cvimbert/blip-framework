@@ -19,6 +19,8 @@ export class GameObject {
     private _controlsDictionary:{[key:string]:Control} = {};
     private _sequencesDictionary:{[key:string]:Sequence} = {};
 
+    protected _params:Object;
+
     constructor(
         data:Object = {}
     ) {
@@ -28,6 +30,7 @@ export class GameObject {
     loadData(data:Object):Object {
 
         var dataDefaults:Object = {
+            gameContainerScale: 1,
             sprites: {},
             groups: {},
             backgrounds: [],
@@ -36,6 +39,7 @@ export class GameObject {
         };
 
         var param:Object = Utils.verifyAndExtends(data, dataDefaults);
+        this._params = param;
 
         this.loadSprites(param["sprites"]);
         this.loadGroups(param["groups"]);

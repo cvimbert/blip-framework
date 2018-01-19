@@ -32,26 +32,32 @@ export class HTMLGameObject extends GameObject {
     getDOMElement():HTMLElement {
         if (this._DOMElement) {
             return this._DOMElement;
-        }
-        else {
+        } else {
+
             var div:HTMLElement = document.createElement("div");
             div.className = "game-scene";
             this._DOMElement = div;
 
+            var gameContainer:HTMLElement = document.createElement("div");
+            gameContainer.className = "game-container";
+            div.appendChild(gameContainer);
+
+            gameContainer.style.transform = "scale(" + this._params["gameContainerScale"] + ")";
+
             //backgrounds
             this._backgroundsContainer = document.createElement("div");
             this._backgroundsContainer.classList.add("backgrounds-container");
-            div.appendChild(this._backgroundsContainer);
+            gameContainer.appendChild(this._backgroundsContainer);
 
             // sprites
             this._spritesContainer = document.createElement("div");
             this._spritesContainer.classList.add("sprites-container");
-            div.appendChild(this._spritesContainer);
+            gameContainer.appendChild(this._spritesContainer);
 
             // foregrounds
             this._foregroundsContainer = document.createElement("div");
             this._foregroundsContainer.classList.add("foregrounds-container");
-            div.appendChild(this._foregroundsContainer);
+            gameContainer.appendChild(this._foregroundsContainer);
 
             // controls
             this._controlsContainer = document.createElement("div");
