@@ -6,6 +6,8 @@ import {BaseTrigger} from "./base-trigger.class";
 
 export class TimeTrigger extends BaseTrigger implements ITrigger {
 
+    private timeout;
+
     constructor(
         public time:number,
         callback:Function = null
@@ -14,8 +16,12 @@ export class TimeTrigger extends BaseTrigger implements ITrigger {
     }
 
     enable() {
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             if (this.callback) this.callback()
         }, this.time * 1000);
+    }
+
+    disable() {
+        clearTimeout(this.timeout);
     }
 }

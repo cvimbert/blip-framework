@@ -5,6 +5,8 @@ export interface ITrigger {
 
     enable();
 
+    disable();
+
     bind(callback:Function);
     
     unbind();

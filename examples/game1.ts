@@ -6,6 +6,7 @@ import {GraphData} from "../core/src/graphs/interfaces/graph-data.interface";
 import {GraphObject} from "../core/src/graphs/graph-object.class";
 import {TriggersData} from "../core/src/triggers/interfaces/triggers-data.interface";
 import {TriggersObject} from "../core/src/triggers/triggers-object.class";
+import {Control} from "../core/src/gamelogic/control.class";
 
 var gameData:Object = {
     gameContainerScale: 0.5,
@@ -39,7 +40,17 @@ var gameData:Object = {
         r3p1s: { file: "files/game1/sprites/r3p1s.png", x: 175, y: 125 },
         r3p2s: { file: "files/game1/sprites/r3p2s.png", x: 320, y: 160 },
         r3p3s: { file: "files/game1/sprites/r3p3s.png", x: 445, y: 155 },
-        r3p4s: { file: "files/game1/sprites/r3p4s.png", x: 576, y: 142 }
+        r3p4s: { file: "files/game1/sprites/r3p4s.png", x: 576, y: 142 },
+
+        e1el1: { file: "files/game1/details/e1el1.png", x: 574, y: 756 },
+        e1el2: { file: "files/game1/details/e1el2.png", x: 448, y: 756 },
+        e1el3: { file: "files/game1/details/e1el3.png", x: 318, y: 754 },
+        e1el4: { file: "files/game1/details/e1el4.png", x: 188, y: 752 },
+
+        e2el1: { file: "files/game1/details/e2el1.png", x: 188, y: 352 },
+        e2el2: { file: "files/game1/details/e2el2.png", x: 324, y: 356 },
+        e2el3: { file: "files/game1/details/e2el3.png", x: 442, y: 358 },
+        e2el4: { file: "files/game1/details/e2el4.png", x: 574, y: 356 }
     },
     backgrounds: [
         { file: "files/game1/backgrounds/fond.png" }
@@ -52,7 +63,8 @@ var gameData:Object = {
     },
     controls: {
         ctrlA: {
-            sprite: { file: "files/controls/buttonA.png", x: 855, y: 276 }
+            sprite: { file: "files/controls/buttonA.png", x: 855, y: 276 },
+            key: "a"
         },
         cross: {
             sprite: {
@@ -61,10 +73,10 @@ var gameData:Object = {
                 y: 266
             },
             zones: {
-                top: { x: 30, y: 0, width: 30, height: 30 },
-                bottom: { x: 30, y: 60, width: 30, height: 30 },
-                right: { x: 60, y: 30, width: 30, height: 30 },
-                left: { x: 0, y: 30, width: 30, height: 30 }
+                top: { x: 30, y: 0, width: 30, height: 30, key: "ArrowUp" },
+                bottom: { x: 30, y: 60, width: 30, height: 30, key: "ArrowDown" },
+                right: { x: 60, y: 30, width: 30, height: 30, key: "ArrowRight" },
+                left: { x: 0, y: 30, width: 30, height: 30, key: "ArrowLeft" }
             }
         }
     }
@@ -73,13 +85,21 @@ var gameData:Object = {
 var scene:HTMLGameObject = new HTMLGameObject(gameData);
 scene.displayIn(document.body);
 
+scene.getControl("ctrlA").enable();
+scene.getControl("cross_top").enable();
+scene.getControl("cross_bottom").enable();
+scene.getControl("cross_right").enable();
+scene.getControl("cross_left").enable();
+
+
 var triggersData:TriggersData = {
     triggers: {
         lclick: { type: "controldown", control: "cross_left" },
         rclick: { type: "controldown", control: "cross_right" },
         tclick: { type: "controldown", control: "cross_top" },
         bclick: { type: "controldown", control: "cross_bottom" },
-        fall: { type: "time", time: 1 }
+        jump: { type: "controldown", control: "ctrlA"},
+        fall: { type: "time", time: 0.5 }
     }
 };
 
@@ -87,8 +107,41 @@ var triggers:TriggersObject = new TriggersObject(triggersData, scene);
 
 var mainGraphData:GraphData = {
     nodes: {
-        nd1: "sp1;rclick->nd2,lclick->nd3"
+        nr1p1: "r1p1;rclick->nr1p2",
+        nr1p2: "r1p2;rclick->nr1p3,lclick->nr1p1",
+        nr1p3: "r1p3;rclick->nr1p4,lclick->nr1p2",
+        nr1p4: "r1p4;lclick->nr1p3,rclick->ne1p1",
+        ne1p1: "e1p1;lclick->nr1p4,tclick->ne1p2",
+        ne1p2: "e1p2;bclick->ne1p1,tclick->nr2p1",
+
+        nr2p1: "r2p1;bclick->ne1p2,lclick->nr2p2,jump->nr2p1s",
+        nr2p1s: "r2p1s;fall->nr2p1",
+
+        nr2p2: "r2p2;rclick->nr2p1,lclick->nr2p3,jump->nr2p2s",
+        nr2p2s: "r2p2s;fall->nr2p2",
+
+        nr2p3: "r2p3;rclick->nr2p2,lclick->nr2p4,jump->nr2p3s",
+        nr2p3s: "r2p3s;fall->nr2p3",
+
+        nr2p4: "r2p4;rclick->nr2p3,jump->nr2p4s,lclick->ne2p1",
+        nr2p4s: "r2p4s;fall->nr2p4",
+
+        ne2p1: "e2p1;rclick->nr2p4,tclick->ne2p2",
+        ne2p2: "e2p2;bclick->ne2p1,tclick->nr3p1",
+
+        nr3p1: "r3p1;bclick->ne2p2,rclick->nr3p2,jump->nr3p1s",
+        nr3p1s: "r3p1s;fall->nr3p1",
+
+        nr3p2: "r3p2;rclick->nr3p3,lclick->nr3p1,jump->nr3p2s",
+        nr3p2s: "r3p2s;fall->nr3p2",
+
+        nr3p3: "r3p3;rclick->nr3p4,lclick->nr3p2,jump->nr3p3s",
+        nr3p3s: "r3p3s;fall->nr3p3",
+
+        nr3p4: "r3p4;lclick->nr3p3,jump->nr3p4s",
+        nr3p4s: "r3p4s;fall->nr3p4"
     }
 };
 
 var mainGraph:GraphObject = new GraphObject(mainGraphData, triggers, scene);
+mainGraph.graph.setCurrentNodeIndex(0);

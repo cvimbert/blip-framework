@@ -21,5 +21,6 @@ export class GraphLink extends EventDispatcher {
 
     disableTrigger() {
         this.trigger.unbind();
+        this.trigger.disable();
     }
 }

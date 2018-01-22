@@ -16,21 +16,18 @@ import {Graph} from "./graph.class";
 
 export class GraphObject {
 
-    private _nodesDictionary:{[key:string]:GraphNode} = {};
     graph:Graph;
+
+    private _nodesDictionary:{[key:string]:GraphNode} = {};
 
     constructor(
         data:GraphData,
         public triggers:TriggersObject,
         public scene:GameObject
     ) {
-        //this.loadData(data);
-        
-        var str:string = "sp1;rclick->nd2,lclick->nd3";
-
-        console.log(this.getDataFromTextFormat(str));
+        this.loadData(data);
     }
-    
+
     getDataFromTextFormat(str:string):NodeData {
 
         let nodeId:string;
@@ -48,20 +45,30 @@ export class GraphObject {
             nodeId = nodesSub[1].split(")")[0];
         }
 
-        let linksList:string[] = linksStr.split(",");
+        let links:LinkData[] = [];
 
-        
+        if (linksStr) {
+            let linksList:string[] = linksStr.split(",");
+
+            linksList.forEach((linkStr:string) => {
+                let lstr:string[] = linkStr.split("->");
+
+                let data:LinkData = {
+                    node: lstr[1],
+                    trigger: lstr[0]
+                };
+
+                links.push(data);
+            });
+        }
+
+
         let value:NodeData = {
             state: {
                 type: nodeType,
                 ref: nodeId
             },
-            links: [
-                {
-                    node: "",
-                    trigger: ""
-                }
-            ]
+            links: links
         };
         
         return value;
@@ -72,39 +79,49 @@ export class GraphObject {
         let nodesData:{[key:string]:any} = data.nodes;
         let nodeIds:string[] = Object.keys(nodesData);
         let nodes:GraphNode[] = [];
-        
-        // à partir de l'écriture abrégée
-        
-        
+
 
         // on crée d'abord les objets node
         nodeIds.forEach((nodeId:string) => {
 
             let state:IDisplayable;
+            let nodeData:NodeData;
 
             if (nodesData[nodeId].state) {
-                let stateData:StateData = nodesData[nodeId].state;
-
-                if (!stateData.type || stateData.type === "sprite") {
-                    state = this.scene.getSprite(stateData.ref);
-                } else if (stateData.type === "state") {
-                    // states à faire
-                }
+                // mode normal
+                nodeData = nodesData[nodeId];
             } else if (typeof nodesData[nodeId] === "string") {
-                
+                // mode abrégé
+                nodeData = this.getDataFromTextFormat(nodesData[nodeId])
             }
 
+            let stateData:StateData = nodeData.state;
 
+            if (!stateData.type || stateData.type === "sprite") {
+                state = this.scene.getSprite(stateData.ref);
+            } else if (stateData.type === "state") {
+                // states à faire
+            }
 
             let node:GraphNode = new GraphNode(state);
             this._nodesDictionary[nodeId] = node;
             nodes.push(node);
         });
-        
+
         nodeIds.forEach((nodeId:string) => {
-            let linksDatas:LinkData[] = nodesData[nodeId].links;
+            let nodeData:NodeData;
+
+            if (nodesData[nodeId].state) {
+                // mode normal
+                nodeData = nodesData[nodeId];
+            } else if (typeof nodesData[nodeId] === "string") {
+                // mode abrégé
+                nodeData = this.getDataFromTextFormat(nodesData[nodeId])
+            }
+
+            let linksDatas:LinkData[] = nodeData.links;
             let currentNode:GraphNode = this._nodesDictionary[nodeId];
-            
+
             linksDatas.forEach((data:LinkData) => {
                 let destNode:GraphNode = this._nodesDictionary[data.node];
                 let trigger:ITrigger = this.triggers.getTrigger(data.trigger);
