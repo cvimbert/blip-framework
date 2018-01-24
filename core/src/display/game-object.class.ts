@@ -10,6 +10,8 @@ import {Control} from "../gamelogic/control.class";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {Sequence} from "../spriteslogic/sequence.class";
 import {ControlSprite} from "./control-sprite.class";
+import {Clock} from "../gamelogic/clock.class";
+import {Animation} from "../spriteslogic/animation.class";
 
 export class GameObject {
     
@@ -18,6 +20,8 @@ export class GameObject {
     private _statesDictionary:{[key:string]:SpritesGroupState} = {};
     private _controlsDictionary:{[key:string]:Control} = {};
     private _sequencesDictionary:{[key:string]:Sequence} = {};
+    private _clocksDictionary:{[key:string]:Clock} = {};
+    private _animationsDictionary:{[key:string]:Animation} = {};
 
     protected _params:Object;
 
@@ -35,12 +39,14 @@ export class GameObject {
             groups: {},
             backgrounds: [],
             foregrounds: [],
-            controls: {}
+            controls: {},
+            clocks: {}
         };
 
         var param:Object = Utils.verifyAndExtends(data, dataDefaults);
         this._params = param;
 
+        this.loadClocks(param["clocks"]);
         this.loadSprites(param["sprites"]);
         this.loadGroups(param["groups"]);
         
@@ -76,13 +82,23 @@ export class GameObject {
         return groupId + "_" + id;
     }
 
+    loadClocks(clocks:Object) {
+        for (let clockId in clocks["clocks"]) {
+            if (clocks["clocks"].hasOwnProperty(clockId)) {
+                var period:number = clocks["clock"][clockId]["period"];
+                this._clocksDictionary[clockId] = new Clock(period);
+            }
+        }
+    }
+
     loadGroups(groups:Object) {
 
         var groupDefaults:Object = {
             sprites: [],
             states: [],
             offset: {x: 0, y: 0},
-            sequences: {}
+            sequences: {},
+            animations: {}
         };
 
         for (let groupId in groups) {
@@ -91,8 +107,6 @@ export class GameObject {
 
                 let xOffset:number = param["offset"]["x"];
                 let yOffset:number = param["offset"]["y"];
-
-                console.log(param);
 
                 let sprites:Sprite[] = this.getSprites(param["sprites"]);
 
@@ -132,6 +146,13 @@ export class GameObject {
                         this._sequencesDictionary[id] = sequence;
                     }
                 }
+
+                for (let animationId in param["animations"]) {
+                    if (param["animations"].hasOwnProperty(animationId)) {
+                        let id:string = this.getIdWithGroupPrefix(groupId, animationId);
+                        this._animationsDictionary[id] = Animation.fromData(param["animations"][animationId], groupId, this);
+                    }
+                }
             }
         }
     }
@@ -162,6 +183,11 @@ export class GameObject {
         return this._statesDictionary[completeStateId];
     }
 
+    getAnimation(groupId:string, animationId:string):Animation {
+        var id:string = this.getIdWithGroupPrefix(groupId, animationId);
+        return this._animationsDictionary[id];
+    }
+
     getSequence(groupId:string, sequenceId:string):Sequence {
         var completeId:string = this.getIdWithGroupPrefix(groupId, sequenceId);
         return this._sequencesDictionary[completeId];
@@ -171,6 +197,10 @@ export class GameObject {
         var states:SpritesGroupState[] = [];
         stateIds.forEach((id:string) => states.push(this.getState(groupId, id)));
         return states;
+    }
+
+    getClock(clockId:string):Clock {
+        return this._clocksDictionary[clockId];
     }
 
     loadDecorations(decorationDatas:Object[]):Decoration[] {

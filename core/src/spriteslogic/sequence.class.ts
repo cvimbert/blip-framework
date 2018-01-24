@@ -35,16 +35,12 @@ export class Sequence extends EventDispatcher {
 
     displayAtIndex(index:number, forced:boolean = false):boolean {
         //if (!this._isIndexValid(index)) return false;
-        console.log(index);
 
         if (!forced && (index <= -1 || index >= this.states.length)){
-            console.log("pas forcé");
             return false;
         }
 
         if (index <= -1) {
-
-            console.log("min");
 
             if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
                 this.reverse();
@@ -56,8 +52,6 @@ export class Sequence extends EventDispatcher {
             return false;
 
         } else if (index >= this.states.length) {
-
-            console.log("max");
 
             if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
                 this.reverse();

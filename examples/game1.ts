@@ -7,6 +7,7 @@ import {GraphObject} from "../core/src/graphs/graph-object.class";
 import {TriggersData} from "../core/src/triggers/interfaces/triggers-data.interface";
 import {TriggersObject} from "../core/src/triggers/triggers-object.class";
 import {Control} from "../core/src/gamelogic/control.class";
+import {Sequence} from "../core/src/spriteslogic/sequence.class";
 
 var gameData:Object = {
     gameContainerScale: 0.5,
@@ -58,8 +59,76 @@ var gameData:Object = {
     foregrounds: [
 
     ],
+    clocks: {
+        mainClock: { period: 0.5 }
+    },
     groups: {
-
+        elec1: {
+            sprites: ["e1el1", "e1el2", "e1el3", "e1el4"],
+            sequences: {
+                s1: {
+                    states: [
+                        {
+                            type: "sprite",
+                            ref: "e1el4"
+                        },
+                        {
+                            type: "sprite",
+                            ref: "e1el3"
+                        },
+                        {
+                            type: "sprite",
+                            ref: "e1el2"
+                        },
+                        {
+                            type: "sprite",
+                            ref: "e1el1"
+                        }
+                    ]
+                }
+            },
+            animations: {
+                an1: {
+                    sequence: "s1",
+                    period: 0.5,
+                    iterations: 1,
+                    interruptable: false
+                }
+            }
+        },
+        elec2: {
+            sprites: ["e2el1", "e2el2", "e2el3", "e2el4"],
+            sequences: {
+                s1: {
+                    states: [
+                        {
+                            type: "sprite",
+                            ref: "e2el1"
+                        },
+                        {
+                            type: "sprite",
+                            ref: "e2el2"
+                        },
+                        {
+                            type: "sprite",
+                            ref: "e2el3"
+                        },
+                        {
+                            type: "sprite",
+                            ref: "e2el4"
+                        }
+                    ]
+                }
+            },
+            animations: {
+                an1: {
+                    sequence: "s1",
+                    period: 0.5,
+                    iterations: 1,
+                    interruptable: false
+                }
+            }
+        }
     },
     controls: {
         ctrlA: {
@@ -145,3 +214,12 @@ var mainGraphData:GraphData = {
 
 var mainGraph:GraphObject = new GraphObject(mainGraphData, triggers, scene);
 mainGraph.graph.setCurrentNodeIndex(0);
+
+var elecSeq1:Sequence = scene.getSequence("elec1", "s1");
+var elecSeq2:Sequence = scene.getSequence("elec2", "s1");
+
+elecSeq1.displayAtIndex(0);
+elecSeq2.displayAtIndex(0);
+
+scene.getAnimation("elec1", "an1").play();
+scene.getAnimation("elec2", "an1").play();

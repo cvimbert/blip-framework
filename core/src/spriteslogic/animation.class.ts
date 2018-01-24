@@ -4,20 +4,51 @@
 import {Sequence} from "./sequence.class";
 import {EventDispatcher} from "../common/event-dispatcher.class";
 import {Events} from "../common/events.class";
+import {Clock} from "../gamelogic/clock.class";
+import {EventListener} from "../common/event-listener.class";
+import {GameObject} from "../display/game-object.class";
+import {Utils} from "../common/utils.class";
+import {AnimationData} from "./animation-data.interface";
 
 export class Animation extends EventDispatcher {
 
     private _isPlaying:boolean = false;
     private _animationInterval:number;
 
+    private clockListener:EventListener;
+
 
     constructor(
         public sequence:Sequence,
         public iterations:number,
-        public period:number,
+        public period:number|Clock,
         public interruptable:boolean = true
     ) {
         super();
+    }
+
+    static fromData(data:AnimationData, groupId:string, scene:GameObject):Animation {
+
+        let defaults:AnimationData = {
+            sequence: "",
+            period: 1,
+            iterations: 1,
+            interruptable: false
+        };
+
+        let param:AnimationData = Utils.verifyAndExtends(data, defaults);
+
+        let period:number|Clock;
+        
+        if (typeof param.period === "number") {
+            period = <number>param.period;
+        } else {
+            period = scene.getClock(<string>param.period);
+        }
+
+        let sequence:Sequence = scene.getSequence(groupId, param.sequence);
+
+        return new Animation(sequence, param.iterations, period, param.interruptable);
     }
 
     play() {
@@ -33,34 +64,47 @@ export class Animation extends EventDispatcher {
 
         this._isPlaying = true;
 
-        this._animationInterval = setInterval(() => {
+        if (this.period instanceof Clock) {
+            this.clockListener = (this.period as Clock).listen(Events.CLOCK_PERIOD, () => {
+                this.animationAction(occurencesCounter);
+            });
+        } else {
+            this._animationInterval = setInterval(() => {
+                this.animationAction(occurencesCounter);
+            }, this.period * 1000);
+        }
 
-            if (this._isPlaying === false) return;
+    }
 
-            if (!this.sequence.displayNext(occurencesCounter < this.iterations - 1)) {
-                this.dispatchEvent(Events.ANIMATION_ITERATION_END, occurencesCounter);
-                occurencesCounter++;
+    animationAction(occurencesCounter:number) {
+        if (this._isPlaying === false) return;
 
-                if (occurencesCounter >= this.iterations) {
+        if (!this.sequence.displayNext(occurencesCounter < this.iterations - 1)) {
+            this.dispatchEvent(Events.ANIMATION_ITERATION_END, occurencesCounter);
+            occurencesCounter++;
 
-                    clearInterval(this._animationInterval);
+            if (occurencesCounter >= this.iterations) {
 
-                    this.dispatchEvent(Events.ANIMATION_END);
-                    this._isPlaying = false;
-                }
-                else {
-                    // on repart à zéro
-                    //this.sequence.resetIndex();
-                    //this.sequence.displayNext(true);
-                    //this.sequence.reverse();
-                }
+                clearInterval(this._animationInterval);
+
+                this.dispatchEvent(Events.ANIMATION_END);
+                this._isPlaying = false;
             }
-
-        }, this.period * 1000);
+            else {
+                // on repart à zéro
+                //this.sequence.resetIndex();
+                //this.sequence.displayNext(true);
+                //this.sequence.reverse();
+            }
+        }
     }
 
     stop() {
-
+        if (this.period instanceof Clock) {
+            (this.period as Clock).deleteListener(this.clockListener);
+        } else {
+            clearInterval(this._animationInterval);
+        }
     }
 
     reset() {
