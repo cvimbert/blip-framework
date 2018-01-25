@@ -8,6 +8,9 @@ import {TriggersData} from "../core/src/triggers/interfaces/triggers-data.interf
 import {TriggersObject} from "../core/src/triggers/triggers-object.class";
 import {Control} from "../core/src/gamelogic/control.class";
 import {Sequence} from "../core/src/spriteslogic/sequence.class";
+import {Animation} from "../core/src/spriteslogic/animation.class";
+import {Clock} from "../core/src/gamelogic/clock.class";
+import {Events} from "../core/src/common/events.class";
 
 var gameData:Object = {
     gameContainerScale: 0.5,
@@ -221,5 +224,24 @@ var elecSeq2:Sequence = scene.getSequence("elec2", "s1");
 elecSeq1.displayAtIndex(0);
 elecSeq2.displayAtIndex(0);
 
-scene.getAnimation("elec1", "an1").play();
-scene.getAnimation("elec2", "an1").play();
+var anElec1:Animation = scene.getAnimation("elec1", "an1");
+var anElec2:Animation = scene.getAnimation("elec2", "an1");
+
+//var mainClock:Clock = scene.getClock("mainClock");
+
+/*mainClock.listen(Events.CLOCK_PERIOD, () => {
+
+    if (!anElec1.isPlaying) {
+        if (Math.random() < 0.1) {
+            anElec1.play();
+        }
+    }
+
+    if (!anElec2.isPlaying) {
+        if (Math.random() < 0.1) {
+            anElec2.play();
+        }
+    }
+});*/
+
+anElec1.play();

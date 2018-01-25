@@ -83,9 +83,9 @@ export class GameObject {
     }
 
     loadClocks(clocks:Object) {
-        for (let clockId in clocks["clocks"]) {
-            if (clocks["clocks"].hasOwnProperty(clockId)) {
-                var period:number = clocks["clock"][clockId]["period"];
+        for (let clockId in clocks) {
+            if (clocks.hasOwnProperty(clockId)) {
+                var period:number = clocks[clockId]["period"];
                 this._clocksDictionary[clockId] = new Clock(period);
             }
         }

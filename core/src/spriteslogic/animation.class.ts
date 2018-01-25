@@ -12,9 +12,9 @@ import {AnimationData} from "./animation-data.interface";
 
 export class Animation extends EventDispatcher {
 
-    private _isPlaying:boolean = false;
-    private _animationInterval:number;
-
+    isPlaying:boolean = false;
+    
+    private animationInterval:number;
     private clockListener:EventListener;
 
 
@@ -25,6 +25,7 @@ export class Animation extends EventDispatcher {
         public interruptable:boolean = true
     ) {
         super();
+        console.log(iterations);
     }
 
     static fromData(data:AnimationData, groupId:string, scene:GameObject):Animation {
@@ -52,7 +53,7 @@ export class Animation extends EventDispatcher {
     }
 
     play() {
-        if (this.interruptable === false && this._isPlaying) {
+        if (this.interruptable === false && this.isPlaying) {
             occurencesCounter = 0;
             return;
         }
@@ -62,14 +63,14 @@ export class Animation extends EventDispatcher {
 
         var occurencesCounter = 0;
 
-        this._isPlaying = true;
+        this.isPlaying = true;
 
         if (this.period instanceof Clock) {
             this.clockListener = (this.period as Clock).listen(Events.CLOCK_PERIOD, () => {
                 this.animationAction(occurencesCounter);
             });
         } else {
-            this._animationInterval = setInterval(() => {
+            this.animationInterval = setInterval(() => {
                 this.animationAction(occurencesCounter);
             }, this.period * 1000);
         }
@@ -77,7 +78,7 @@ export class Animation extends EventDispatcher {
     }
 
     animationAction(occurencesCounter:number) {
-        if (this._isPlaying === false) return;
+        if (this.isPlaying === false) return;
 
         if (!this.sequence.displayNext(occurencesCounter < this.iterations - 1)) {
             this.dispatchEvent(Events.ANIMATION_ITERATION_END, occurencesCounter);
@@ -85,10 +86,10 @@ export class Animation extends EventDispatcher {
 
             if (occurencesCounter >= this.iterations) {
 
-                clearInterval(this._animationInterval);
+                clearInterval(this.animationInterval);
 
                 this.dispatchEvent(Events.ANIMATION_END);
-                this._isPlaying = false;
+                this.isPlaying = false;
             }
             else {
                 // on repart à zéro
@@ -103,16 +104,16 @@ export class Animation extends EventDispatcher {
         if (this.period instanceof Clock) {
             (this.period as Clock).deleteListener(this.clockListener);
         } else {
-            clearInterval(this._animationInterval);
+            clearInterval(this.animationInterval);
         }
     }
 
     reset() {
         this.sequence.reset();
 
-        if (this._animationInterval !== undefined) {
-            clearInterval(this._animationInterval);
-            this._animationInterval = undefined;
+        if (this.animationInterval !== undefined) {
+            clearInterval(this.animationInterval);
+            this.animationInterval = undefined;
         }
     }
 }
