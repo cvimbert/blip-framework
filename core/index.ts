@@ -45,3 +45,6 @@ export {StatusDispatcher} from "./src/common/status-dispatcher.class";
 export {StatusSubscription} from "./src/common/status-subscription.class";
 export {TimeUtils} from "./src/common/time-utils.class";
 export {EventDispatcher} from "./src/common/event-dispatcher.class";
+
+export {TriggersObject} from "./src/triggers/triggers-object.class";
+export {GraphObject} from "./src/graphs/graph-object.class";

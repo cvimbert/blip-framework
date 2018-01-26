@@ -136,6 +136,8 @@ export class GameObject {
                         param["sequences"][sequenceId]["states"].forEach((data:Object) => {
                             if (data["type"] === "sprite") {
                                 displayables.push(this.getSprite(data["ref"]));
+                            } else if (data["type"] === "state") {
+                                displayables.push(this.getState(groupId, data["ref"]));
                             }
                         });
                         

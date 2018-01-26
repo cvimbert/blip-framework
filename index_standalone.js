@@ -1,18 +1,7 @@
 /**
- * Created by Christophe on 18/01/2018.
+ * Created by Christophe on 25/01/2018.
  */
-import {HTMLGameObject} from "../core/src/display/html-game-object.class";
-import {GraphData} from "../core/src/graphs/interfaces/graph-data.interface";
-import {GraphObject} from "../core/src/graphs/graph-object.class";
-import {TriggersData} from "../core/src/triggers/interfaces/triggers-data.interface";
-import {TriggersObject} from "../core/src/triggers/triggers-object.class";
-import {Control} from "../core/src/gamelogic/control.class";
-import {Sequence} from "../core/src/spriteslogic/sequence.class";
-import {Animation} from "../core/src/spriteslogic/animation.class";
-import {Clock} from "../core/src/gamelogic/clock.class";
-import {Events} from "../core/src/common/events.class";
-
-var gameData:Object = {
+var gameData = {
     gameContainerScale: 0.5,
     sprites: {
         r1p1: { file: "files/game1/sprites/r1p1.png", x: 160, y: 1038 },
@@ -54,17 +43,7 @@ var gameData:Object = {
         e2el1: { file: "files/game1/details/e2el1.png", x: 188, y: 352 },
         e2el2: { file: "files/game1/details/e2el2.png", x: 324, y: 356 },
         e2el3: { file: "files/game1/details/e2el3.png", x: 442, y: 358 },
-        e2el4: { file: "files/game1/details/e2el4.png", x: 574, y: 356 },
-
-        ondes1e1: { file: "files/game1/details/ondes1.png", x:45, y:695 },
-        ondes2e1: { file: "files/game1/details/ondes2.png", x:86, y:704 },
-        ondes3e1: { file: "files/game1/details/ondes3.png", x:118, y:720 },
-        ondes4e1: { file: "files/game1/details/ondes4.png", x:148, y:726 },
-
-        ondes1e2: { file: "files/game1/details/ondes1.png", x:42, y:301 },
-        ondes2e2: { file: "files/game1/details/ondes2.png", x:80, y:308 },
-        ondes3e2: { file: "files/game1/details/ondes3.png", x:114, y:326 },
-        ondes4e2: { file: "files/game1/details/ondes4.png", x:142, y:332 }
+        e2el4: { file: "files/game1/details/e2el4.png", x: 574, y: 356 }
     },
     backgrounds: [
         { file: "files/game1/backgrounds/fond.png" }
@@ -76,53 +55,8 @@ var gameData:Object = {
         mainClock: { period: 0.5 }
     },
     groups: {
-        ondes1: {
-            sprites: ["ondes1e1", "ondes2e1", "ondes3e1", "ondes4e1"],
-            states: {
-                s1: ["ondes1e1"],
-                s2: ["ondes1e1", "ondes2e1"],
-                s3: ["ondes1e1", "ondes2e1", "ondes3e1"],
-                s4: ["ondes1e1", "ondes2e1", "ondes3e1", "ondes4e1"],
-                s5: []
-            },
-            sequences: {
-                seq1: {
-                    states: [
-                        {
-                            type: "state",
-                            ref: "s1"
-                        },
-                        {
-                            type: "state",
-                            ref: "s2"
-                        },
-                        {
-                            type: "state",
-                            ref: "s3"
-                        },
-                        {
-                            type: "state",
-                            ref: "s4"
-                        },
-                        {
-                            type: "state",
-                            ref: "s5"
-                        }
-                    ]
-                }
-            },
-            animations: {
-                "an1": {
-                    sequence: "seq1",
-                    period: 0.3
-                }
-            }
-        },
         elec1: {
             sprites: ["e1el1", "e1el2", "e1el3", "e1el4"],
-            states: {
-                empty: []
-            },
             sequences: {
                 s1: {
                     states: [
@@ -141,10 +75,6 @@ var gameData:Object = {
                         {
                             type: "sprite",
                             ref: "e1el1"
-                        },
-                        {
-                            type: "state",
-                            ref: "empty"
                         }
                     ]
                 }
@@ -152,7 +82,7 @@ var gameData:Object = {
             animations: {
                 an1: {
                     sequence: "s1",
-                    period: 0.3,
+                    period: 0.5,
                     iterations: 1,
                     interruptable: false
                 }
@@ -160,9 +90,6 @@ var gameData:Object = {
         },
         elec2: {
             sprites: ["e2el1", "e2el2", "e2el3", "e2el4"],
-            states: {
-                empty: []
-            },
             sequences: {
                 s1: {
                     states: [
@@ -181,10 +108,6 @@ var gameData:Object = {
                         {
                             type: "sprite",
                             ref: "e2el4"
-                        },
-                        {
-                            type: "state",
-                            ref: "empty"
                         }
                     ]
                 }
@@ -192,7 +115,7 @@ var gameData:Object = {
             animations: {
                 an1: {
                     sequence: "s1",
-                    period: 0.3,
+                    period: 0.5,
                     iterations: 1,
                     interruptable: false
                 }
@@ -220,7 +143,7 @@ var gameData:Object = {
     }
 };
 
-var scene:HTMLGameObject = new HTMLGameObject(gameData);
+var scene = new Blip.HTMLGameObject(gameData);
 scene.displayIn(document.body);
 
 scene.getControl("ctrlA").enable();
@@ -230,7 +153,7 @@ scene.getControl("cross_right").enable();
 scene.getControl("cross_left").enable();
 
 
-var triggersData:TriggersData = {
+var triggersData = {
     triggers: {
         lclick: { type: "controldown", control: "cross_left" },
         rclick: { type: "controldown", control: "cross_right" },
@@ -241,9 +164,9 @@ var triggersData:TriggersData = {
     }
 };
 
-var triggers:TriggersObject = new TriggersObject(triggersData, scene);
+var triggers = new Blip.TriggersObject(triggersData, scene);
 
-var mainGraphData:GraphData = {
+var mainGraphData = {
     nodes: {
         nr1p1: "r1p1;rclick->nr1p2",
         nr1p2: "r1p2;rclick->nr1p3,lclick->nr1p1",
@@ -281,32 +204,33 @@ var mainGraphData:GraphData = {
     }
 };
 
-var mainGraph:GraphObject = new GraphObject(mainGraphData, triggers, scene);
+var mainGraph = new Blip.GraphObject(mainGraphData, triggers, scene);
 mainGraph.graph.setCurrentNodeIndex(0);
 
-var elecSeq1:Sequence = scene.getSequence("elec1", "s1");
-var elecSeq2:Sequence = scene.getSequence("elec2", "s1");
+var elecSeq1 = scene.getSequence("elec1", "s1");
+var elecSeq2 = scene.getSequence("elec2", "s1");
 
-var anElec1:Animation = scene.getAnimation("elec1", "an1");
-var anElec2:Animation = scene.getAnimation("elec2", "an1");
+elecSeq1.displayAtIndex(0);
+elecSeq2.displayAtIndex(0);
 
-var mainClock:Clock = scene.getClock("mainClock");
-mainClock.start();
+var anElec1 = scene.getAnimation("elec1", "an1");
+var anElec2 = scene.getAnimation("elec2", "an1");
 
-mainClock.listen(Events.CLOCK_PERIOD, () => {
+//var mainClock:Clock = scene.getClock("mainClock");
 
-    if (!anElec1.isPlaying) {
-        if (Math.random() < 0.4) {
-            anElec1.play();
-        }
-    }
+/*mainClock.listen(Events.CLOCK_PERIOD, () => {
 
-    if (!anElec2.isPlaying) {
-        if (Math.random() < 0.4) {
-            anElec2.play();
-        }
-    }
-});
+ if (!anElec1.isPlaying) {
+ if (Math.random() < 0.1) {
+ anElec1.play();
+ }
+ }
 
-var animOndes1:Animation = scene.getAnimation("ondes1", "an1");
-animOndes1.play();
+ if (!anElec2.isPlaying) {
+ if (Math.random() < 0.1) {
+ anElec2.play();
+ }
+ }
+ });*/
+
+anElec1.play();

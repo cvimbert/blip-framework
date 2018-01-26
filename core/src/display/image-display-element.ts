@@ -5,8 +5,8 @@ import {DisplayElement} from "./display-element.class";
 import {File} from "../files/file.class";
 
 declare var require:any;
-const Draggable = require("draggable");
-const TweenLite = require("TweenLite");
+/*const Draggable = require("draggable");
+const TweenLite = require("TweenLite");*/
     
 export class ImageDisplayElement extends DisplayElement {
 

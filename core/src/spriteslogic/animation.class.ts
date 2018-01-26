@@ -25,7 +25,6 @@ export class Animation extends EventDispatcher {
         public interruptable:boolean = true
     ) {
         super();
-        console.log(iterations);
     }
 
     static fromData(data:AnimationData, groupId:string, scene:GameObject):Animation {
@@ -106,6 +105,8 @@ export class Animation extends EventDispatcher {
         } else {
             clearInterval(this.animationInterval);
         }
+
+        this.isPlaying = false;
     }
 
     reset() {
@@ -115,5 +116,7 @@ export class Animation extends EventDispatcher {
             clearInterval(this.animationInterval);
             this.animationInterval = undefined;
         }
+
+        this.isPlaying = false;
     }
 }
