@@ -9,8 +9,9 @@ import {EventListener} from "../common/event-listener.class";
 import {GameObject} from "../display/game-object.class";
 import {Utils} from "../common/utils.class";
 import {AnimationData} from "./animation-data.interface";
+import {Playable} from "../interfaces/playable.interface";
 
-export class Animation extends EventDispatcher {
+export class Animation extends EventDispatcher implements Playable{
 
     isPlaying:boolean = false;
     
@@ -88,6 +89,7 @@ export class Animation extends EventDispatcher {
                 clearInterval(this.animationInterval);
 
                 this.dispatchEvent(Events.ANIMATION_END);
+                this.dispatchEvent(Events.END_PLAYING);
                 this.isPlaying = false;
             }
             else {

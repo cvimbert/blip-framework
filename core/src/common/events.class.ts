@@ -9,6 +9,8 @@ export class Events {
     static ANIMATION_ITERATION_END:string = "animation_iteration_end";
     static ANIMATION_END:string = "animation_end";
     
+    static END_PLAYING:string = "end_playing";
+    
     static CLOCK_PERIOD:string = "clock_period";
     
     static CONTROL_UP:string = "control_up";
