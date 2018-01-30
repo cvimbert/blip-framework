@@ -8,21 +8,22 @@ import {EventListener} from "../../common/event-listener.class";
 
 export class ControlTrigger extends BaseTrigger implements ITrigger {
 
-    private _listener:EventListener;
+    private listener:EventListener;
 
     constructor(
         public control:Control,
-        public eventName:string,
-        callback:Function = null
+        public eventName:string
     ) {
-        super(callback);
+        super();
     }
 
     enable() {
-        this._listener = this.control.listen(this.eventName, this.callback);
+        this.listener = this.control.listen(this.eventName, () => {
+            this.action();
+        });
     }
 
     disable() {
-        this.control.deleteListener(this._listener);
+        this.control.deleteListener(this.listener);
     }
 }

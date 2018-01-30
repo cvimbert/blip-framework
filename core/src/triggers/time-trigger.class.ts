@@ -9,15 +9,14 @@ export class TimeTrigger extends BaseTrigger implements ITrigger {
     private timeout;
 
     constructor(
-        public time:number,
-        callback:Function = null
+        public time:number
     ) {
-        super(callback);
+        super();
     }
 
     enable() {
         this.timeout = setTimeout(() => {
-            if (this.callback) this.callback()
+            this.action();
         }, this.time * 1000);
     }
 

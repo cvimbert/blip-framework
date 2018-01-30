@@ -8,14 +8,12 @@ export class BaseTrigger extends EventDispatcher {
 
     protected _enabled:boolean = false;
 
-    constructor(
-        public callback:Function = null
-    ) {
+    constructor() {
         super();
     }
 
-    action() {
-        this.dispatchEvent(Events.TRIGGER_ACTION);
+    action(arg:any = null) {
+        this.dispatchEvent(Events.TRIGGER_ACTION, arg);
     }
 
     set enabled(value:boolean) {
@@ -36,15 +34,5 @@ export class BaseTrigger extends EventDispatcher {
 
     get enabled():boolean {
         return this._enabled;
-    }
-
-    bind(callback:Function) {
-        this.callback = callback;
-        this._enabled = true;
-    }
-
-    unbind() {
-        this.callback = null;
-        this._enabled = false;
     }
 }

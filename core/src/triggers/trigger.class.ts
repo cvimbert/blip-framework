@@ -13,15 +13,14 @@ export class Trigger extends BaseTrigger implements ITrigger {
     constructor(
         public dispatcher:EventDispatcher,
         public eventName:string,
-        callback:Function = null,
         public argument:any = null
     ) {
-        super(callback);
+        super();
     }
 
     protected _callback(arg:any) {
         
-        if (!this._enabled || !this.callback) return;
+        /*if (!this._enabled || !this.callback) return;
         
         if (this.argument) {
             if (arg !== this.argument) {
@@ -29,7 +28,7 @@ export class Trigger extends BaseTrigger implements ITrigger {
             }
         }
 
-        this.callback(arg);
+        this.callback(arg);*/
     }
 
     set enabled(value:boolean) {
@@ -47,7 +46,7 @@ export class Trigger extends BaseTrigger implements ITrigger {
     enable() {
         if (!this._enabled) {
             this.subscription = this.dispatcher.listen(this.eventName, (arg:any) => {
-                this._callback(arg);
+                this.action(arg);
             });
         }
 

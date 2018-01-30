@@ -9,9 +9,8 @@ import {Events} from "../../common/events.class";
 export class ControlDownTrigger extends ControlTrigger implements ITrigger {
 
     constructor(
-        control:Control,
-        callback:Function = null
+        control:Control
     ) {
-        super(control, Events.CONTROL_DOWN, callback);
+        super(control, Events.CONTROL_DOWN);
     }
 }

@@ -12,7 +12,9 @@ export class EventListener {
     ) {}
 
     call(param) {
-        this._callback(param);
+        if (this._callback) {
+            this._callback(param);
+        }
     }
 
     stoplisten() {

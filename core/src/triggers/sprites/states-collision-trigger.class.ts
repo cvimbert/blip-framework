@@ -25,12 +25,11 @@ export class StatesCollisionTrigger extends BaseTrigger implements ITrigger {
     constructor(
         public baseSprite:IState,
         public targetSprite:IState,
-        callback:Function = null,
         public onEvent:string = Events.DISPLAYED,
         public offEvent:string = Events.HIDDEN
 
     ) {
-        super(callback);
+        super();
     }
 
     enable() {
