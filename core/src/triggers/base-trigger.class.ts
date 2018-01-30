@@ -1,14 +1,22 @@
 /**
  * Created by Christophe on 07/03/2017.
  */
+import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Events} from "../common/events.class";
 
-export class BaseTrigger {
+export class BaseTrigger extends EventDispatcher {
 
     protected _enabled:boolean = false;
 
     constructor(
         public callback:Function = null
-    ) {}
+    ) {
+        super();
+    }
+
+    action() {
+        this.dispatchEvent(Events.TRIGGER_ACTION);
+    }
 
     set enabled(value:boolean) {
         if (value) {

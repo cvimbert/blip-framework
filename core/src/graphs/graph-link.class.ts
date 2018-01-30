@@ -4,12 +4,13 @@
 import {EventDispatcher} from "../common/event-dispatcher.class";
 import {GraphNode} from "./graph-node.class";
 import {ITrigger} from "../interfaces/ITrigger.interface";
+import {BaseTrigger} from "core";
 
 export class GraphLink extends EventDispatcher {
 
     constructor(
         public destNode:GraphNode,
-        public trigger:ITrigger
+        public trigger:BaseTrigger
     ) {
         super();
     }

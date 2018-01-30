@@ -20,4 +20,6 @@ export class Events {
     
     static DISPLAYED:string = "displayed";
     static HIDDEN:string = "hidden";
+
+    static TRIGGER_ACTION:string = "trigger_action";
 }

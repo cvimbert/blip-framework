@@ -9,7 +9,8 @@ import {File} from "../files/file.class";
 
 export class Sprite extends ImageDisplayElement implements IDisplayable {
     
-    private _visible:boolean;
+    private visible:boolean;
+    private visibilities:number[] = [];
 
     /**
      * The sprite is the basic display unit in Blip
@@ -27,7 +28,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
         initVisibility:boolean = false
     ) {
         super(file, x, y, scale);
-        this._visible = initVisibility;
+        this.visible = initVisibility;
     }
 
 
@@ -60,6 +61,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
      */
     displayInDOMElement(container:HTMLElement):HTMLElement {
         var elem:HTMLElement = super.displayInDOMElement(container);
+        this._DOMElement.classList.add("inactive");
         this._setVisibility();
         return elem;
     }
@@ -80,8 +82,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
      * @private
      */
     private _setVisibility() {
-
-        if (this._visible) {
+        if (this.visible) {
             this.show();
         } else {
             this.hide();
@@ -92,21 +93,27 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
     /**
      * Displays the sprite and sets its status to visible
      */
-    show() {
+    show(instanceNumber:number = 0) {
 
-        this.setStatus(Status.VISIBILITY, Status.VISIBLE);
+        if (this.visibilities.length === 0) {
+            this.setStatus(Status.VISIBILITY, Status.VISIBLE);
 
-        this._DOMElement.classList.remove("inactive");
-        this._DOMElement.classList.add("active");
+            this._DOMElement.classList.remove("inactive");
+            this._DOMElement.classList.add("active");
 
-        this._visible = true;
+            this.visible = true;
+        }
+
+        if (this.visibilities.indexOf(instanceNumber) === -1) {
+            this.visibilities.push(instanceNumber);
+        }
     }
 
 
     /**
      * Alias to Show()
      */
-    display() {
+    display(instanceNumber:number = 0) {
         this.show();
     }
 
@@ -114,14 +121,22 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
     /**
      * Hides the sprites, and sets its status to hidden
      */
-    hide() {
+    hide(instanceNumber:number = 0) {
 
-        this.setStatus(Status.VISIBILITY, Status.HIDDEN);
+        if (this.visibilities.length === 1) {
+            this.setStatus(Status.VISIBILITY, Status.HIDDEN);
 
         this._DOMElement.classList.add("inactive");
         this._DOMElement.classList.remove("active");
 
-        this._visible = false;
+            this.visible = false;
+        }
+
+        let index:number = this.visibilities.indexOf(instanceNumber);
+
+        if (index !== -1) {
+            this.visibilities.splice(index, 1);
+        }
     }
 
 
@@ -129,7 +144,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
      * Toggles the sprite's visibility
      */
     toggle() {
-        if (this._visible) {
+        if (this.visible) {
             this.hide();
         } else {
             this.show();

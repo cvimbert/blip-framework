@@ -27,7 +27,7 @@ export {Sequence} from "./src/spriteslogic/sequence.class";
 export {BaseTrigger} from "./src/triggers/base-trigger.class";
 export {TimeTrigger} from "./src/triggers/time-trigger.class";
 export {Trigger} from "./src/triggers/trigger.class";
-export {SpritesCollisionTrigger} from "./src/triggers/sprites/sprites-collision-trigger.class";
+export {StatesCollisionTrigger} from "./src/triggers/sprites/states-collision-trigger.class";
 
 export {ConditionalSpritesGroupState} from "./src/display/conditional-sprites-group-state.class";
 export {ConditionalSpritesGroupStateSet} from "./src/display/conditional-sprites-group-state-set.class";

@@ -52,7 +52,7 @@ export class TriggersObject {
         }
     }
 
-    getTrigger(triggerId:string):ITrigger {
+    getTrigger(triggerId:string):BaseTrigger {
         return this._triggersDictionary[triggerId];
     }
 }

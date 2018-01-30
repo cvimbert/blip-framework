@@ -11,8 +11,10 @@ import {Sequence} from "../core/src/spriteslogic/sequence.class";
 import {Animation} from "../core/src/spriteslogic/animation.class";
 import {Clock} from "../core/src/gamelogic/clock.class";
 import {Events} from "../core/src/common/events.class";
+import {GameObjectDefinitionData} from "../core/src/display/interfaces/game-object-definition-data.interface";
+import {StatesCollisionTrigger} from "../core";
 
-var gameData:Object = {
+let gameData:Object = {
     gameContainerScale: 0.5,
     sprites: {
         r1p1: { file: "files/game1/sprites/r1p1.png", x: 160, y: 1038 },
@@ -220,7 +222,7 @@ var gameData:Object = {
     }
 };
 
-var scene:HTMLGameObject = new HTMLGameObject(gameData);
+let scene:HTMLGameObject = new HTMLGameObject(gameData);
 scene.displayIn(document.body);
 
 scene.getControl("ctrlA").enable();
@@ -230,7 +232,7 @@ scene.getControl("cross_right").enable();
 scene.getControl("cross_left").enable();
 
 
-var triggersData:TriggersData = {
+let triggersData:TriggersData = {
     triggers: {
         lclick: { type: "controldown", control: "cross_left" },
         rclick: { type: "controldown", control: "cross_right" },
@@ -241,9 +243,9 @@ var triggersData:TriggersData = {
     }
 };
 
-var triggers:TriggersObject = new TriggersObject(triggersData, scene);
+let triggers:TriggersObject = new TriggersObject(triggersData, scene);
 
-var mainGraphData:GraphData = {
+let mainGraphData:GraphData = {
     nodes: {
         nr1p1: "r1p1;rclick->nr1p2",
         nr1p2: "r1p2;rclick->nr1p3,lclick->nr1p1",
@@ -281,16 +283,16 @@ var mainGraphData:GraphData = {
     }
 };
 
-var mainGraph:GraphObject = new GraphObject(mainGraphData, triggers, scene);
+let mainGraph:GraphObject = new GraphObject(mainGraphData, triggers, scene);
 mainGraph.graph.setCurrentNodeIndex(0);
 
-var elecSeq1:Sequence = scene.getSequence("elec1", "s1");
-var elecSeq2:Sequence = scene.getSequence("elec2", "s1");
+let elecSeq1:Sequence = scene.getSequence("elec1", "s1");
+let elecSeq2:Sequence = scene.getSequence("elec2", "s1");
 
-var anElec1:Animation = scene.getAnimation("elec1", "an1");
-var anElec2:Animation = scene.getAnimation("elec2", "an1");
+let anElec1:Animation = scene.getAnimation("elec1", "an1");
+let anElec2:Animation = scene.getAnimation("elec2", "an1");
 
-var mainClock:Clock = scene.getClock("mainClock");
+let mainClock:Clock = scene.getClock("mainClock");
 mainClock.start();
 
 mainClock.listen(Events.CLOCK_PERIOD, () => {
@@ -308,5 +310,24 @@ mainClock.listen(Events.CLOCK_PERIOD, () => {
     }
 });
 
-var animOndes1:Animation = scene.getAnimation("ondes1", "an1");
+let animOndes1:Animation = scene.getAnimation("ondes1", "an1");
 animOndes1.play();
+
+let def:GameObjectDefinitionData = {
+    groups: {
+        g1: {
+            sequences: {
+                seq1: {
+                    states: [
+                        {
+                            type: "state",
+                            ref: "ok"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+};
+
+let collisionTrigger:StatesCollisionTrigger;
