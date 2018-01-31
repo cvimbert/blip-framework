@@ -1,13 +1,13 @@
 /**
  * Created by Christophe on 26/01/2018.
  */
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {Sequence} from "./sequence.class";
 import {ArticulatedAnimationData} from "./interfaces/articulated-animation-data.interface";
 import {GameObject} from "../display/game-object.class";
 import {Utils} from "../common/utils.class";
 
-export class ArticulatedAnimation extends EventDispatcher {
+export class ArticulatedAnimation extends Dispatcher {
 
     isPlaying:boolean = false;
 

@@ -2,7 +2,7 @@
  * Created by Christophe on 21/02/2017.
  */
 import {ControlSprite} from "../display/control-sprite.class";
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
 import {Utils} from "../common/utils.class";
 import {File} from "../files/file.class";
@@ -17,7 +17,7 @@ export class ControlZone {
     ) {}
 }
 
-export class Control extends EventDispatcher {
+export class Control extends Dispatcher {
 
     upHandler;
     downHandler;

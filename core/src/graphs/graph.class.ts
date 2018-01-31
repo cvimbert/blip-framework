@@ -1,10 +1,10 @@
 /**
  * Created by Christophe on 14/02/2017.
  */
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {GraphNode} from "./graph-node.class";
 
-export class Graph extends EventDispatcher {
+export class Graph extends Dispatcher {
     
     private _currentNode:GraphNode;
 

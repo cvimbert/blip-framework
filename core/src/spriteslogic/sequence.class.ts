@@ -3,10 +3,10 @@
  */
 import {SpritesGroup} from "../display/sprites-group.class";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
 
-export class Sequence extends EventDispatcher {
+export class Sequence extends Dispatcher {
 
     // 1 2 3 4 3 2 1 2 3 4
     static LOOP_TYPE_CIRCLE:string = "circle";

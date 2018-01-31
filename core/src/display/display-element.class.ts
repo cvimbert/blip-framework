@@ -1,10 +1,9 @@
 /**
  * Created by Christophe on 21/02/2017.
  */
-import {StatusDispatcher} from "../common/status-dispatcher.class";
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 
-export class DisplayElement extends EventDispatcher {
+export class DisplayElement extends Dispatcher {
 
     protected _DOMElement:HTMLElement;
     

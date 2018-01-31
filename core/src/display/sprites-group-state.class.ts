@@ -5,9 +5,9 @@ import {Sprite} from "./sprite.class";
 import {SpritesGroup} from "./sprites-group.class";
 import {IState} from "../interfaces/IState.interface";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 
-export class SpritesGroupState extends EventDispatcher implements IState {
+export class SpritesGroupState extends Dispatcher implements IState {
 
     constructor(
         public group:SpritesGroup,

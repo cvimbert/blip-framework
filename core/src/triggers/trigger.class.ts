@@ -1,7 +1,7 @@
 /**
  * Created by Christophe on 27/02/2017.
  */
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {EventListener} from "../common/event-listener.class";
 import {ITrigger} from "../interfaces/ITrigger.interface";
 import {BaseTrigger} from "./base-trigger.class";
@@ -11,7 +11,7 @@ export class Trigger extends BaseTrigger implements ITrigger {
     subscription:EventListener;
 
     constructor(
-        public dispatcher:EventDispatcher,
+        public dispatcher:Dispatcher,
         public eventName:string,
         public argument:any = null
     ) {

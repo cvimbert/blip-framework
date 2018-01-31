@@ -1,10 +1,10 @@
 /**
  * Created by Christophe on 07/03/2017.
  */
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
 
-export class BaseTrigger extends EventDispatcher {
+export class BaseTrigger extends Dispatcher {
 
     protected _enabled:boolean = false;
 

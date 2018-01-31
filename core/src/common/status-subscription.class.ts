@@ -1,14 +1,14 @@
 /**
  * Created by Christophe on 08/03/2017.
  */
-import {StatusDispatcher} from "./status-dispatcher.class";
+import {Dispatcher} from "./dispatcher.class";
     
 export class StatusSubscription {
     
     constructor(
         public statusName:string,
         private _callback:Function,
-        private _dispatcher:StatusDispatcher
+        private _dispatcher:Dispatcher
     ) {}
     
     call(value:any) {

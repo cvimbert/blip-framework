@@ -1,10 +1,10 @@
 /**
  * Created by Christophe on 03/02/2017.
  */
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
 
-export class Clock extends EventDispatcher {
+export class Clock extends Dispatcher {
 
     private _interval:number;
 

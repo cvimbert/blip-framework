@@ -2,7 +2,7 @@
  * Created by Christophe on 03/02/2017.
  */
 import {Sequence} from "./sequence.class";
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
 import {Clock} from "../gamelogic/clock.class";
 import {EventListener} from "../common/event-listener.class";
@@ -11,7 +11,7 @@ import {Utils} from "../common/utils.class";
 import {AnimationData} from "./animation-data.interface";
 import {Playable} from "../interfaces/playable.interface";
 
-export class Animation extends EventDispatcher implements Playable{
+export class Animation extends Dispatcher implements Playable{
 
     isPlaying:boolean = false;
     

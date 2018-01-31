@@ -1,14 +1,14 @@
 /**
  * Created by Christophe on 03/03/2017.
  */
-import {EventDispatcher} from "./event-dispatcher.class";
+import {Dispatcher} from "./dispatcher.class";
 
 export class EventListener {
 
     constructor(
         public  eventName:string,
         private callback:Function,
-        private dispatcher:EventDispatcher
+        private dispatcher:Dispatcher
     ) {}
 
     call(param) {

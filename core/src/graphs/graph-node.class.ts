@@ -1,11 +1,11 @@
 /**
  * Created by Christophe on 14/02/2017.
  */
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {GraphLink} from "./graph-link.class";
 
-export class GraphNode extends EventDispatcher {
+export class GraphNode extends Dispatcher {
 
     constructor(
         public state:IDisplayable,

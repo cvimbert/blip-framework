@@ -1,10 +1,10 @@
-import {EventDispatcher} from "../common/event-dispatcher.class";
+import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
 /**
  * Created by Christophe on 03/02/2017.
  */
 
-export class Variable extends EventDispatcher {
+export class Variable extends Dispatcher {
 
     private _currentValue:any;
 
