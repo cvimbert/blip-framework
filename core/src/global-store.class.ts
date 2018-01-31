@@ -4,5 +4,5 @@
 
 export class GlobalStore {
     
-    static instanciationIndex:number = 0;
+    static instantiationIndex:number = 0;
 }

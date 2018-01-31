@@ -22,6 +22,14 @@ export class Dispatcher {
         this.statusValues[statusName] = value;
     }
 
+    getStatus(statusName:string):any {
+        for (let subscription of this.subscriptions) {
+            if (subscription.statusName === statusName) {
+                return this.statusValues[statusName];
+            }
+        }
+    }
+
     subscribe(statusName:string, callback:Function):StatusSubscription {
         let subscription:StatusSubscription = new StatusSubscription(statusName, callback, this);
 

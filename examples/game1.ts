@@ -12,7 +12,7 @@ import {Animation} from "../core/src/spriteslogic/animation.class";
 import {Clock} from "../core/src/gamelogic/clock.class";
 import {Events} from "../core/src/common/events.class";
 import {GameObjectDefinitionData} from "../core/src/display/interfaces/game-object-definition-data.interface";
-import {StatesCollisionTrigger} from "../core";
+import {StatesCollisionTrigger} from "../core/src/triggers/sprites/states-collision-trigger.class";
 
 let gameData:Object = {
     gameContainerScale: 0.5,
@@ -330,4 +330,13 @@ let def:GameObjectDefinitionData = {
     }
 };
 
-let collisionTrigger:StatesCollisionTrigger;
+let collisionTrigger:StatesCollisionTrigger = new StatesCollisionTrigger(
+    scene.getSprite("e1el1"),
+    scene.getSprite("e2p1")
+);
+
+collisionTrigger.listen(Events.TRIGGER_ACTION, () => {
+    console.log("collision");
+});
+
+collisionTrigger.enable();

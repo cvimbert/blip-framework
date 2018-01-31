@@ -7,7 +7,8 @@ import {Sprite} from "../../display/sprite.class";
 import {Events} from "../../common/events.class";
 import {EventListener} from "../../common/event-listener.class";
 import {IState} from "../../interfaces/IState.interface";
-import {IDisplayable} from "core/src/interfaces/IDisplayable.interface";
+import {IDisplayable} from "../../interfaces/IDisplayable.interface";
+import {Status} from "../../common/status.class";
 
 export class StatesCollisionTrigger extends BaseTrigger implements ITrigger {
 
@@ -33,11 +34,16 @@ export class StatesCollisionTrigger extends BaseTrigger implements ITrigger {
         if (!this._enabled) {
 
             this.baseSpriteSubscription = this.baseSprite.listen(Events.DISPLAYED, () => {
-
+                console.log("disp");
+                if (this.baseSprite.getStatus(Status.VISIBILITY) === Status.VISIBLE) {
+                    this.action();
+                }
             });
 
             this.targetSpriteSubscription = this.targetSprite.listen(Events.DISPLAYED, () => {
-
+                if (this.targetSprite.getStatus(Status.VISIBILITY) === Status.VISIBLE) {
+                    this.action();
+                }
             });
 
             //this.baseSpriteSubscription = this.baseSprite

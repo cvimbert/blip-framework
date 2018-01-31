@@ -21,7 +21,7 @@ export class DisplayElement extends Dispatcher {
             return this._DOMElement;
         }
         else {
-            var div:HTMLElement = document.createElement("div");
+            let div:HTMLElement = document.createElement("div");
             div.className = "game-element";
             div.style.left = this.x + "px";
             div.style.top = this.y + "px";
@@ -45,7 +45,7 @@ export class DisplayElement extends Dispatcher {
 
     displayInDocumentById(id:string) {
         this._DOMElement = this.getDOMElement();
-        var container:HTMLElement = document.getElementById(id);
+        let container:HTMLElement = document.getElementById(id);
         container.appendChild(this._DOMElement);
     }
 }
