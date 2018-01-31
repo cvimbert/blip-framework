@@ -5,10 +5,10 @@ import {EventListener} from "./event-listener.class";
 
 export class EventDispatcher {
 
-    private _listeners:EventListener[] = [];
+    private listeners:EventListener[] = [];
 
     dispatchEvent(eventType:string, param:any = null) {
-        this._listeners.forEach((subscription:EventListener) => {
+        this.listeners.forEach((subscription:EventListener) => {
             if (subscription.eventName === eventType) {
                 subscription.call(param);
             }
@@ -16,16 +16,16 @@ export class EventDispatcher {
     }
 
     listen(eventName:string, callback:Function):EventListener {
-        var listener:EventListener = new EventListener(eventName, callback, this);
-        this._listeners.push(listener);
+        let listener:EventListener = new EventListener(eventName, callback, this);
+        this.listeners.push(listener);
         return listener;
     }
 
     deleteListener(listener:EventListener) {
-        var index:number = this._listeners.indexOf(listener);
+        let index:number = this.listeners.indexOf(listener);
 
         if (index !== -1) {
-            this._listeners.splice(index, 1);
+            this.listeners.splice(index, 1);
         }
     }
 }

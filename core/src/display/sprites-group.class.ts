@@ -5,16 +5,23 @@ import {Sprite} from "./sprite.class";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {IState} from "../interfaces/IState.interface";
 import {SpritesGroupState} from "./sprites-group-state.class";
+import {EventDispatcher} from "../common/event-dispatcher.class";
 
-export class SpritesGroup implements IDisplayable {
+export class SpritesGroup extends EventDispatcher implements IDisplayable {
 
     constructor(
         public sprites:Sprite[],
         public states:IState[] = []
-    ) {}
+    ) {
+        super();
+    }
 
     show() {
         this.sprites.forEach(sprite => sprite.show());
+    }
+
+    isVisible():boolean {
+        return true;
     }
     
     display() {
@@ -38,7 +45,7 @@ export class SpritesGroup implements IDisplayable {
             }
         });
 
-        var state:SpritesGroupState = new SpritesGroupState(this, sprites);
+        let state:SpritesGroupState = new SpritesGroupState(this, sprites);
         this.states.push(state);
         return state;
     }

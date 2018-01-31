@@ -22,18 +22,18 @@ export class ImageDisplayElement extends DisplayElement {
     }
 
     getDOMElement():HTMLElement {
-        var div:HTMLElement = super.getDOMElement();
-        var image:HTMLElement = document.createElement("img");
+        let div:HTMLElement = super.getDOMElement();
+        let image:HTMLElement = document.createElement("img");
         image["src"] = this.file.path;
         div.appendChild(image);
 
-        var positionDisplayer:HTMLElement = document.createElement("div");
+        let positionDisplayer:HTMLElement = document.createElement("div");
         positionDisplayer.classList.add("position-displayer");
         div.appendChild(positionDisplayer);
 
         this.positionDisplayer = positionDisplayer;
 
-        /*var draggable:any = Draggable.create(div, {
+        /*let draggable:any = Draggable.create(div, {
             onDrag: function () {
                 positionDisplayer.innerHTML = "(" + this.x + "," + this.y + ")";
             }

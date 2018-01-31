@@ -7,17 +7,17 @@ export class EventListener {
 
     constructor(
         public  eventName:string,
-        private _callback:Function,
-        private _dispatcher:EventDispatcher
+        private callback:Function,
+        private dispatcher:EventDispatcher
     ) {}
 
     call(param) {
-        if (this._callback) {
-            this._callback(param);
+        if (this.callback) {
+            this.callback(param);
         }
     }
 
     stoplisten() {
-        this._dispatcher.deleteListener(this);
+        this.dispatcher.deleteListener(this);
     }
 }

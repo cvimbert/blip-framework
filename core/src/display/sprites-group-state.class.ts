@@ -5,13 +5,16 @@ import {Sprite} from "./sprite.class";
 import {SpritesGroup} from "./sprites-group.class";
 import {IState} from "../interfaces/IState.interface";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
+import {EventDispatcher} from "../common/event-dispatcher.class";
 
-export class SpritesGroupState implements IState {
+export class SpritesGroupState extends EventDispatcher implements IState {
 
     constructor(
         public group:SpritesGroup,
         public sprites:IDisplayable[] = []
-    ) {}
+    ) {
+        super();
+    }
 
     display() {
         this.group.hide();
@@ -20,5 +23,9 @@ export class SpritesGroupState implements IState {
 
     hide() {
         this.group.hide();
+    }
+
+    isVisible():boolean {
+        return true;
     }
 }

@@ -32,6 +32,11 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
     }
 
 
+    isVisible():boolean {
+        return this.visible;
+    }
+
+
     /**
      * Create a sprite from raw datas
      * @param data
@@ -39,7 +44,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
      */
     static fromData(data:Object):Sprite {
         
-        var defaults:Object = {
+        let defaults:Object = {
             file: "",
             x: 0,
             y: 0,
@@ -47,8 +52,8 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
             initVisibility: false
         };
         
-        var param:Object = Utils.verifyAndExtends(data, defaults);
-        var file:File = new File(param["file"]);
+        let param:Object = Utils.verifyAndExtends(data, defaults);
+        let file:File = new File(param["file"]);
         
         return new Sprite(file, param["x"], param["y"], param["scale"], param["initVisibility"]);
     }
@@ -60,7 +65,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
      * @returns {HTMLElement}
      */
     displayInDOMElement(container:HTMLElement):HTMLElement {
-        var elem:HTMLElement = super.displayInDOMElement(container);
+        let elem:HTMLElement = super.displayInDOMElement(container);
         this._DOMElement.classList.add("inactive");
         this._setVisibility();
         return elem;
@@ -96,7 +101,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
     show(instanceNumber:number = 0) {
 
         if (this.visibilities.length === 0) {
-            this.setStatus(Status.VISIBILITY, Status.VISIBLE);
+            //this.setStatus(Status.VISIBILITY, Status.VISIBLE);
 
             this._DOMElement.classList.remove("inactive");
             this._DOMElement.classList.add("active");
@@ -124,7 +129,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
     hide(instanceNumber:number = 0) {
 
         if (this.visibilities.length === 1) {
-            this.setStatus(Status.VISIBILITY, Status.HIDDEN);
+            //this.setStatus(Status.VISIBILITY, Status.HIDDEN);
 
         this._DOMElement.classList.add("inactive");
         this._DOMElement.classList.remove("active");

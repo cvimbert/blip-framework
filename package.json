@@ -23,7 +23,6 @@
     "start": "tsc && tsc -w",
     "lite": "lite-server",
     "tsc": "tsc",
-    "tsc:w": "tsc -w",
     "build": "webpack"
   },
   "repository": {

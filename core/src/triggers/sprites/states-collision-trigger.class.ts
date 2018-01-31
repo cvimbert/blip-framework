@@ -7,14 +7,12 @@ import {Sprite} from "../../display/sprite.class";
 import {Events} from "../../common/events.class";
 import {EventListener} from "../../common/event-listener.class";
 import {IState} from "../../interfaces/IState.interface";
+import {IDisplayable} from "core/src/interfaces/IDisplayable.interface";
 
 export class StatesCollisionTrigger extends BaseTrigger implements ITrigger {
 
-    private baseSpriteSubscription1:EventListener;
-    private targetSpriteSubscription1:EventListener;
-
-    private baseSpriteSubscription2:EventListener;
-    private targetSpriteSubscription2:EventListener;
+    private baseSpriteSubscription:EventListener;
+    private targetSpriteSubscription:EventListener;
     
     private ON:string = "on";
     private OFF:string = "off";
@@ -23,17 +21,26 @@ export class StatesCollisionTrigger extends BaseTrigger implements ITrigger {
     private targetSpriteStatus:string;
 
     constructor(
-        public baseSprite:IState,
-        public targetSprite:IState,
+        public baseSprite:IDisplayable,
+        public targetSprite:IDisplayable,
         public onEvent:string = Events.DISPLAYED,
         public offEvent:string = Events.HIDDEN
-
     ) {
         super();
     }
 
     enable() {
         if (!this._enabled) {
+
+            this.baseSpriteSubscription = this.baseSprite.listen(Events.DISPLAYED, () => {
+
+            });
+
+            this.targetSpriteSubscription = this.targetSprite.listen(Events.DISPLAYED, () => {
+
+            });
+
+            //this.baseSpriteSubscription = this.baseSprite
 
             // dans un sens
             
@@ -58,11 +65,8 @@ export class StatesCollisionTrigger extends BaseTrigger implements ITrigger {
     }
 
     disable() {
-        if (this.baseSpriteSubscription1) this.baseSpriteSubscription1.stoplisten();
-        if (this.targetSpriteSubscription1) this.targetSpriteSubscription1.stoplisten();
-
-        if (this.baseSpriteSubscription2) this.baseSpriteSubscription2.stoplisten();
-        if (this.targetSpriteSubscription2) this.targetSpriteSubscription2.stoplisten();
+        if (this.baseSpriteSubscription) this.baseSpriteSubscription.stoplisten();
+        if (this.targetSpriteSubscription) this.targetSpriteSubscription.stoplisten();
 
         super.disable();
     }
