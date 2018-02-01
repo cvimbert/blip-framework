@@ -13,6 +13,8 @@ import {Clock} from "../core/src/gamelogic/clock.class";
 import {Events} from "../core/src/common/events.class";
 import {GameObjectDefinitionData} from "../core/src/display/interfaces/game-object-definition-data.interface";
 import {StatesCollisionTrigger} from "../core/src/triggers/sprites/states-collision-trigger.class";
+import {Variable} from "../core/src/gamelogic/variable.class";
+import {Condition} from "../core/src/gamelogic/condition.class";
 
 let gameData:Object = {
     gameContainerScale: 0.5,
@@ -75,7 +77,8 @@ let gameData:Object = {
 
     ],
     clocks: {
-        mainClock: { period: 0.3 }
+        mainClock: { period: 0.3 },
+        electricityClock: { period : 0.5 }
     },
     groups: {
         ondes1: {
@@ -154,7 +157,7 @@ let gameData:Object = {
             animations: {
                 an1: {
                     sequence: "s1",
-                    period: 0.3,
+                    period: "electricityClock",
                     iterations: 1,
                     interruptable: false
                 }
@@ -194,7 +197,7 @@ let gameData:Object = {
             animations: {
                 an1: {
                     sequence: "s1",
-                    period: 0.3,
+                    period: "electricityClock",
                     iterations: 1,
                     interruptable: false
                 }
@@ -295,6 +298,8 @@ let anElec2:Animation = scene.getAnimation("elec2", "an1");
 let mainClock:Clock = scene.getClock("mainClock");
 mainClock.start();
 
+scene.getClock("electricityClock").start();
+
 mainClock.listen(Events.CLOCK_PERIOD, () => {
 
     if (!anElec1.isPlaying) {
@@ -340,3 +345,11 @@ collisionTrigger.listen(Events.TRIGGER_ACTION, () => {
 });
 
 collisionTrigger.enable();
+
+let variable1 = new Variable(20);
+
+let cond1:Condition = new Condition(() => {
+    return variable1.value < 10;
+});
+
+console.log(cond1.eval());

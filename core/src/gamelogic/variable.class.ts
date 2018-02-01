@@ -6,31 +6,30 @@ import {Events} from "../common/events.class";
 
 export class Variable extends Dispatcher {
 
-    private _currentValue:any;
+    private currentValue:any;
 
     static STRING_TYPE:string = "string";
     static NUMBER_TYPE:string = "number";
     static BOOLEAN_TYPE:string = "boolean";
 
     constructor(
-        public type:string,
-        public initValue:any = null
+        public initValue:string|number|boolean = null
     ) {
         super();
-        this._currentValue = initValue;
+        this.currentValue = initValue;
     }
 
     get value():any {
-        return this._currentValue;
+        return this.currentValue;
     }
 
     set value(value:any) {
-        this._currentValue = value;
+        this.currentValue = value;
         this.dispatchEvent(Events.VARIABLE_CHANGE, this.value);
     }
 
-    getType():string {
-        return typeof this._currentValue;
+    get type():string {
+        return typeof this.value;
     }
 
     increment() {

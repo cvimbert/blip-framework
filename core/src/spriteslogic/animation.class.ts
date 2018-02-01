@@ -53,6 +53,12 @@ export class Animation extends Dispatcher implements Playable{
     }
 
     play() {
+        let occurencesCounter;
+
+        if (this.clockListener) {
+            this.clockListener.stoplisten();
+        }
+
         if (this.interruptable === false && this.isPlaying) {
             occurencesCounter = 0;
             return;
@@ -61,7 +67,7 @@ export class Animation extends Dispatcher implements Playable{
         this.sequence.reset();
         this.sequence.displayNext(true);
 
-        var occurencesCounter = 0;
+        occurencesCounter = 0;
 
         this.isPlaying = true;
 
@@ -117,6 +123,11 @@ export class Animation extends Dispatcher implements Playable{
         if (this.animationInterval !== undefined) {
             clearInterval(this.animationInterval);
             this.animationInterval = undefined;
+        }
+
+        if (this.clockListener) {
+            this.clockListener.stoplisten();
+            this.clockListener = null;
         }
 
         this.isPlaying = false;

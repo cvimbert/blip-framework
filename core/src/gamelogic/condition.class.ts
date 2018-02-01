@@ -5,8 +5,10 @@
 export class Condition {
 
     constructor(
-        public type:string
+        private testFunction:Function
     ) {}
 
-    
+    eval():boolean {
+        return this.testFunction();
+    }
 }

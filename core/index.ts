@@ -1,7 +1,7 @@
 /**
  * Created by Christophe on 20/03/2017.
  */
-export {Utils} from "./src/common/utils.class";
+/*export {Utils} from "./src/common/utils.class";
 export {GameObject} from "./src/display/game-object.class";
 export {HTMLGameObject} from "./src/display/html-game-object.class";
 export {LcdDisplayer} from "./src/modules/lcd-displayer/lcd-displayer.class";
@@ -45,4 +45,4 @@ export {StatusSubscription} from "./src/common/status-subscription.class";
 export {TimeUtils} from "./src/common/time-utils.class";
 
 export {TriggersObject} from "./src/triggers/triggers-object.class";
-export {GraphObject} from "./src/graphs/graph-object.class";
+export {GraphObject} from "./src/graphs/graph-object.class";*/
