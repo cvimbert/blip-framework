@@ -75,7 +75,7 @@ let gameData:Object = {
 
     ],
     clocks: {
-        mainClock: { period: 0.5 }
+        mainClock: { period: 0.3 }
     },
     groups: {
         ondes1: {
