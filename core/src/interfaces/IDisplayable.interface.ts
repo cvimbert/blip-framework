@@ -8,4 +8,5 @@ export interface IDisplayable {
     hide();
     listen(event:string, callback:Function):EventListener;
     getStatus(statusName:string);
+    subscribe(statusName:string, callback:Function);
 }

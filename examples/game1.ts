@@ -332,7 +332,7 @@ let def:GameObjectDefinitionData = {
 
 let collisionTrigger:StatesCollisionTrigger = new StatesCollisionTrigger(
     scene.getSprite("e1el1"),
-    scene.getSprite("e2p1")
+    scene.getSprite("r2p2")
 );
 
 collisionTrigger.listen(Events.TRIGGER_ACTION, () => {

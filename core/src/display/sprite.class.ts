@@ -7,6 +7,7 @@ import {Status} from "../common/status.class";
 import {Utils} from "../common/utils.class";
 import {File} from "../files/file.class";
 import {Events} from "../common/events.class";
+import {VisibilityStatus} from "../common/statuses/visibility-status.class";
 
 export class Sprite extends ImageDisplayElement implements IDisplayable {
 
@@ -31,7 +32,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
         super(file, x, y, scale);
         this.visible = initVisibility;
 
-        this.setStatus(Status.VISIBILITY, Status.HIDDEN);
+        this.setStatus(VisibilityStatus.VISIBILITY, VisibilityStatus.HIDDEN);
     }
 
 
@@ -104,7 +105,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
     show(instanceNumber:number = 0) {
 
         if (this.visibilities.length === 0) {
-            this.setStatus(Status.VISIBILITY, Status.VISIBLE);
+            this.setStatus(VisibilityStatus.VISIBILITY, VisibilityStatus.VISIBLE);
             this.dispatchEvent(Events.DISPLAYED);
 
             this._DOMElement.classList.remove("inactive");
@@ -133,7 +134,7 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
     hide(instanceNumber:number = 0) {
 
         if (this.visibilities.length === 1) {
-            this.setStatus(Status.VISIBILITY, Status.HIDDEN);
+            this.setStatus(VisibilityStatus.VISIBILITY, VisibilityStatus.HIDDEN);
 
             this._DOMElement.classList.add("inactive");
             this._DOMElement.classList.remove("active");
