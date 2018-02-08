@@ -351,5 +351,3 @@ let variable1 = new Variable(20);
 let cond1:Condition = new Condition(() => {
     return variable1.value < 10;
 });
-
-console.log(cond1.eval());
