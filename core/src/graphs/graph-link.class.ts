@@ -7,6 +7,7 @@ import {ITrigger} from "../interfaces/ITrigger.interface";
 import {BaseTrigger} from "../triggers/base-trigger.class";
 import {EventListener} from "../common/event-listener.class";
 import {Events} from "../common/events.class";
+import {Condition} from "../gamelogic/condition.class";
 
 export class GraphLink extends Dispatcher {
 
@@ -14,19 +15,22 @@ export class GraphLink extends Dispatcher {
 
     constructor(
         public destNode:GraphNode,
-        public trigger:BaseTrigger
+        public trigger:BaseTrigger,
+        public condition:Condition = null
     ) {
         super();
     }
 
     enableTrigger(callback:Function) {
-        //this.trigger.bind(() => callback(this.destNode));
         this.trigger.enable();
-        this.triggerListener = this.trigger.listen(Events.TRIGGER_ACTION, () => callback(this.destNode));
+        this.triggerListener = this.trigger.listen(Events.TRIGGER_ACTION, () => {
+            if (!this.condition || this.condition.eval()) {
+                callback(this.destNode)
+            }
+        });
     }
 
     disableTrigger() {
-        //this.trigger.unbind();
         this.trigger.disable();
         this.trigger.deleteListener(this.triggerListener);
     }

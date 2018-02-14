@@ -15,6 +15,7 @@ import {GameObjectDefinitionData} from "../core/src/display/interfaces/game-obje
 import {StatesCollisionTrigger} from "../core/src/triggers/sprites/states-collision-trigger.class";
 import {Variable} from "../core/src/gamelogic/variable.class";
 import {Condition} from "../core/src/gamelogic/condition.class";
+import {ConditionsData} from "../core/src/gamelogic/conditions/interfaces/conditions-data.interface";
 
 let gameData:Object = {
     gameContainerScale: 0.5,
@@ -248,40 +249,44 @@ let triggersData:TriggersData = {
 
 let triggers:TriggersObject = new TriggersObject(triggersData, scene);
 
+let conditionsData:ConditionsData = {
+
+};
+
 let mainGraphData:GraphData = {
     nodes: {
-        nr1p1: "r1p1;rclick->nr1p2",
-        nr1p2: "r1p2;rclick->nr1p3,lclick->nr1p1",
-        nr1p3: "r1p3;rclick->nr1p4,lclick->nr1p2",
-        nr1p4: "r1p4;lclick->nr1p3,rclick->ne1p1",
-        ne1p1: "e1p1;lclick->nr1p4,tclick->ne1p2",
-        ne1p2: "e1p2;bclick->ne1p1,tclick->nr2p1",
+        nr1p1: "sprite(r1p1);condition1:rclick->nr1p2",
+        nr1p2: "r1p2;rclick->nr1p3;lclick->nr1p1",
+        nr1p3: "r1p3;rclick->nr1p4;lclick->nr1p2",
+        nr1p4: "r1p4;lclick->nr1p3;rclick->ne1p1",
+        ne1p1: "e1p1;lclick->nr1p4;tclick->ne1p2",
+        ne1p2: "e1p2;bclick->ne1p1;tclick->nr2p1",
 
-        nr2p1: "r2p1;bclick->ne1p2,lclick->nr2p2,jump->nr2p1s",
+        nr2p1: "r2p1;bclick->ne1p2;lclick->nr2p2;jump->nr2p1s",
         nr2p1s: "r2p1s;fall->nr2p1",
 
-        nr2p2: "r2p2;rclick->nr2p1,lclick->nr2p3,jump->nr2p2s",
+        nr2p2: "r2p2;rclick->nr2p1;lclick->nr2p3;jump->nr2p2s",
         nr2p2s: "r2p2s;fall->nr2p2",
 
-        nr2p3: "r2p3;rclick->nr2p2,lclick->nr2p4,jump->nr2p3s",
+        nr2p3: "r2p3;rclick->nr2p2;lclick->nr2p4;jump->nr2p3s",
         nr2p3s: "r2p3s;fall->nr2p3",
 
-        nr2p4: "r2p4;rclick->nr2p3,jump->nr2p4s,lclick->ne2p1",
+        nr2p4: "r2p4;rclick->nr2p3;jump->nr2p4s;lclick->ne2p1",
         nr2p4s: "r2p4s;fall->nr2p4",
 
-        ne2p1: "e2p1;rclick->nr2p4,tclick->ne2p2",
-        ne2p2: "e2p2;bclick->ne2p1,tclick->nr3p1",
+        ne2p1: `e2p1;rclick->nr2p4;tclick->ne2p2`,
+        ne2p2: "e2p2;bclick->ne2p1;tclick->nr3p1",
 
-        nr3p1: "r3p1;bclick->ne2p2,rclick->nr3p2,jump->nr3p1s",
+        nr3p1: "r3p1;bclick->ne2p2;rclick->nr3p2;jump->nr3p1s",
         nr3p1s: "r3p1s;fall->nr3p1",
 
-        nr3p2: "r3p2;rclick->nr3p3,lclick->nr3p1,jump->nr3p2s",
+        nr3p2: "r3p2;rclick->nr3p3;lclick->nr3p1;jump->nr3p2s",
         nr3p2s: "r3p2s;fall->nr3p2",
 
-        nr3p3: "r3p3;rclick->nr3p4,lclick->nr3p2,jump->nr3p3s",
+        nr3p3: "r3p3;rclick->nr3p4;lclick->nr3p2;jump->nr3p3s",
         nr3p3s: "r3p3s;fall->nr3p3",
 
-        nr3p4: "r3p4;lclick->nr3p3,jump->nr3p4s",
+        nr3p4: "r3p4;lclick->nr3p3;jump->nr3p4s",
         nr3p4s: "r3p4s;fall->nr3p4"
     }
 };

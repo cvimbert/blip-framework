@@ -13,6 +13,8 @@ import {GraphLink} from "./graph-link.class";
 import {BaseTrigger} from "../triggers/base-trigger.class";
 import {ITrigger} from "../interfaces/ITrigger.interface";
 import {Graph} from "./graph.class";
+import {RevertedTemplate} from "reverted-template";
+import {DataTemplates} from "../data-templates.class";
 
 export class GraphObject {
 
@@ -30,43 +32,25 @@ export class GraphObject {
 
     getDataFromTextFormat(str:string):NodeData {
 
-        let nodeId:string;
+        let data:Object = DataTemplates.graphNode.extract(str);
+
         let nodeType:string = "sprite";
-
-        let splt:string[] = str.split(";");
-        let nodeStr:string = splt[0];
-        let linksStr:string = splt[1];
-
-        if (nodeStr.indexOf("(") === -1) {
-            nodeId = nodeStr;
-        } else {
-            let nodesSub:string[] = nodeStr.split("(");
-            nodeType = nodesSub[0];
-            nodeId = nodesSub[1].split(")")[0];
-        }
 
         let links:LinkData[] = [];
 
-        if (linksStr) {
-            let linksList:string[] = linksStr.split(",");
+        data[1].forEach((linkData:Object) => {
+            let data:LinkData = {
+                node: linkData["$nodeId"],
+                trigger: linkData["$triggerId"]
+            };
 
-            linksList.forEach((linkStr:string) => {
-                let lstr:string[] = linkStr.split("->");
-
-                let data:LinkData = {
-                    node: lstr[1],
-                    trigger: lstr[0]
-                };
-
-                links.push(data);
-            });
-        }
-
+            links.push(data);
+        });
 
         let value:NodeData = {
             state: {
                 type: nodeType,
-                ref: nodeId
+                ref: data[0]["$spriteId"]
             },
             links: links
         };
