@@ -5,7 +5,7 @@
 export class Condition {
 
     constructor(
-        private testFunction:Function
+        private testFunction:Function = null
     ) {}
 
     eval():boolean {

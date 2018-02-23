@@ -1,7 +1,7 @@
 /**
  * Created by Christophe on 24/02/2017.
  */
-import {Variable} from "../../gamelogic/variable.class";
+import {Variable} from "../../gamelogic/variables/variable.class";
 import {Seg7Displayer} from "./seg7-displayer.class";
 import {DisplayElement} from "../../display/display-element.class";
 

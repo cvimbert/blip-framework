@@ -1,5 +1,5 @@
-import {Dispatcher} from "../common/dispatcher.class";
-import {Events} from "../common/events.class";
+import {Dispatcher} from "../../common/dispatcher.class";
+import {Events} from "../../common/events.class";
 /**
  * Created by Christophe on 03/02/2017.
  */

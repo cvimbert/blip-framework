@@ -1,12 +1,12 @@
-import {Variable} from "../../variable.class";
+import {Variable} from "../../variables/variable.class";
 import {Condition} from "../../condition.class";
 
 export class VariableCondition extends Condition {
 
     constructor(
         private variable:Variable,
-        testFunction:Function
+        private statement:string,
     ) {
-        super(testFunction);
+        super();
     }
 }

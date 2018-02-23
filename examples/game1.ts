@@ -13,9 +13,11 @@ import {Clock} from "../core/src/gamelogic/clock.class";
 import {Events} from "../core/src/common/events.class";
 import {GameObjectDefinitionData} from "../core/src/display/interfaces/game-object-definition-data.interface";
 import {StatesCollisionTrigger} from "../core/src/triggers/sprites/states-collision-trigger.class";
-import {Variable} from "../core/src/gamelogic/variable.class";
+import {Variable} from "../core/src/gamelogic/variables/variable.class";
 import {Condition} from "../core/src/gamelogic/condition.class";
 import {ConditionsData} from "../core/src/gamelogic/conditions/interfaces/conditions-data.interface";
+import {ConditionObject} from "../core/src/gamelogic/conditions/condition-object.class";
+import {SpritesProvider} from "../core/src/providers/sprites-provider.class";
 
 let gameData:Object = {
     gameContainerScale: 0.5,
@@ -250,8 +252,13 @@ let triggersData:TriggersData = {
 let triggers:TriggersObject = new TriggersObject(triggersData, scene);
 
 let conditionsData:ConditionsData = {
-
+    conditions: {
+        cond1: "variable(var1)>5",
+        cond2: "variable(var2)===6"
+    }
 };
+
+let conditions:ConditionObject = new ConditionObject(conditionsData, scene);
 
 let mainGraphData:GraphData = {
     nodes: {

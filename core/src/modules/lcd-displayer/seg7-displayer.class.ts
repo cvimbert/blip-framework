@@ -2,7 +2,7 @@
  * Created by Christophe on 22/02/2017.
  */
 import {DisplayElement} from "../../display/display-element.class";
-import {Variable} from "../../gamelogic/variable.class";
+import {Variable} from "../../gamelogic/variables/variable.class";
 import {Events} from "../../common/events.class";
 
 export class Seg7Displayer extends DisplayElement {
