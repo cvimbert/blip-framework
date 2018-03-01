@@ -25,14 +25,12 @@ export class BlpParser {
     loadCode() {
         let req: XMLHttpRequest = new XMLHttpRequest();
 
-        req.open("GET", "code2.blp", true);
+        req.open("GET", "code.blp", true);
 
         req.onreadystatechange = () => {
             if (req.readyState === XMLHttpRequest.DONE) {
                 if (req.status === 200) {
-                    //console.log("loaded");
                     this.code = req.responseText;
-                    //this.code = this.code.replace("\r", "");
                     this.simplifiedParsing();
                 }
             } else {
@@ -60,14 +58,18 @@ export class BlpParser {
     }
 
     simplifiedParsing() {
-        let propertyName: string = `(${Regexps.objectName})\\s*:${Regexps.spaceOrLinebreak}`;
-        let passivePropertyName: string = `${Regexps.objectName}\\s*:${Regexps.spaceOrLinebreak}`;
-        let fullContent: string = `(?:(?:(?!(?:${passivePropertyName})|#).)*)`;
-        //let namedBracketsGroup: string = `${propertyName}\\{(${fullContent})\\}`;
-        let freeGroup: string = `${propertyName}(${fullContent})${Regexps.spaceOrLinebreak}`;
+        let capturingPropertyName: string = `(${Regexps.objectName})\\s*:${Regexps.spaceOrLinebreak}`;
+        let propertyName: string = `${Regexps.objectName}\\s*:${Regexps.spaceOrLinebreak}`;
 
-        console.log(freeGroup);
-        let tested: RegExp = new RegExp(freeGroup, "gs");
+        let everything: string = `(?:.|\\n|\\r)`;
+
+        let freeGroupContent: string = `(?:(?!(?:${propertyName})|#)${everything})*`;
+
+        let namedBracketsGroup: string = `${capturingPropertyName}\\{((?:(?!\\}(?:[^\\}]*)$)${everything})*)`;
+
+        let freeGroup: string = `${capturingPropertyName}(${freeGroupContent})${Regexps.spaceOrLinebreak}`;
+
+        let tested: RegExp = new RegExp(namedBracketsGroup, "g");
 
         let res: RegExpExecArray = tested.exec(this.code);
 
