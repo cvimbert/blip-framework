@@ -1,0 +1,23 @@
+        #sprite
+            sp1: "path", 26.3, 90
+            sp2: "path2", 87, 9
+            sp3:
+                25
+                14
+
+        #state
+        	st1: sp1
+        	st2: sp1, sp2
+
+        #sequence seq1:
+        	state(st1)
+        	state(st2)
+
+        #animation
+        	an1:
+        	    true
+        		seq1
+        		0.6
+        	an2:
+        		seq1
+        		clock(cl1)
