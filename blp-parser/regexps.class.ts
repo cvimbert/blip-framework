@@ -1,9 +1,6 @@
 export class Regexps {
 
-    static propertyName: string = "#[A-Za-z0-9]+";
-    static capturingPropertyName: string = "#([A-Za-z0-9]+)";
-
-    static bracketObject: string = "#([A-Za-z0-9]+)[\\s\\n]*([A-Za-z0-9]+)[\\s\\n]*\\{(.*)\\}";
+    static propertyName: string = "#([A-Za-z0-9]+)";
 
     static className: string = "([A-Za-z]+)";
     static objectName: string = "[A-Za-z0-9]+";

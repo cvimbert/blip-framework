@@ -1,6 +1,9 @@
 #instanciable inst1: {
 
-    #clock cl1: 0.6
+    #clock
+        cl1: 0.6, 0.5
+        cl2: 0.3,
+        cl3: "yes", true, 0.2
 
     #group gr1: {
 
@@ -45,4 +48,23 @@
                 	trigger2->nd2
         }
     }
+}
+
+inst2: {
+    #graph gra1 {
+
+                #node
+                    nd1:
+                    	state(st1)
+                    	trigger1->nd2
+                    	trigger2->nd3
+                    nd2:
+                    	state(st2)
+                    	trigger1->nd1
+                    	trigger2->nd3
+                    nd3:
+                    	state(st3)
+                    	trigger1->nd1
+                    	trigger2->nd2
+            }
 }

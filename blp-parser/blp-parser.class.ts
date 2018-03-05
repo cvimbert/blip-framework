@@ -1,4 +1,5 @@
 import {Regexps} from "./regexps.class";
+import {TypedObject} from "./parse-units/typed-object.class";
 
 export class BlpParser {
 
@@ -8,18 +9,6 @@ export class BlpParser {
         private filePath: string
     ) {
         this.loadCode();
-
-        /*var chaine='[soundcloud url="http://api.soundcloud.com/tracks/13633074" params="show_comments=true&auto_play=false&color=ff7700" width="100%" height="81" ] '
-        let extrait=chaine.match(/tracks\/([^"]+)/);
-        console.log(extrait);
-        //alert (extrait[1])
-
-        let test: string = "nnn<hhhh>mmmm";
-        let exp: RegExp = /\<(?:.*)\>/;
-
-        console.log("ok", test.match(exp));
-
-        console.log(exp.exec(test));*/
     }
 
     loadCode() {
@@ -31,7 +20,7 @@ export class BlpParser {
             if (req.readyState === XMLHttpRequest.DONE) {
                 if (req.status === 200) {
                     this.code = req.responseText;
-                    this.simplifiedParsing();
+                    this.linearParsing();
                 }
             } else {
 
@@ -57,6 +46,11 @@ export class BlpParser {
         return regExpStr;
     }
 
+    linearParsing() {
+        let baseUnit: TypedObject = new TypedObject(this.code, 0);
+        console.log("eval: ", baseUnit.evaluate());
+    }
+
     simplifiedParsing() {
         let capturingPropertyName: string = `(${Regexps.objectName})\\s*:${Regexps.spaceOrLinebreak}`;
         let propertyName: string = `${Regexps.objectName}\\s*:${Regexps.spaceOrLinebreak}`;
@@ -65,16 +59,22 @@ export class BlpParser {
 
         let freeGroupContent: string = `(?:(?!(?:${propertyName})|#)${everything})*`;
 
-        let namedBracketsGroup: string = `${capturingPropertyName}\\{((?:(?!\\}(?:[^\\}]*)$)${everything})*)`;
+        // (?!\}(?:[^\}]*)$)
+        //let namedBracketsGroup: string = `${capturingPropertyName}\\{((?:(?!\\}(?:[^\\}]*)(?:$|(?:${propertyName})))${everything})*)`;
+
+        let namedBracketsGroup: string = `${capturingPropertyName}\\{((${everything})*)\\}`;
 
         let freeGroup: string = `${capturingPropertyName}(${freeGroupContent})${Regexps.spaceOrLinebreak}`;
 
+        let objDef: string = `${Regexps.propertyName}${Regexps.spaceOrLinebreak}(${namedBracketsGroup}${Regexps.spaceOrLinebreak})*`;
+
+        // `(${namedBracketsGroup}${Regexps.spaceOrLinebreak})`
         let tested: RegExp = new RegExp(namedBracketsGroup, "g");
 
         let res: RegExpExecArray = tested.exec(this.code);
 
         while (res) {
-            console.log("res:", res[2]);
+            console.log(res[2]);
             res = tested.exec(this.code);
         }
     }
