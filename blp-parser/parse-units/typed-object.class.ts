@@ -5,12 +5,17 @@ export class TypedObject extends ParseUnit {
 
     constructor(
         code: string,
+        parent: ParseUnit = null,
         pointer: number = 0
     ) {
-        super(code, pointer);
+        super(code, parent, pointer);
 
         this.addAssertionsGroup("typedObject", {
-            to1: /^#([A-Za-z0-9]+)\s*/
+            typedObject: /^#([A-Za-z0-9]+)\s*/
         }, NamedProperty);
+
+        this.setClosingGroup({
+            closing: /^\s*\}\s*/
+        });
     }
 }

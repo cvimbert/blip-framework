@@ -3,9 +3,11 @@ import {AssertionsSet} from "../assertions-set.class";
 export class ParseUnit {
 
     assertionsSets: {[key:string]: AssertionsSet} = {};
+    closingGroup: AssertionsSet;
 
     constructor(
         private code: string,
+        private parent: ParseUnit = null,
         private pointer: number = 0
     ) {}
 
@@ -13,25 +15,45 @@ export class ParseUnit {
         this.assertionsSets[groupId] = new AssertionsSet(assertions, Next);
     }
 
-    evaluate(): boolean {
+    setClosingGroup(assertions: {[key: string]: RegExp}) {
+        this.closingGroup = new AssertionsSet(assertions);
+    }
+
+    evaluate(newPointer: number = null): boolean {
+
+        if (newPointer) {
+            this.pointer = newPointer;
+        }
+
+        if (this.closingGroup) {
+            if (this.evaluateGroup(this.closingGroup)) {
+                return this.parent.evaluate(this.pointer);
+            }
+        }
+
         for (let key in this.assertionsSets) {
             if (this.assertionsSets.hasOwnProperty(key)) {
+
                 if (this.evaluateGroup(this.assertionsSets[key])) {
                     if (this.assertionsSets[key].Next) {
-
-                        // we must index this.object
-                        let obj: ParseUnit = new this.assertionsSets[key].Next(this.code, this.pointer);
+                        console.log("->");
+                        let obj: ParseUnit = new this.assertionsSets[key].Next(this.code, this, this.pointer);
                         return obj.evaluate();
                     } else {
-                        // end of parsing, let's go on with this object
-                        console.log("end of parsing");
-                        return true;
+                        console.log("<->");
+                        return this.evaluate(this.pointer);
                     }
                 }
             }
         }
 
-        return false;
+        if (this.parent) {
+            console.log("<-");
+            return this.parent.evaluate(this.pointer);
+        } else {
+            console.log("end of parsing");
+            return true;
+        }
     }
 
     evaluateGroup(group: AssertionsSet): boolean {
@@ -41,12 +63,12 @@ export class ParseUnit {
 
                 if (exp) {
                     let evaluation: RegExpExecArray = this.evaluateExpression(this.code.substring(this.pointer), exp);
+
                     if (!evaluation) {
-                        //console.log("error:", expKey);
                         return false;
                     } else {
                         if (evaluation[1]) {
-                            console.log(evaluation[1]);
+                            console.log(evaluation[1], expKey);
                         }
 
                         this.pointer += evaluation[0].length;
@@ -57,10 +79,6 @@ export class ParseUnit {
         }
 
         return true;
-    }
-
-    sendError() {
-
     }
 
     evaluateExpression(partialCode: string, expression: RegExp): RegExpExecArray {
