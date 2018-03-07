@@ -12,34 +12,41 @@ export class PropertyValue extends ParseUnit {
 
         let separator: RegExp = /^\s*,\s*|\s+/;
 
-        this.addAssertionsGroup("hhh", {
-            el: /^([A-Za-z0-9]+\s*-\>\s*[A-Za-z0-9]+)/,
-            sep: separator
-        });
+        this.addAssertionsGroup("hhh",
+            [
+            /^([A-Za-z0-9]+\s*-\>\s*[A-Za-z0-9]+)/,
+            separator
+        ]);
 
-        this.addAssertionsGroup("string", {
-            string: /^"([A-Za-z0-9]+)"/,
-            sep: separator
-        });
+        this.addAssertionsGroup("string",
+            [
+            /^"([A-Za-z0-9]+)"/,
+            separator
+        ]);
 
-        this.addAssertionsGroup("number", {
-            number: /^([0-9]+(?:\.[0-9]*)?)/,
-            sep: separator
-        });
+        this.addAssertionsGroup("number",
+            [
+            /^([0-9]+(?:\.[0-9]*)?)/,
+            separator
+        ]);
 
-        this.addAssertionsGroup("boolean", {
-            boolean: /^(true|false)/,
-            sep: separator
-        });
+        this.addAssertionsGroup("boolean",
+            [
+                /^(true|false)/,
+                separator
+            ]
+        );
 
-        this.addAssertionsGroup("nm", {
-            freeCharValue: /^(?:([A-Za-z0-9]+))(?=[\s+,]+)/,
-            sep: separator
-        }, PropertyValue);
+        this.addAssertionsGroup("nm",
+            [
+            /^(?:([A-Za-z0-9]+))(?=[\s+,]+)/,
+            separator
+        ]);
 
-        this.addAssertionsGroup("tpprop", {
-            nm2: /^([A-Za-z]+\([A-Za-z0-9]+\))/,
-            sep: separator
-        });
+        this.addAssertionsGroup("tpprop",
+            [
+            /^([A-Za-z]+\([A-Za-z0-9]+\))/,
+            separator
+        ]);
     }
 }

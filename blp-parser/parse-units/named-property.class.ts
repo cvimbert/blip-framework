@@ -11,14 +11,12 @@ export class NamedProperty extends ParseUnit {
     ) {
         super(code, parent, pointer);
 
-        let name: RegExp = /^([A-Za-z0-9]+)\s*:\s*/;
+        this.addAssertionsGroup("bracketsGroup", [
+            /^([A-Za-z0-9]+)\s*:\s*\{\s*/
+        ], TypedObject);
 
-        this.addAssertionsGroup("bracketsGroup", {
-            bracketsList: /^([A-Za-z0-9]+)\s*:\s*\{\s*/
-        }, TypedObject);
-
-        this.addAssertionsGroup("simpleProp", {
-            noBrackets: /^([A-Za-z0-9]+)\s*:\s*/
-        }, PropertyValue);
+        this.addAssertionsGroup("simplePropsGroup", [
+            /^([A-Za-z0-9]+)\s*:\s*/
+        ], PropertyValue);
     }
 }
