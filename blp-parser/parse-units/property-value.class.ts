@@ -4,15 +4,12 @@ import {NamedProperty} from "./named-property.class";
 export class PropertyValue extends ParseUnit {
 
     constructor(
-        code: string,
-        parent: ParseUnit = null,
-        pointer: number
     ) {
-        super(code, parent, pointer);
+        super();
 
         let separator: RegExp = /^\s*,\s*|\s+/;
 
-        this.addAssertionsGroup("hhh",
+        this.addAssertionsGroup("graphLink",
             [
             /^([A-Za-z0-9]+\s*-\>\s*[A-Za-z0-9]+)/,
             separator
@@ -34,16 +31,15 @@ export class PropertyValue extends ParseUnit {
             [
                 /^(true|false)/,
                 separator
-            ]
-        );
+            ]);
 
-        this.addAssertionsGroup("nm",
+        this.addAssertionsGroup("typedProperty",
             [
             /^(?:([A-Za-z0-9]+))(?=[\s+,]+)/,
             separator
         ]);
 
-        this.addAssertionsGroup("tpprop",
+        this.addAssertionsGroup("freeProperty",
             [
             /^([A-Za-z]+\([A-Za-z0-9]+\))/,
             separator

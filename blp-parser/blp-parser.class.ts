@@ -30,7 +30,8 @@ export class BlpParser {
     }
 
     linearParsing() {
-        let baseUnit: TypedObject = new TypedObject(this.code);
+        let baseUnit: TypedObject = new TypedObject();
+        baseUnit.code = this.code;
         console.log("eval: ", baseUnit.evaluate());
     }
 }
