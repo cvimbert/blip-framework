@@ -68,3 +68,75 @@ inst2: {
                 trigger2->nd2jjj
     }
 }
+
+
+#instanciable inst1: {
+
+    #clock
+        cl1: 0.6, 0.5
+        cl2: 0.3
+        cl3: "yes", true, 0.2
+
+    #group gr1: {
+
+        #sprite
+            sp1: "path", 26.3, 90
+            sp2: "path2", 87, 9, ab, 9
+            sp3:
+                25
+                14
+
+        #state
+        	st1: sp1
+        	st2: sp1, sp2
+
+        #sequence seq1:
+        	state(st1)
+        	state(st2)
+
+        #animation
+        	an1:
+        	    true
+        		seq1
+        		0.6
+        	an2:
+        		seq1
+        		clock(cl1)
+
+        #graph gra1: {
+
+            #node
+                nd1:
+                	state(st1)
+                	trigger1->nd2
+                	trigger2->nd3
+                nd2:
+                	state(st2)
+                	trigger1->nd1
+                	trigger2->nd3
+                nd3:
+                	state(st3)
+                	trigger1->nd1
+                	trigger2->nd2
+        }
+    }
+}
+
+inst2: {
+    #graph gra1: {
+
+        #node
+            nd1:
+                state(st1)
+                trigger1->nd2
+                trigger2->nd3
+            nd2:
+                state(st2)
+                trigger1->nd1
+                trigger2->nd3
+            nd3:
+                state(st3)
+                trigger1->nd1
+                trigger2->nd2jjj
+    }
+}

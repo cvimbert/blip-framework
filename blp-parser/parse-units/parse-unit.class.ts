@@ -1,22 +1,23 @@
 import {AssertionsSet} from "../assertions-set.class";
-import {Assertions} from "../assertions.interface";
+import {Assertion, AssertionResult, Assertions} from "../interfaces/assertions.interface";
 
 export class ParseUnit {
 
-    code: string;
-    parent: ParseUnit;
+    // for parsing
     private _pointer: number = 0;
 
-    assertionsSets: {[key:string]: AssertionsSet} = {};
-    closingGroup: AssertionsSet;
-
-    startIndex: number = 0;
-    endIndex: number = 0;
-
+    code: string;
+    parent: ParseUnit;
     assertions: Assertions;
     closingExpression: RegExp;
 
-    generated: ParseUnit[] = [];
+    // results storage
+    startIndex: number = 0;
+    endIndex: number = 0;
+    children: ParseUnit[] = [];
+    childrenById: {[key: string]: ParseUnit[]} = {};
+    results: AssertionResult[] = [];
+    resultsById: {[key: string]: AssertionResult[]} = {};
 
 
     constructor(
@@ -30,46 +31,40 @@ export class ParseUnit {
         this._pointer = value;
     }
 
-    addAssertionsGroup(groupId: string, assertions: RegExp[], Next: any = null) {
-        this.assertionsSets[groupId] = new AssertionsSet(assertions, Next);
-    }
-
-    setClosingGroup(assertions: RegExp[]) {
-        this.closingGroup = new AssertionsSet(assertions);
-    }
-
     evaluate(newPointer: number = null): boolean {
 
         if (newPointer) {
             this._pointer = newPointer;
         }
 
-        if (this.closingGroup) {
-            if (this.evaluateGroup(this.closingGroup)) {
+        if (this.closingExpression && this.parent) {
+
+            let closingResult: RegExpExecArray = this.evaluateSingleExpression(this.closingExpression);
+
+            if (closingResult) {
+                this._pointer += closingResult[0].length;
                 return this.parent.evaluate(this._pointer);
             }
         }
 
-        for (let key in this.assertionsSets) {
+        for (let assertionName in this.assertions) {
 
-            let res: RegExpExecArray[] = this.evaluateGroup(this.assertionsSets[key]);
+            let res: AssertionResult = this.evaluateGroup(this.assertions[assertionName]);
 
-            if (this.assertionsSets.hasOwnProperty(key) && res) {
-                if (this.assertionsSets[key].Next) {
-                    //console.log("->");
-                    let unit: ParseUnit = new this.assertionsSets[key].Next();
+            if (this.assertions.hasOwnProperty(assertionName) && res) {
+                if (this.assertions[assertionName].next) {
+                    //console.log("->", assertionName);
+                    let unit: ParseUnit = new this.assertions[assertionName].next();
                     unit.code = this.code;
                     unit.parent = this;
                     unit.pointer = this._pointer;
 
-                    this.generated.push(unit);
-
                     unit.parseParentResult(res);
-                    this.parseOwnResult(key, unit, res);
+                    this.parseOwnResult(assertionName, unit, res);
 
                     return unit.evaluate();
                 } else {
-                    //console.log("<->");
+                    //console.log("<->", assertionName);
                     return this.evaluate(this._pointer);
                 }
             }
@@ -84,35 +79,60 @@ export class ParseUnit {
         }
     }
 
-    parseParentResult(res: RegExpExecArray[]) {
+    parseParentResult(res: AssertionResult) {
 
     }
 
-    parseOwnResult(id: string, generated: ParseUnit, res: RegExpExecArray[]) {
+    parseOwnResult(id: string, generated: ParseUnit, res: AssertionResult) {
 
+        this.children.push(generated);
+
+        if (!this.childrenById[id]) {
+            this.childrenById[id] = [];
+        }
+
+        this.childrenById[id].push(generated);
+
+        this.results.push(res);
+
+        if (!this.resultsById[id]) {
+            this.resultsById[id] = [];
+        }
+
+        this.resultsById[id].push(res);
+
+        if (this.parent) {
+            let target: AssertionResult = this.parent.results[this.parent.results.length - 1];
+            target[id] = this.results;
+        }
     }
 
-    evaluateGroup(group: AssertionsSet): RegExpExecArray[] {
+    evaluateSingleExpression(exp: RegExp): RegExpExecArray {
+        return this.evaluateExpression(this.code.substring(this._pointer), exp);
+    }
 
-        let evaluations: RegExpExecArray[] = [];
+    evaluateGroup(group: Assertion): AssertionResult {
+
+        let results: AssertionResult = {};
 
         for (let exp of group.assertions) {
-            let evaluation: RegExpExecArray = this.evaluateExpression(this.code.substring(this._pointer), exp);
+            let evaluation: RegExpExecArray = this.evaluateExpression(this.code.substring(this._pointer), exp.expression);
 
             if (!evaluation) {
                 return null;
             } else {
-                /*if (evaluation[1]) {
-                    console.log(evaluation[1]);
-                }*/
-
-                evaluations.push(evaluation);
+                if (exp.values) {
+                    exp.values.forEach((value: string, index: number) => {
+                        results[value] = evaluation[index + 1];
+                    });
+                }
 
                 this._pointer += evaluation[0].length;
             }
         }
 
-        return evaluations;
+        //console.log(results);
+        return results;
     }
 
     evaluateExpression(partialCode: string, expression: RegExp): RegExpExecArray {

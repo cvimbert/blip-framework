@@ -1,7 +1,7 @@
 import {ParseUnit} from "./parse-unit.class";
 import {PropertyValue} from "./property-value.class";
 import {TypedObject} from "./typed-object.class";
-import {Assertions} from "../assertions.interface";
+import {Assertions} from "../interfaces/assertions.interface";
 
 export class NamedProperty extends ParseUnit {
 
@@ -25,17 +25,4 @@ export class NamedProperty extends ParseUnit {
             next: PropertyValue
         }
     };
-
-    constructor (
-    ) {
-        super();
-
-        this.addAssertionsGroup("bracketsGroup", [
-            /^([A-Za-z0-9]+)\s*:\s*\{\s*/
-        ], TypedObject);
-
-        this.addAssertionsGroup("simplePropsGroup", [
-            /^([A-Za-z0-9]+)\s*:\s*/
-        ], PropertyValue);
-    }
 }

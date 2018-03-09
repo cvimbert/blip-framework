@@ -34,6 +34,6 @@ export class BlpParser {
         baseUnit.code = this.code;
         baseUnit.evaluate();
 
-        console.log(baseUnit);
+        console.log(baseUnit.resultsById);
     }
 }

@@ -1,6 +1,6 @@
 import {ParseUnit} from "./parse-unit.class";
 import {NamedProperty} from "./named-property.class";
-import {Assertions} from "../assertions.interface";
+import {Assertions} from "../interfaces/assertions.interface";
 
 export class TypedObject extends ParseUnit {
 
@@ -17,17 +17,4 @@ export class TypedObject extends ParseUnit {
     };
 
     closingExpression: RegExp = /^\s*\}\s*/;
-
-    constructor(
-    ) {
-        super();
-
-        this.addAssertionsGroup("typedObject", [
-            /^#([A-Za-z0-9]+)\s*/
-        ], NamedProperty);
-
-        this.setClosingGroup([
-            /^\s*\}\s*/
-        ]);
-    }
 }
