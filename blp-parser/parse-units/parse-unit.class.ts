@@ -1,10 +1,12 @@
 import {AssertionsSet} from "../assertions-set.class";
 import {Assertion, AssertionResult, Assertions} from "../interfaces/assertions.interface";
+import {ResultUnit} from "../result-unit.class";
 
 export class ParseUnit {
 
     // for parsing
     private _pointer: number = 0;
+    private _lastPointer: number = 0;
 
     code: string;
     parent: ParseUnit;
@@ -12,13 +14,8 @@ export class ParseUnit {
     closingExpression: RegExp;
 
     // results storage
-    startIndex: number = 0;
-    endIndex: number = 0;
-    children: ParseUnit[] = [];
-    childrenById: {[key: string]: ParseUnit[]} = {};
-    results: AssertionResult[] = [];
-    resultsById: {[key: string]: AssertionResult[]} = {};
-
+    startIndex: number;
+    resultUnits: ResultUnit[] = [];
 
     constructor(
     ) {}
@@ -26,6 +23,8 @@ export class ParseUnit {
     set pointer(value: number) {
         if (this._pointer === undefined) {
             this.startIndex = value;
+        } else {
+            this.startIndex = 0;
         }
 
         this._pointer = value;
@@ -42,7 +41,13 @@ export class ParseUnit {
             let closingResult: RegExpExecArray = this.evaluateSingleExpression(this.closingExpression);
 
             if (closingResult) {
+                this._lastPointer = this._pointer;
                 this._pointer += closingResult[0].length;
+
+                if (this.resultUnits) {
+                    this.parent.resultUnits[this.parent.resultUnits.length - 1].endIndex = this._pointer - 1;
+                }
+
                 return this.parent.evaluate(this._pointer);
             }
         }
@@ -52,15 +57,25 @@ export class ParseUnit {
             let res: AssertionResult = this.evaluateGroup(this.assertions[assertionName]);
 
             if (this.assertions.hasOwnProperty(assertionName) && res) {
+
+                let resultUnit: ResultUnit = new ResultUnit();
+                resultUnit.startIndex = this._lastPointer;
+                resultUnit.endIndex = this._pointer;
+                resultUnit.type = assertionName;
+                resultUnit.results = res;
+
+                this.resultUnits.push(resultUnit);
+
+                if (this.parent) {
+                    this.parent.resultUnits[this.parent.resultUnits.length - 1].children.push(resultUnit);
+                }
+
                 if (this.assertions[assertionName].next) {
                     //console.log("->", assertionName);
                     let unit: ParseUnit = new this.assertions[assertionName].next();
                     unit.code = this.code;
                     unit.parent = this;
                     unit.pointer = this._pointer;
-
-                    unit.parseParentResult(res);
-                    this.parseOwnResult(assertionName, unit, res);
 
                     return unit.evaluate();
                 } else {
@@ -72,38 +87,15 @@ export class ParseUnit {
 
         if (this.parent) {
             //console.log("<-");
+
+            if (this.resultUnits) {
+                this.parent.resultUnits[this.parent.resultUnits.length - 1].endIndex = this._pointer - 1;
+            }
+
             return this.parent.evaluate(this._pointer);
         } else {
             console.log("EOP");
             return true;
-        }
-    }
-
-    parseParentResult(res: AssertionResult) {
-
-    }
-
-    parseOwnResult(id: string, generated: ParseUnit, res: AssertionResult) {
-
-        this.children.push(generated);
-
-        if (!this.childrenById[id]) {
-            this.childrenById[id] = [];
-        }
-
-        this.childrenById[id].push(generated);
-
-        this.results.push(res);
-
-        if (!this.resultsById[id]) {
-            this.resultsById[id] = [];
-        }
-
-        this.resultsById[id].push(res);
-
-        if (this.parent) {
-            let target: AssertionResult = this.parent.results[this.parent.results.length - 1];
-            target[id] = this.results;
         }
     }
 
@@ -127,6 +119,7 @@ export class ParseUnit {
                     });
                 }
 
+                this._lastPointer = this._pointer;
                 this._pointer += evaluation[0].length;
             }
         }

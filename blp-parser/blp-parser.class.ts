@@ -34,6 +34,7 @@ export class BlpParser {
         baseUnit.code = this.code;
         baseUnit.evaluate();
 
-        console.log(baseUnit.resultsById);
+        console.log(baseUnit.resultUnits);
+        console.log(baseUnit.resultUnits[0].getResult("bracketsGroup@groupName=inst1"));
     }
 }
