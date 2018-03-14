@@ -23,13 +23,14 @@ export class PropertyValue extends ParseUnit {
         string: {
             assertions: [
                 {
-                    expression: /^"([A-Za-z0-9]+)"/,
+                    expression: /^"([A-Za-z0-9\/\.]+)"/,
                     values: ['value']
                 },
                 {
                     expression: this.separator
                 }
-            ]
+            ],
+            next: GraphLink
         },
         number: {
             assertions: [

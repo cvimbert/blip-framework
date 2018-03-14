@@ -13,7 +13,7 @@ export class BlpParser {
     loadCode() {
         let req: XMLHttpRequest = new XMLHttpRequest();
 
-        req.open("GET", "code.blp", true);
+        req.open("GET", "../examples/blp/object1.blp", true);
 
         req.onreadystatechange = () => {
             if (req.readyState === XMLHttpRequest.DONE) {
@@ -35,6 +35,7 @@ export class BlpParser {
         baseUnit.evaluate();
 
         console.log(baseUnit.resultUnits);
-        console.log(baseUnit.resultUnits[0].getResult("bracketsGroup@groupName=inst1"));
+        console.log(baseUnit.resultUnits[0].getResult("bracketsGroup/typedObject@type=sprite/simplePropsGroup"));
+        console.log(baseUnit.resultUnits[0].getResult("bracketsGroup/typedObject@type=clock/simplePropsGroup"));
     }
 }

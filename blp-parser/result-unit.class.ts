@@ -16,6 +16,8 @@ export class ResultUnit {
 
         let schema: RegExp = /([A-Za-z0-9-]+)(?:@([A-Za-z0-9-]+)=(.+))?/;
 
+        let nrm: ResultUnit[] = [];
+
         for (let item of pathItems) {
             let res: RegExpExecArray = schema.exec(item);
 
@@ -25,22 +27,23 @@ export class ResultUnit {
 
             let nr: ResultUnit[] = [];
 
-            for (let res of results) {
-                if (res.type === type) {
+            for (let result of results) {
+                if (result.type === type) {
 
                     if (propertyName && propertyValue) {
-                        if (res.results[propertyName] === propertyValue) {
-                            nr.push(res);
+                        if (result.results[propertyName] === propertyValue) {
+                            nr = nr.concat(result.children);
                         }
                     } else {
-                        nr.push(res);
+                        nr = nr.concat(result.children);
                     }
                 }
             }
 
+            nrm = results;
             results = nr;
         }
 
-        return results;
+        return nrm;
     }
 }
