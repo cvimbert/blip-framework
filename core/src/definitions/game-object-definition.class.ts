@@ -4,6 +4,7 @@ import {SpriteDefinition} from "./sprite-definition.class";
 import {ClockDefinition} from "./clock-definition.class";
 import {GroupDefinition} from "./group-definition.class";
 import {SoundDefinition} from "./sound-definition.class";
+import {VariableDefinition} from "./variable-definition.class";
 
 export class GameObjectDefinition {
 
@@ -11,6 +12,7 @@ export class GameObjectDefinition {
     clocks: {[key: string]: ClockDefinition} = {};
     groups: {[key: string]: GroupDefinition} = {};
     sounds: {[key: string]: SoundDefinition} = {};
+    variables: {[key: string]: VariableDefinition} = {};
 
     constructor(
         definition: ResultUnit
@@ -29,6 +31,10 @@ export class GameObjectDefinition {
 
         definition.getResult("bracketsGroup/typedObject@type=sound/simplePropsGroup").forEach((definition: ResultUnit) => {
             this.sounds[definition.results["groupName"]] = new SoundDefinition(definition);
+        });
+
+        definition.getResult("bracketsGroup/typedObject@type=variable/simplePropsGroup").forEach((definition: ResultUnit) => {
+            this.variables[definition.results["groupName"]] = new VariableDefinition(definition);
         });
 
         console.log(this);

@@ -3,6 +3,7 @@ import {GroupStateDefinition} from "./group-state-definition.class";
 import {SequenceDefinition} from "./sequence-definition.class";
 import {AnimationDefinition} from "./animation-definition.class";
 import {GraphDefinition} from "./graph-definition.class";
+import {SpritesGroup} from "../display/sprites-group.class";
 
 export class GroupDefinition {
 
@@ -35,5 +36,9 @@ export class GroupDefinition {
         definition.getResult("typedObject@type=graph/bracketsGroup").forEach((definition: ResultUnit) => {
             this.graphs[definition.results["groupName"]] = new GraphDefinition(definition);
         });
+    }
+
+    create(): SpritesGroup {
+        return;
     }
 }
