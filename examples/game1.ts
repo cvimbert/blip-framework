@@ -17,7 +17,6 @@ import {Variable} from "../core/src/gamelogic/variables/variable.class";
 import {Condition} from "../core/src/gamelogic/condition.class";
 import {ConditionsData} from "../core/src/gamelogic/conditions/interfaces/conditions-data.interface";
 import {ConditionObject} from "../core/src/gamelogic/conditions/condition-object.class";
-import {SpritesProvider} from "../core/src/providers/sprites-provider.class";
 
 let gameData:Object = {
     gameContainerScale: 0.5,

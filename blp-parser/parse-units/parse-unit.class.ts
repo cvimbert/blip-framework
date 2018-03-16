@@ -30,7 +30,7 @@ export class ParseUnit {
         this._pointer = value;
     }
 
-    evaluate(newPointer: number = null): boolean {
+    evaluate(newPointer: number = null): ResultUnit[] {
 
         if (newPointer) {
             this._pointer = newPointer;
@@ -95,7 +95,7 @@ export class ParseUnit {
             return this.parent.evaluate(this._pointer);
         } else {
             console.log("EOP");
-            return true;
+            return this.resultUnits;
         }
     }
 
@@ -124,7 +124,6 @@ export class ParseUnit {
             }
         }
 
-        //console.log(results);
         return results;
     }
 

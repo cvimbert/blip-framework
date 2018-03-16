@@ -3,7 +3,8 @@ export interface Assertion {
         expression: RegExp,
         values?: string[]
     }[],
-    next?: any
+    next?: any,
+    mode?: string
 }
 
 export interface AssertionUnit {

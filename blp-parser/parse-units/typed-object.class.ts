@@ -1,6 +1,7 @@
 import {ParseUnit} from "./parse-unit.class";
 import {NamedProperty} from "./named-property.class";
 import {Assertions} from "../interfaces/assertions.interface";
+import {PropertyValue} from "./property-value.class";
 
 export class TypedObject extends ParseUnit {
 
@@ -13,6 +14,15 @@ export class TypedObject extends ParseUnit {
                 }
             ],
             next: NamedProperty
+        },
+        simplePropertyGroup: {
+            assertions: [
+                {
+                    expression: /^([A-Za-z0-9]+)\s*:\s*/,
+                    values: ['groupName']
+                }
+            ],
+            next: PropertyValue
         }
     };
 

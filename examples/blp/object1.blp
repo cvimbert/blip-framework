@@ -7,4 +7,34 @@
     #clock
         main: 0.4
 
+    #sound
+        snd1: "path/to/file"
+        snd2: "path/to/other/file"
+
+    #group
+        g1: {
+            sprites: r1p1, r2p2
+
+            #state
+                st1: r1p1, r1p2
+                st2: r1p2
+                st3:
+
+            #sequence
+                seq1: st1, st2, st3
+                seq2: st1, st2
+
+            #animation
+                an1: seq1, clock(main), 2
+                an2: seq2, 0.5, 1, true
+
+            #graph
+                gr1: {
+                    #node
+                        nd1:
+                            state(st1)
+                            trigger1 -> nd2
+                            trigger2 -> nd2
+                }
+        }
 }
