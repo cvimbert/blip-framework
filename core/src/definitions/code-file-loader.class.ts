@@ -1,6 +1,7 @@
 import {ResultUnit} from "../../../blp-parser/result-unit.class";
 import {TypedObject} from "../../../blp-parser/parse-units/typed-object.class";
 import {GameObjectDefinition} from "./game-object-definition.class";
+import {GameUnitObject} from "../global-objects/game-unit-object.class";
 
 export class CodeFileLoader {
 
@@ -38,6 +39,10 @@ export class CodeFileLoader {
         for (let result of results) {
             if (result.results["type"] === "instantiable") {
                 this.instanciables.push(new GameObjectDefinition(result));
+                console.log(this.instanciables);
+
+                let obj: GameUnitObject = this.instanciables[0].create();
+                console.log(obj);
             }
         }
     }

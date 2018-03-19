@@ -1,4 +1,8 @@
 import {ResultUnit} from "../../../blp-parser/result-unit.class";
+import {ExtendedSpritesGroup} from "../display/extended-sprites-group.class";
+import {Animation} from "../spriteslogic/animation.class";
+import {Clock} from "../gamelogic/clock.class";
+import {GameUnitObject} from "../global-objects/game-unit-object.class";
 
 export class AnimationDefinition {
 
@@ -29,5 +33,12 @@ export class AnimationDefinition {
         if (definition.children[3]) {
             this.interruptable = definition.children[3].results["value"] === "true";
         }
+    }
+
+    create(group: ExtendedSpritesGroup, scope: GameUnitObject): Animation {
+
+        let clockValue: number | Clock = this.clockId ? scope.getClock(this.clockId) : this.period;
+
+        return new Animation(group.getSequence(this.sequenceId), this.iterations, clockValue, this.interruptable);
     }
 }

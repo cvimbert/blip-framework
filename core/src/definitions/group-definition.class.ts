@@ -4,6 +4,8 @@ import {SequenceDefinition} from "./sequence-definition.class";
 import {AnimationDefinition} from "./animation-definition.class";
 import {GraphDefinition} from "./graph-definition.class";
 import {SpritesGroup} from "../display/sprites-group.class";
+import {ExtendedSpritesGroup} from "../display/extended-sprites-group.class";
+import {GameUnitObject} from "../global-objects/game-unit-object.class";
 
 export class GroupDefinition {
 
@@ -38,7 +40,7 @@ export class GroupDefinition {
         });
     }
 
-    create(): SpritesGroup {
-        return;
+    create(scope: GameUnitObject): ExtendedSpritesGroup {
+        return new ExtendedSpritesGroup(this, scope);
     }
 }

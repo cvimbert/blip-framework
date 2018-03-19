@@ -5,6 +5,7 @@ import {ClockDefinition} from "./clock-definition.class";
 import {GroupDefinition} from "./group-definition.class";
 import {SoundDefinition} from "./sound-definition.class";
 import {VariableDefinition} from "./variable-definition.class";
+import {GameUnitObject} from "../global-objects/game-unit-object.class";
 
 export class GameObjectDefinition {
 
@@ -38,5 +39,9 @@ export class GameObjectDefinition {
         });
 
         console.log(this);
+    }
+
+    create(): GameUnitObject {
+        return new GameUnitObject(this);
     }
 }

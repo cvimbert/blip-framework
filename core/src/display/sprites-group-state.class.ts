@@ -6,11 +6,12 @@ import {SpritesGroup} from "./sprites-group.class";
 import {IState} from "../interfaces/IState.interface";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {Dispatcher} from "../common/dispatcher.class";
+import {ExtendedSpritesGroup} from "./extended-sprites-group.class";
 
 export class SpritesGroupState extends Dispatcher implements IState {
 
     constructor(
-        public group:SpritesGroup,
+        public group:SpritesGroup|ExtendedSpritesGroup,
         public sprites:IDisplayable[] = []
     ) {
         super();

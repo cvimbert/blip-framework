@@ -5,6 +5,7 @@ import {SpritesGroup} from "../display/sprites-group.class";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
+import {ExtendedSpritesGroup} from "../display/extended-sprites-group.class";
 
 export class Sequence extends Dispatcher {
 
@@ -18,7 +19,7 @@ export class Sequence extends Dispatcher {
     private _currentIndex:number = -1;
 
     constructor(
-        public group:SpritesGroup,
+        public group:SpritesGroup|ExtendedSpritesGroup,
         public states:IDisplayable[] = [],
         public loopType:string = ""
     ) {

@@ -1,5 +1,9 @@
 import {ResultUnit} from "../../../blp-parser/result-unit.class";
 import {GraphLinkDefinition} from "./graph-link-definition.class";
+import {ExtendedSpritesGroup} from "../display/extended-sprites-group.class";
+import {GameUnitObject} from "../global-objects/game-unit-object.class";
+import {GraphNode} from "../graphs/graph-node.class";
+import {GraphLink} from "../graphs/graph-link.class";
 
 export class GraphNodeDefinition {
 
@@ -24,5 +28,16 @@ export class GraphNodeDefinition {
                 this.links.push(new GraphLinkDefinition(definition.children[i]));
             }
         }
+    }
+
+    create (group: ExtendedSpritesGroup, scope: GameUnitObject): GraphNode {
+
+        let links: GraphLink[] = [];
+
+        for (let link of this.links) {
+            //links.push(link.create());
+        }
+
+        return new GraphNode(group.getState(this.stateId), links);
     }
 }
