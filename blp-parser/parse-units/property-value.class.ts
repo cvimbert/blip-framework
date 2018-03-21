@@ -23,7 +23,7 @@ export class PropertyValue extends ParseUnit {
         string: {
             assertions: [
                 {
-                    expression: /^"([A-Za-z0-9\/\.]+)"/,
+                    expression: /^"([A-Za-z0-9\/\._]+)"/,
                     values: ['value']
                 },
                 {

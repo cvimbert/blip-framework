@@ -62,7 +62,7 @@ export class GraphObject {
 
         let nodesData:{[key:string]:any} = data.nodes;
         let nodeIds:string[] = Object.keys(nodesData);
-        let nodes:GraphNode[] = [];
+        let nodes:{[key: string]: GraphNode} = {};
 
 
         // on crée d'abord les objets node
@@ -89,7 +89,7 @@ export class GraphObject {
 
             let node:GraphNode = new GraphNode(state);
             this._nodesDictionary[nodeId] = node;
-            nodes.push(node);
+            nodes[nodeId] = node;
         });
 
         nodeIds.forEach((nodeId:string) => {

@@ -4,6 +4,7 @@ import {ExtendedSpritesGroup} from "../display/extended-sprites-group.class";
 import {GameUnitObject} from "../global-objects/game-unit-object.class";
 import {GraphNode} from "../graphs/graph-node.class";
 import {GraphLink} from "../graphs/graph-link.class";
+import {Graph} from "../graphs/graph.class";
 
 export class GraphNodeDefinition {
 
@@ -30,14 +31,7 @@ export class GraphNodeDefinition {
         }
     }
 
-    create (group: ExtendedSpritesGroup, scope: GameUnitObject): GraphNode {
-
-        let links: GraphLink[] = [];
-
-        for (let link of this.links) {
-            //links.push(link.create());
-        }
-
-        return new GraphNode(group.getState(this.stateId), links);
+    create (group: ExtendedSpritesGroup): GraphNode {
+        return new GraphNode(group.getState(this.stateId));
     }
 }

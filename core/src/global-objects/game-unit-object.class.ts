@@ -3,8 +3,8 @@ import {Sprite} from "../display/sprite.class";
 import {Clock} from "../gamelogic/clock.class";
 import {Sound} from "../sound/sound.class";
 import {Variable} from "../gamelogic/variables/variable.class";
-import {SpritesGroup} from "../display/sprites-group.class";
 import {ExtendedSpritesGroup} from "../display/extended-sprites-group.class";
+import {BaseTrigger} from "../triggers/base-trigger.class";
 
 export class GameUnitObject {
 
@@ -44,5 +44,9 @@ export class GameUnitObject {
 
     getClock(id: string): Clock {
         return this.clocks[id];
+    }
+
+    getTrigger(id: string): BaseTrigger {
+        return new BaseTrigger();
     }
 }

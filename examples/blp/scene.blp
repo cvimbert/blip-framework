@@ -1,0 +1,33 @@
+#scene scene1: {
+
+    #background
+        bg1: "../files/decorations/background.png", 855, 276
+
+    #clock
+        main: 0.6
+
+    #control
+        ctrlA: {
+            sprite: "../files/controls/buttonA.png", 855, 276
+            key: "a"
+        }
+
+        cross:  {
+            sprite: "files/controls/cross.png", 707, 266
+
+            #zone
+                top: 30, 0, 30, 30, "ArrowUp"
+                bottom: 30, 60, 30, 30, "ArrowDown"
+                right: 60, 30, 30, 30, "ArrowRight"
+                left: 0, 30, 30, 30, "ArrowLeft"
+        }
+
+    #trigger
+        lclick: "controldown", "cross_left"
+        jump: "controldown", "ctrlA"
+        fall: "time", 0.5
+
+    #variable
+        var1: 2
+        var2: true
+}

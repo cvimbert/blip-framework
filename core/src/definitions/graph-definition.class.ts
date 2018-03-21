@@ -4,6 +4,7 @@ import {Graph} from "../graphs/graph.class";
 import {GraphNode} from "../graphs/graph-node.class";
 import {ExtendedSpritesGroup} from "../display/extended-sprites-group.class";
 import {GameUnitObject} from "../global-objects/game-unit-object.class";
+import {GraphLinkDefinition} from "./graph-link-definition.class";
 
 export class GraphDefinition {
 
@@ -19,12 +20,20 @@ export class GraphDefinition {
 
     create(group: ExtendedSpritesGroup, scope: GameUnitObject): Graph {
 
-        let nodes: GraphNode[] = [];
+        let nodes: {[key: string]: GraphNode} = {};
 
         for (let id in this.nodes) {
-            //nodes.push(this.nodes.create());
+            nodes[id] = this.nodes[id].create(group);
         }
 
-        return new Graph(nodes);
+        let graph: Graph = new Graph(nodes);
+
+        for (let id in this.nodes) {
+            this.nodes[id].links.forEach((link: GraphLinkDefinition) => {
+                nodes[id].addLink(link.create(graph, scope));
+            });
+        }
+
+        return graph;
     }
 }

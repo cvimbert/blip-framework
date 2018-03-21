@@ -9,13 +9,15 @@ export class Graph extends Dispatcher {
     private _currentNode:GraphNode;
 
     constructor(
-        public nodes:GraphNode[]
+        public nodes:{[key: string]: GraphNode} = null
     ) {
         super();
     }
 
     hide() {
-        this.nodes.forEach(node => node.hide());
+        for (let id in this.nodes) {
+            this.nodes[id].hide();
+        }
     }
 
     setCurrentNodeIndex(index:number = 0) {
@@ -36,5 +38,9 @@ export class Graph extends Dispatcher {
             // callback de changement de noeud
             this.setNodeAsCurrent(newNode);
         });
+    }
+
+    getNode(id: string) {
+        return this.nodes[id];
     }
 }

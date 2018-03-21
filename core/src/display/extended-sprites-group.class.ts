@@ -42,7 +42,7 @@ export class ExtendedSpritesGroup extends Dispatcher implements IDisplayable {
         }
 
         for (let id in definition.graphs) {
-            //this.graphs[id] = definition.graphs[id]
+            this.graphs[id] = definition.graphs[id].create(this, this.scope);
         }
     }
 
