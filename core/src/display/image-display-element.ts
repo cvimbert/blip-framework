@@ -33,7 +33,7 @@ export class ImageDisplayElement extends DisplayElement {
 
         this.positionDisplayer = positionDisplayer;
 
-        /*let draggable:any = Draggable.create(div, {
+        /*let draggable:any = Draggable.createBasicSprite(div, {
             onDrag: function () {
                 positionDisplayer.innerHTML = "(" + this.x + "," + this.y + ")";
             }

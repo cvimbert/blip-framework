@@ -3,6 +3,7 @@ import {TypedObject} from "../../../blp-parser/parse-units/typed-object.class";
 import {GameObjectDefinition} from "./game-object-definition.class";
 import {GameUnitObject} from "../global-objects/game-unit-object.class";
 import {SceneObjectDefinition} from "./scene-object-definition.class";
+import {SceneUnitObject} from "../global-objects/scene-unit-object.class";
 
 export class CodeFileLoader {
 
@@ -46,6 +47,7 @@ export class CodeFileLoader {
 
             if (result.results["type"] === "scene") {
                 let definition: SceneObjectDefinition = new SceneObjectDefinition(result);
+                let obj: SceneUnitObject = new SceneUnitObject(definition);
                 console.log(definition);
             }
         }

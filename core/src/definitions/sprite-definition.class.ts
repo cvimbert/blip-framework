@@ -1,6 +1,7 @@
 import {ResultUnit} from "../../../blp-parser/result-unit.class";
 import {Sprite} from "../display/sprite.class";
 import {File} from "../files/file.class";
+import {ControlSprite} from "../display/control-sprite.class";
 
 export class SpriteDefinition {
 
@@ -16,8 +17,13 @@ export class SpriteDefinition {
         this.y = +definition.children[2].results["value"];
     }
 
-    create(): Sprite {
+    createBasicSprite(): Sprite {
         let file: File = new File(this.filePath);
         return new Sprite(file, this.x, this.y);
+    }
+
+    createControlSprite(): ControlSprite {
+        let file: File = new File(this.filePath);
+        return new ControlSprite(file, this.x, this.y);
     }
 }

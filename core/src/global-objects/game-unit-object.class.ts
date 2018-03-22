@@ -18,7 +18,7 @@ export class GameUnitObject {
         definition: GameObjectDefinition
     ) {
         for (let id in definition.sprites) {
-            this.sprites[id] = definition.sprites[id].create();
+            this.sprites[id] = definition.sprites[id].createBasicSprite();
         }
 
         for (let id in definition.clocks) {
