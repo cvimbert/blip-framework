@@ -38,18 +38,26 @@ export class CodeFileLoader {
         baseUnit.code = code;
         let results: ResultUnit[] = baseUnit.evaluate();
 
+        console.log(results);
+
+        let scene: SceneUnitObject;
+
         for (let result of results) {
+            if (result.results["type"] === "scene") {
+                let definition: SceneObjectDefinition = new SceneObjectDefinition(result);
+                scene = new SceneUnitObject(definition);
+            }
+
             if (result.results["type"] === "instantiable") {
                 let definition: GameObjectDefinition = new GameObjectDefinition(result);
                 this.instanciables.push(definition);
                 let obj: GameUnitObject = definition.create();
-            }
 
-            if (result.results["type"] === "scene") {
-                let definition: SceneObjectDefinition = new SceneObjectDefinition(result);
-                let obj: SceneUnitObject = new SceneUnitObject(definition);
-                console.log(definition);
+                let id: string = result.children[0].results["groupName"];
+                scene.objects[id] = obj;
             }
         }
+
+        scene.displaySprites();
     }
 }

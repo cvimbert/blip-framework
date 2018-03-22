@@ -1,19 +1,19 @@
 #scene scene1: {
 
     #background
-        bg1: "../files/decorations/background.png", 855, 276
+        bg1: "../files/decorations/background.png", 20, 20
 
     #clock
         main: 0.6
 
     #control
         ctrlA: {
-            sprite: "../files/controls/buttonA.png", 855, 276
+            sprite: "../files/controls/buttonA.png", 700, 100
             key: "a"
         }
 
         cross:  {
-            sprite: "files/controls/cross.png", 707, 266
+            sprite: "../files/controls/cross.png", 707, 266
 
             #zone
                 top: 30, 0, 30, 30, "ArrowUp"
@@ -30,4 +30,55 @@
     #variable
         var1: 2
         var2: true
+}
+
+#instantiable object1: {
+
+    #sprite
+        r1p1: "../files/game1/sprites/r1p1.png", 160, 50
+        r1p2: "../files/game1/sprites/r1p2.png", 307, 50
+
+    #clock
+        main: 0.4
+
+    #sound
+        snd1: "../files/sounds/blip.mp3"
+        snd2: "../files/sounds/takegold.mp3"
+
+    #variable
+        var1: 45
+        var2: false
+        var3: "ok"
+
+    #group
+        g1: {
+            sprites: r1p1, r1p2
+
+            #state
+                st1: r1p1, r1p2
+                st2: r1p2
+                st3:
+
+            #sequence
+                seq1: st1, st2, st3
+                seq2: st1, st2
+
+            #animation
+                an1: seq1, clock(main), 2
+                an2: seq2, 0.5, 1, true
+
+            #graph
+                gr1: {
+                    #node
+                        nd1:
+                            state(st1)
+                            trigger1 -> nd2
+                            trigger2 -> nd2
+
+                        nd2:
+                            state(st2)
+                            trigger1 -> nd1
+                            trigger2 -> nd1
+                }
+        }
 }

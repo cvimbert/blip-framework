@@ -2,6 +2,7 @@ import {ResultUnit} from "../../../blp-parser/result-unit.class";
 import {Sprite} from "../display/sprite.class";
 import {File} from "../files/file.class";
 import {ControlSprite} from "../display/control-sprite.class";
+import {Decoration} from "../display/decoration.class";
 
 export class SpriteDefinition {
 
@@ -25,5 +26,10 @@ export class SpriteDefinition {
     createControlSprite(): ControlSprite {
         let file: File = new File(this.filePath);
         return new ControlSprite(file, this.x, this.y);
+    }
+
+    createDecorationSprite(): Decoration {
+        let file: File = new File(this.filePath);
+        return new Decoration(file, this.x, this.y);
     }
 }

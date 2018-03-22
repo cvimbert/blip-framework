@@ -17,8 +17,6 @@ export class SceneObjectDefinition {
     constructor(
         definition: ResultUnit
     ) {
-        console.log(definition);
-
         definition.getResult("bracketsGroup/typedObject@type=background/simplePropsGroup").forEach((definition: ResultUnit) => {
             this.backgrounds[definition.results["groupName"]] = new SpriteDefinition(definition);
         });

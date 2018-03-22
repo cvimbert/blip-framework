@@ -37,8 +37,6 @@ export class GameObjectDefinition {
         definition.getResult("bracketsGroup/typedObject@type=variable/simplePropsGroup").forEach((definition: ResultUnit) => {
             this.variables[definition.results["groupName"]] = new VariableDefinition(definition);
         });
-
-        console.log(this);
     }
 
     create(): GameUnitObject {

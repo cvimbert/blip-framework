@@ -3,11 +3,11 @@ import {Decoration} from "../display/decoration.class";
 
 export class SceneObject {
 
-    private _DOMElement:HTMLElement;
-    private _spritesContainer:HTMLElement;
-    private _backgroundsContainer:HTMLElement;
-    private _foregroundsContainer:HTMLElement;
-    private _controlsContainer:HTMLElement;
+    protected _DOMElement:HTMLElement;
+    protected _spritesContainer:HTMLElement;
+    protected _backgroundsContainer:HTMLElement;
+    protected _foregroundsContainer:HTMLElement;
+    protected _controlsContainer:HTMLElement;
 
     private _params:Object;
 
