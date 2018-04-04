@@ -1,5 +1,4 @@
 import {ParseUnit} from "./parse-unit.class";
-import {NamedProperty} from "./named-property.class";
 import {GraphLink} from "./graph-link.class";
 import {Assertions} from "../interfaces/assertions.interface";
 
@@ -35,7 +34,7 @@ export class PropertyValue extends ParseUnit {
         number: {
             assertions: [
                 {
-                    expression: /^([0-9]+(?:\.[0-9]*)?)/,
+                    expression: /^(-?[0-9]+(?:\.[0-9]*)?)/,
                     values: ['value']
                 },
                 {

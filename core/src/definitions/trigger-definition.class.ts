@@ -1,5 +1,9 @@
 import {ResultUnit} from "../../../blp-parser/result-unit.class";
 import {BaseTrigger} from "../triggers/base-trigger.class";
+import {ControlDownTrigger} from "../triggers/controls/control-down-trigger.class";
+import {GameUnitObject} from "../global-objects/game-unit-object.class";
+import {SceneUnitObject} from "../global-objects/scene-unit-object.class";
+import {TimeTrigger} from "../triggers/time-trigger.class";
 
 export class TriggerDefinition {
 
@@ -24,7 +28,15 @@ export class TriggerDefinition {
         }
     }
 
-    create(): BaseTrigger {
-        return;
+    create(scope: SceneUnitObject | GameUnitObject): BaseTrigger {
+
+        switch (this.type) {
+
+            case "controldown":
+                return new ControlDownTrigger(scope.getControl(this.arguments[0]));
+
+            case "time":
+                return new TimeTrigger(+this.arguments[0]);
+        }
     }
 }

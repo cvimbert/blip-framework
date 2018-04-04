@@ -20,7 +20,7 @@ export class Graph extends Dispatcher {
         }
     }
 
-    setCurrentNodeIndex(index:number = 0) {
+    setCurrentNodeIndex(index: string | number = 0) {
         this.setNodeAsCurrent(this.nodes[index]);
     }
 
@@ -36,7 +36,10 @@ export class Graph extends Dispatcher {
 
         node.enable((newNode:GraphNode) => {
             // callback de changement de noeud
-            this.setNodeAsCurrent(newNode);
+            setTimeout(() => {
+                this.setNodeAsCurrent(newNode);
+            });
+
         });
     }
 

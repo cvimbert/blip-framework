@@ -20,10 +20,10 @@ export class Animation extends Dispatcher implements Playable{
 
 
     constructor(
-        public sequence:Sequence,
-        public iterations:number,
-        public period:number|Clock,
-        public interruptable:boolean = true
+        public sequence: Sequence,
+        public iterations: number,
+        public period: number | Clock,
+        public interruptable: boolean = true
     ) {
         super();
     }

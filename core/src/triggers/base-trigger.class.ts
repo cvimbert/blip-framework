@@ -16,14 +16,6 @@ export class BaseTrigger extends Dispatcher {
         this.dispatchEvent(Events.TRIGGER_ACTION, arg);
     }
 
-    set enabled(value:boolean) {
-        if (value) {
-            this.enable();
-        } else {
-            this.disable();
-        }
-    }
-
     enable() {
         this._enabled = true;
     }

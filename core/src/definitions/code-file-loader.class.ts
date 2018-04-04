@@ -7,10 +7,10 @@ import {SceneUnitObject} from "../global-objects/scene-unit-object.class";
 
 export class CodeFileLoader {
 
-    instanciables: GameObjectDefinition[] = [];
-
     constructor(
-        filePath: string
+        filePath: string,
+        private onCompleted: Function = null,
+        private onError: Function = null
     ) {
         this.loadFromFile(filePath);
     }
@@ -37,27 +37,31 @@ export class CodeFileLoader {
         let baseUnit: TypedObject = new TypedObject();
         baseUnit.code = code;
         let results: ResultUnit[] = baseUnit.evaluate();
-
         console.log(results);
 
         let scene: SceneUnitObject;
+        let objectsBank: {[key: string]: GameObjectDefinition} = {};
+
+        for (let result of results) {
+
+            if (result.results["type"] === "instantiable") {
+                let definition: GameObjectDefinition = new GameObjectDefinition(result);
+
+                let id: string = result.children[0].results["groupName"];
+                objectsBank[id] = definition;
+            }
+        }
 
         for (let result of results) {
             if (result.results["type"] === "scene") {
                 let definition: SceneObjectDefinition = new SceneObjectDefinition(result);
-                scene = new SceneUnitObject(definition);
-            }
-
-            if (result.results["type"] === "instantiable") {
-                let definition: GameObjectDefinition = new GameObjectDefinition(result);
-                this.instanciables.push(definition);
-                let obj: GameUnitObject = definition.create();
-
-                let id: string = result.children[0].results["groupName"];
-                scene.objects[id] = obj;
+                scene = new SceneUnitObject(definition, objectsBank);
             }
         }
 
         scene.displaySprites();
+
+        console.log(scene);
+        this.onCompleted(scene);
     }
 }

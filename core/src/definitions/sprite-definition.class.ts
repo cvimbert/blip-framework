@@ -18,9 +18,9 @@ export class SpriteDefinition {
         this.y = +definition.children[2].results["value"];
     }
 
-    createBasicSprite(): Sprite {
+    createBasicSprite(x: number, y: number): Sprite {
         let file: File = new File(this.filePath);
-        return new Sprite(file, this.x, this.y);
+        return new Sprite(file, this.x + x, this.y + y);
     }
 
     createControlSprite(): ControlSprite {

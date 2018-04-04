@@ -10,7 +10,7 @@ import {Graph} from "../graphs/graph.class";
 
 export class ExtendedSpritesGroup extends Dispatcher implements IDisplayable {
 
-    sprites: Sprite[] = [];
+    sprites: {[key: string]: Sprite} = {};
     states: {[key: string]: IDisplayable} = {};
     sequences: {[key: string]: Sequence} = {};
     animations: {[key: string]: Animation} = {};
@@ -26,7 +26,7 @@ export class ExtendedSpritesGroup extends Dispatcher implements IDisplayable {
 
     fromDefinition(definition: GroupDefinition) {
         definition.spriteIds.forEach((id: string) => {
-            this.sprites.push(this.scope.getSprite(id));
+            this.sprites[id] = this.scope.getSprite(id);
         });
 
         for (let id in definition.states) {
@@ -47,7 +47,8 @@ export class ExtendedSpritesGroup extends Dispatcher implements IDisplayable {
     }
 
     getSprite(id: string): Sprite {
-        return this.sprites[id];
+        let sp:Sprite = this.sprites[id] || this.scope.getSprite(id);
+        return sp;
     }
 
     getState(id: string): IDisplayable {
@@ -59,10 +60,14 @@ export class ExtendedSpritesGroup extends Dispatcher implements IDisplayable {
     }
 
     hide() {
-
+        for (let id in this.sprites) {
+            this.sprites[id].hide();
+        }
     }
 
     display() {
-
+        for (let id in this.sprites) {
+            this.sprites[id].display();
+        }
     }
 }

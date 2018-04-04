@@ -2,6 +2,7 @@ import {ResultUnit} from "../../../blp-parser/result-unit.class";
 import {Graph} from "../graphs/graph.class";
 import {GraphLink} from "../graphs/graph-link.class";
 import {GameUnitObject} from "../global-objects/game-unit-object.class";
+import {BaseTrigger} from "../triggers/base-trigger.class";
 
 export class GraphLinkDefinition {
 
@@ -16,6 +17,7 @@ export class GraphLinkDefinition {
     }
 
     create(graph: Graph, scope: GameUnitObject): GraphLink {
-        return new GraphLink(graph.getNode(this.destNodeId), scope.getTrigger(this.triggerId));
+        let trg: BaseTrigger = scope.getTrigger(this.triggerId);
+        return new GraphLink(graph.getNode(this.destNodeId), trg);
     }
 }

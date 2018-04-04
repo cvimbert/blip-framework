@@ -11,6 +11,8 @@ export class SceneObject {
 
     private _params:Object;
 
+    protected scale: number = 1;
+
     constructor(
 
     ) {
@@ -38,7 +40,7 @@ export class SceneObject {
             gameContainer.className = "game-container";
             div.appendChild(gameContainer);
 
-            //gameContainer.style.transform = "scale(" + this._params["gameContainerScale"] + ")";
+            gameContainer.style.transform = "scale(" + this.scale + ")";
 
             //backgrounds
             this._backgroundsContainer = document.createElement("div");
@@ -85,25 +87,4 @@ export class SceneObject {
         let element:HTMLElement = document.getElementById(containerId);
         element.appendChild(this._DOMElement);
     }
-
-    /*loadSprites(spritesData:Object):Sprite[] {
-        this.getDOMElement();
-        var sprites:Sprite[] = super.loadSprites(spritesData);
-        sprites.forEach((sprite:Sprite) => sprite.displayInDOMElement(this._spritesContainer));
-        return sprites;
-    }*/
-
-    /*loadDecorations(decorationDatas:Object[], container:HTMLElement = null):Decoration[] {
-        this.getDOMElement();
-        var decorations:Decoration[] = super.loadDecorations(decorationDatas);
-        decorations.forEach((decoration:Decoration) => decoration.displayInDOMElement(container));
-        return decorations;
-    }*/
-
-    /*loadControls(controlsDatas:Object[], container:HTMLElement = null):ControlSprite[] {
-        this.getDOMElement();
-        var sprites:ControlSprite[] = super.loadControls(controlsDatas);
-        sprites.forEach((sprite:ControlSprite) => sprite.displayInDOMElement(container));
-        return null;
-    }*/
 }

@@ -35,10 +35,8 @@ export class AnimationDefinition {
         }
     }
 
-    create(group: ExtendedSpritesGroup, scope: GameUnitObject): Animation {
-
+    create(group: ExtendedSpritesGroup | GameUnitObject, scope: GameUnitObject): Animation {
         let clockValue: number | Clock = this.clockId ? scope.getClock(this.clockId) : this.period;
-
         return new Animation(group.getSequence(this.sequenceId), this.iterations, clockValue, this.interruptable);
     }
 }

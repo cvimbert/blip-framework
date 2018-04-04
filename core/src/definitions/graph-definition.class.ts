@@ -8,28 +8,28 @@ import {GraphLinkDefinition} from "./graph-link-definition.class";
 
 export class GraphDefinition {
 
-    nodes: {[key: string]: GraphNodeDefinition} = {};
+    nodeDefinitions: {[key: string]: GraphNodeDefinition} = {};
 
     constructor(
         definition: ResultUnit
     ) {
         definition.getResult("typedObject@type=node/simplePropsGroup").forEach((definition: ResultUnit) => {
-            this.nodes[definition.results["groupName"]] = new GraphNodeDefinition(definition);
+            this.nodeDefinitions[definition.results["groupName"]] = new GraphNodeDefinition(definition);
         });
     }
 
-    create(group: ExtendedSpritesGroup, scope: GameUnitObject): Graph {
+    create(container: ExtendedSpritesGroup | GameUnitObject, scope: GameUnitObject): Graph {
 
         let nodes: {[key: string]: GraphNode} = {};
 
-        for (let id in this.nodes) {
-            nodes[id] = this.nodes[id].create(group);
+        for (let id in this.nodeDefinitions) {
+            nodes[id] = this.nodeDefinitions[id].create(container);
         }
 
         let graph: Graph = new Graph(nodes);
 
-        for (let id in this.nodes) {
-            this.nodes[id].links.forEach((link: GraphLinkDefinition) => {
+        for (let id in this.nodeDefinitions) {
+            this.nodeDefinitions[id].links.forEach((link: GraphLinkDefinition) => {
                 nodes[id].addLink(link.create(graph, scope));
             });
         }

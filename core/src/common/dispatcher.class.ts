@@ -72,4 +72,8 @@ export class Dispatcher {
             this.listeners.splice(index, 1);
         }
     }
+
+    clearListeners() {
+        this.listeners = [];
+    }
 }

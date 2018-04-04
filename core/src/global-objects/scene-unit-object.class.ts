@@ -8,6 +8,7 @@ import {SceneObject} from "./scene-object.class";
 import {Decoration} from "../display/decoration.class";
 import {ControlSprite} from "../display/control-sprite.class";
 import {GameUnitObject} from "./game-unit-object.class";
+import {GameObjectDefinition} from "../definitions/game-object-definition.class";
 
 export class SceneUnitObject extends SceneObject {
 
@@ -17,12 +18,16 @@ export class SceneUnitObject extends SceneObject {
     triggers: {[key: string]: BaseTrigger} = {};
     controls: {[key: string]: Control} = {};
     controlSprites: {[key: string]: ControlSprite} = {};
+
     objects: {[key: string]: GameUnitObject} = {};
 
     constructor(
-        definition: SceneObjectDefinition
+        definition: SceneObjectDefinition,
+        private objectsBank: {[key: string]: GameObjectDefinition}
     ) {
         super();
+
+        this.scale = definition.scale;
 
         for (let id in definition.backgrounds) {
             this.backgrounds.push(definition.backgrounds[id].createDecorationSprite());
@@ -34,10 +39,6 @@ export class SceneUnitObject extends SceneObject {
 
         for (let id in definition.variables) {
             this.variables[id] = definition.variables[id].create();
-        }
-
-        for (let id in definition.triggers) {
-            this.triggers[id] = definition.triggers[id].create();
         }
 
         for (let id in definition.controls) {
@@ -57,6 +58,14 @@ export class SceneUnitObject extends SceneObject {
             }
         }
 
+        for (let id in definition.triggers) {
+            this.triggers[id] = definition.triggers[id].create(this);
+        }
+
+        for (let id in definition.objects) {
+            this.objects[id] = definition.objects[id].create(this.objectsBank, this);
+        }
+
         this.displayIn(document.body);
         this.getDOMElement();
         this.displayDecorations();
@@ -66,7 +75,9 @@ export class SceneUnitObject extends SceneObject {
     displaySprites() {
         for (let id in this.objects) {
             for (let spriteId in this.objects[id].sprites) {
-                this.objects[id].sprites[spriteId].displayInDOMElement(this._spritesContainer);
+                if (this.objects[id].sprites.hasOwnProperty(spriteId)) {
+                    this.objects[id].sprites[spriteId].displayInDOMElement(this._spritesContainer);
+                }
             }
         }
     }
@@ -81,5 +92,25 @@ export class SceneUnitObject extends SceneObject {
         for (let id in this.controlSprites) {
             this.controlSprites[id].displayInDOMElement(this._controlsContainer);
         }
+    }
+
+    getControl(id: string): Control {
+        return this.controls[id];
+    }
+
+    getClock(id: string): Clock {
+        return this.clocks[id];
+    }
+
+    getVariable(id: string): Variable {
+        return this.variables[id];
+    }
+
+    getTrigger(id: string): BaseTrigger {
+        return this.triggers[id];
+    }
+
+    getObject(id: string): GameUnitObject {
+        return this.objects[id];
     }
 }

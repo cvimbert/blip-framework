@@ -5,6 +5,7 @@ import {GameUnitObject} from "../global-objects/game-unit-object.class";
 import {GraphNode} from "../graphs/graph-node.class";
 import {GraphLink} from "../graphs/graph-link.class";
 import {Graph} from "../graphs/graph.class";
+import {Sprite} from "../display/sprite.class";
 
 export class GraphNodeDefinition {
 
@@ -21,7 +22,7 @@ export class GraphNodeDefinition {
             this.stateType = stateDefinition.results["type"];
             this.stateId = stateDefinition.results["value"];
         } else if (stateDefinition.type === "free") {
-            this.stateType = stateDefinition.results["value"];
+            this.stateId = stateDefinition.results["value"];
         }
 
         for (let i = 1; i < definition.children.length; i++) {
@@ -31,7 +32,8 @@ export class GraphNodeDefinition {
         }
     }
 
-    create (group: ExtendedSpritesGroup): GraphNode {
-        return new GraphNode(group.getState(this.stateId));
+    create (group: ExtendedSpritesGroup | GameUnitObject): GraphNode {
+        let sp: Sprite = group.getSprite(this.stateId);
+        return new GraphNode(sp);
     }
 }

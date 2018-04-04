@@ -23,6 +23,11 @@ export class GraphLink extends Dispatcher {
 
     enableTrigger(callback:Function) {
         this.trigger.enable();
+
+        if (this.triggerListener) {
+            this.trigger.deleteListener(this.triggerListener);
+        }
+
         this.triggerListener = this.trigger.listen(Events.TRIGGER_ACTION, () => {
             if (!this.condition || this.condition.eval()) {
                 callback(this.destNode)
@@ -31,7 +36,9 @@ export class GraphLink extends Dispatcher {
     }
 
     disableTrigger() {
-        this.trigger.disable();
-        this.trigger.deleteListener(this.triggerListener);
+        //setTimeout(() => {
+            this.trigger.disable();
+            this.trigger.deleteListener(this.triggerListener);
+        //});
     }
 }

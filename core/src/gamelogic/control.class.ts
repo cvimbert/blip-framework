@@ -31,7 +31,7 @@ export class Control extends Dispatcher {
     ) {
         super();
 
-        var self = this;
+        let self = this;
 
         this.upHandler = (evt:MouseEvent) => {
             self.checkZoneEvent(Events.CONTROL_UP, evt);
@@ -91,16 +91,16 @@ export class Control extends Dispatcher {
     
     static fromData(data:Object):Control|{[key:string]:Control} {
         
-        var defaults:Object = {
+        let defaults:Object = {
             file: "",
             x: 0,
             y: 0,
             scale: 1
         };
         
-        var spriteParams:Object = Utils.verifyAndExtends(data["sprite"], defaults);
-        var file:File = new File(spriteParams["file"]);
-        var controlSprite:ControlSprite = new ControlSprite(file, spriteParams["x"], spriteParams["y"], spriteParams["scale"]);
+        let spriteParams:Object = Utils.verifyAndExtends(data["sprite"], defaults);
+        let file:File = new File(spriteParams["file"]);
+        let controlSprite:ControlSprite = new ControlSprite(file, spriteParams["x"], spriteParams["y"], spriteParams["scale"]);
 
         if (!data["zones"] || Object.keys(data["zones"]).length === 0) {
             return new Control(controlSprite, null, data["key"]);

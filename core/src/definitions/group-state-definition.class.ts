@@ -17,7 +17,7 @@ export class GroupStateDefinition {
         });
     }
 
-    create(group: ExtendedSpritesGroup): SpritesGroupState {
+    create(group: ExtendedSpritesGroup | GameUnitObject): SpritesGroupState {
         let sprites: IDisplayable[] = [];
 
         this.sprites.forEach((id: string) => {
