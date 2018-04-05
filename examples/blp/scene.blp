@@ -63,9 +63,6 @@
         r3p3s: "../files/game1/sprites/r3p3s.png", 445, 155
         r3p4s: "../files/game1/sprites/r3p4s.png", 576, 142
 
-    #condition
-        cond1: var1 > 0
-
     #trigger
         lclick: "controldown", "cross_left"
         rclick: "controldown", "cross_right"
@@ -79,7 +76,7 @@
             #node
                 nr1p1:
                     r1p1
-                    cond1:rclick -> nr1p2
+                    rclick -> nr1p2
 
                 nr1p2:
                     r1p2
@@ -89,7 +86,7 @@
                 nr1p3:
                     r1p3
                     rclick -> nr1p4
-                    lclikc -> nr1p2
+                    lclick -> nr1p2
 
                 nr1p4:
                     r1p4
