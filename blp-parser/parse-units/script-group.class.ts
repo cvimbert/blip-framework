@@ -8,7 +8,7 @@ export class ScriptGroup extends ParseUnit {
         actionOnObject: {
             assertions: [
                 {
-                    expression: /^([A-Za-z0-9]+)[ ]+([A-Za-z0-9_-]+)[ ]*<[ ]*/,
+                    expression: /^([A-Za-z0-9]+)[ ]+([A-Za-z0-9_-]+)[ ]*>[ ]*/,
                     values: ["objectType", "objectName"]
                 }
             ],

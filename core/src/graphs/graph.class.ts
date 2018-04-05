@@ -3,8 +3,9 @@
  */
 import {Dispatcher} from "../common/dispatcher.class";
 import {GraphNode} from "./graph-node.class";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
-export class Graph extends Dispatcher {
+export class Graph extends Dispatcher implements Actionable {
     
     private _currentNode:GraphNode;
 
@@ -45,5 +46,13 @@ export class Graph extends Dispatcher {
 
     getNode(id: string) {
         return this.nodes[id];
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "setnode":
+                this.setCurrentNodeIndex(args[0]);
+                break;
+        }
     }
 }

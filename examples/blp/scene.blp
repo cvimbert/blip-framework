@@ -194,9 +194,13 @@
         }
 
     @start {
-            clock clk1 < start
-            control cross_right < enable
-        }
+        control cross_right > enable
+        control cross_left > enable
+        control cross_top > enable
+        control cross_bottom > enable
+        control ctrlA > enable
+        graph gr1 > setnode nr1p1
+    }
 }
 
 #instantiable elec: {
@@ -215,6 +219,11 @@
 
     #animation
         an1: seq1, clock(main), 1
+
+    @start {
+        clock main > start
+        animation an1 > play
+    }
 }
 
 #instantiable ondes: {
@@ -237,4 +246,8 @@
 
     #animation
         an1: seq1, 0.5, 1
+
+    @start {
+        animation an1 > play
+    }
 }

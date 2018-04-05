@@ -145,6 +145,9 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
 
             case "clock":
                 return this.getClock(id);
+
+            case "graph":
+                return this.getGraph(id);
         }
     }
 

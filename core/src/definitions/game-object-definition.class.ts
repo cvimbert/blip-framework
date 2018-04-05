@@ -80,7 +80,7 @@ export class GameObjectDefinition {
         });
 
         definition.getResult("bracketsGroup/scriptGroup").forEach((script: ResultUnit) => {
-            this.scripts[definition.results["scriptName"]] = new ScriptDefinition(script);
+            this.scripts[script.results["scriptName"]] = new ScriptDefinition(script);
         });
     }
 

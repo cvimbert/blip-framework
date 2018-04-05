@@ -71,6 +71,20 @@ export class SceneUnitObject extends SceneObject {
         this.getDOMElement();
         this.displayDecorations();
         this.displayControls();
+
+        // TODO temp
+        setTimeout(() => {
+            this.initialize();
+        });
+    }
+
+    initialize() {
+        // objects initialization
+        for (let id in this.objects) {
+            if (this.objects[id].scripts["start"]) {
+                this.objects[id].scripts["start"].execute();
+            }
+        }
     }
 
     displaySprites() {

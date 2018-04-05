@@ -8,15 +8,20 @@ export class ActionOnObjectScript extends ScriptUnit {
 
     targetObject: Actionable;
     actionName: string;
-    actionArgs: string[];
+    actionArgs: string[] = [];
 
     constructor(
         result: ResultUnit,
         context: GameUnitObject | SceneUnitObject
     ) {
         super(result);
-        console.log(result);
         this.targetObject = context.getActionable(result.results["objectType"], result.results["objectName"]);
+
+        this.actionName = result.getResult("actionAndArguments")[0].results["actionName"];
+
+        result.getResult("actionAndArguments/argument").forEach((res: ResultUnit) => {
+            this.actionArgs.push(res.results["value"]);
+        });
     }
 
     execute() {
