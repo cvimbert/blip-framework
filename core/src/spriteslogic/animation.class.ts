@@ -10,8 +10,9 @@ import {GameObject} from "../display/game-object.class";
 import {Utils} from "../common/utils.class";
 import {AnimationData} from "./animation-data.interface";
 import {Playable} from "../interfaces/playable.interface";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
-export class Animation extends Dispatcher implements Playable{
+export class Animation extends Dispatcher implements Playable, Actionable {
 
     isPlaying:boolean = false;
     
@@ -131,5 +132,13 @@ export class Animation extends Dispatcher implements Playable{
         }
 
         this.isPlaying = false;
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "play":
+                this.play();
+                break;
+        }
     }
 }

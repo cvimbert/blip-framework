@@ -13,6 +13,7 @@ import {SequenceDefinition} from "./sequence-definition.class";
 import {AnimationDefinition} from "./animation-definition.class";
 import {GroupStateDefinition} from "./group-state-definition.class";
 import {Script} from "../script/script.class";
+import {ScriptDefinition} from "./script-definition.class";
 
 export class GameObjectDefinition {
 
@@ -29,7 +30,7 @@ export class GameObjectDefinition {
 
     objects: {[key: string]: GameObjectReference} = {};
 
-    scripts: {[key: string]: Script} = {};
+    scripts: {[key: string]: ScriptDefinition} = {};
 
     constructor(
         definition: ResultUnit
@@ -79,7 +80,7 @@ export class GameObjectDefinition {
         });
 
         definition.getResult("bracketsGroup/scriptGroup").forEach((script: ResultUnit) => {
-            console.log("sc", script);
+            this.scripts[definition.results["scriptName"]] = new ScriptDefinition(script);
         });
     }
 

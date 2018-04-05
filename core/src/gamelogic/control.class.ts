@@ -6,6 +6,7 @@ import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
 import {Utils} from "../common/utils.class";
 import {File} from "../files/file.class";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
 export class ControlZone {
 
@@ -17,7 +18,7 @@ export class ControlZone {
     ) {}
 }
 
-export class Control extends Dispatcher {
+export class Control extends Dispatcher implements Actionable{
 
     upHandler;
     downHandler;
@@ -132,5 +133,17 @@ export class Control extends Dispatcher {
         this.sprite.DOMElement.removeEventListener("mouseup", this.upHandler);
         document.removeEventListener("keydown", this.keyDownHandler);
         document.removeEventListener("keyup", this.keyUpHandler);
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "enable":
+                this.enable();
+                break;
+
+            case "disable":
+                this.disable();
+                break;
+        }
     }
 }

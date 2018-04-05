@@ -14,6 +14,7 @@ import {Sequence} from "../spriteslogic/sequence.class";
 import {Animation} from "../spriteslogic/animation.class";
 import {SpritesGroupState} from "../display/sprites-group-state.class";
 import {Script} from "../script/script.class";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
 export class GameUnitObject extends Dispatcher implements IDisplayable {
 
@@ -84,6 +85,10 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
         for (let id in definition.animations) {
             this.animations[id] = definition.animations[id].create(this, this);
         }
+
+        for (let id in definition.scripts) {
+            this.scripts[id] = definition.scripts[id].create(this);
+        }
     }
 
     display() {
@@ -128,5 +133,22 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
 
     getState(id: string): SpritesGroupState {
         return this.states[id];
+    }
+
+    getActionable(type: string, id: string): Actionable {
+        switch (type) {
+            case "animation":
+                return this.getAnimation(id);
+
+            case "control":
+                return this.getControl(id);
+
+            case "clock":
+                return this.getClock(id);
+        }
+    }
+
+    executeScript(id: string) {
+        this.scripts[id].execute();
     }
 }

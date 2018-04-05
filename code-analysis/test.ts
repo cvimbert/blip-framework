@@ -14,6 +14,8 @@ let sceneLoader: CodeFileLoader = new CodeFileLoader("../examples/blp/scene.blp"
     let obj2: GameUnitObject = scene.getObject("elec1");
     let obj3: GameUnitObject = scene.getObject("elec2");
 
+
+
     obj2.getClock("main").start();
     obj3.getClock("main").start();
 

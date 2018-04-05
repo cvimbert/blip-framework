@@ -9,6 +9,7 @@ import {Decoration} from "../display/decoration.class";
 import {ControlSprite} from "../display/control-sprite.class";
 import {GameUnitObject} from "./game-unit-object.class";
 import {GameObjectDefinition} from "../definitions/game-object-definition.class";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
 export class SceneUnitObject extends SceneObject {
 
@@ -112,5 +113,9 @@ export class SceneUnitObject extends SceneObject {
 
     getObject(id: string): GameUnitObject {
         return this.objects[id];
+    }
+
+    getActionable(type: string, id: string): Actionable {
+        return;
     }
 }
