@@ -1,10 +1,11 @@
 import {Dispatcher} from "../../common/dispatcher.class";
 import {Events} from "../../common/events.class";
+import {Actionable} from "../../script/interfaces/actionable.interface";
 /**
  * Created by Christophe on 03/02/2017.
  */
 
-export class Variable extends Dispatcher {
+export class Variable extends Dispatcher implements Actionable {
 
     private currentValue:any;
 
@@ -51,5 +52,31 @@ export class Variable extends Dispatcher {
         }
 
         this.value = this.initValue;
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "set":
+                if (this.type === Variable.BOOLEAN_TYPE) {
+                    this.value = args[0] === "true";
+                } else if (this.type === Variable.NUMBER_TYPE) {
+                    this.value = +args[0];
+                } else {
+                    this.value = args[0];
+                }
+                break;
+
+            case "reinit":
+                this.reset();
+                break;
+
+            case "increment":
+                this.increment();
+                break;
+
+            case "decrement":
+                this.decrement();
+                break;
+        }
     }
 }

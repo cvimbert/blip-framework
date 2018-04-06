@@ -11,35 +11,31 @@ import {GameUnitObject} from "./game-unit-object.class";
 import {GameObjectDefinition} from "../definitions/game-object-definition.class";
 import {Actionable} from "../script/interfaces/actionable.interface";
 
-export class SceneUnitObject extends SceneObject {
+export class SceneUnitObject extends GameUnitObject {
+
+    // for display in DOM
+    private _DOMElement:HTMLElement;
+    private _spritesContainer:HTMLElement;
+    private _backgroundsContainer:HTMLElement;
+    private _foregroundsContainer:HTMLElement;
+    private _controlsContainer:HTMLElement;
+
+    private scale: number = 1;
+    //
 
     backgrounds: Decoration[] = [];
-    clocks: {[key: string]: Clock} = {};
-    variables: {[key: string]: Variable} = {};
-    triggers: {[key: string]: BaseTrigger} = {};
     controls: {[key: string]: Control} = {};
     controlSprites: {[key: string]: ControlSprite} = {};
 
-    objects: {[key: string]: GameUnitObject} = {};
-
     constructor(
         definition: SceneObjectDefinition,
-        private objectsBank: {[key: string]: GameObjectDefinition}
+        public objectsBank: {[key: string]: GameObjectDefinition}
     ) {
-        super();
-
+        super(definition, objectsBank);
         this.scale = definition.scale;
 
         for (let id in definition.backgrounds) {
             this.backgrounds.push(definition.backgrounds[id].createDecorationSprite());
-        }
-
-        for (let id in definition.clocks) {
-            this.clocks[id] = definition.clocks[id].create();
-        }
-
-        for (let id in definition.variables) {
-            this.variables[id] = definition.variables[id].create();
         }
 
         for (let id in definition.controls) {
@@ -59,14 +55,6 @@ export class SceneUnitObject extends SceneObject {
             }
         }
 
-        for (let id in definition.triggers) {
-            this.triggers[id] = definition.triggers[id].create(this);
-        }
-
-        for (let id in definition.objects) {
-            this.objects[id] = definition.objects[id].create(this.objectsBank, this);
-        }
-
         this.displayIn(document.body);
         this.getDOMElement();
         this.displayDecorations();
@@ -76,6 +64,12 @@ export class SceneUnitObject extends SceneObject {
         setTimeout(() => {
             this.initialize();
         });
+
+        this.initializeObject(definition);
+    }
+
+    preinit() {
+        // must be empty for override
     }
 
     initialize() {
@@ -113,23 +107,66 @@ export class SceneUnitObject extends SceneObject {
         return this.controls[id];
     }
 
-    getClock(id: string): Clock {
-        return this.clocks[id];
+    // for display
+
+    getDOMElement():HTMLElement {
+        if (this._DOMElement) {
+            return this._DOMElement;
+        } else {
+
+            let div:HTMLElement = document.createElement("div");
+            div.className = "game-scene";
+            this._DOMElement = div;
+
+            let gameContainer:HTMLElement = document.createElement("div");
+            gameContainer.className = "game-container";
+            div.appendChild(gameContainer);
+
+            gameContainer.style.transform = "scale(" + this.scale + ")";
+
+            //backgrounds
+            this._backgroundsContainer = document.createElement("div");
+            this._backgroundsContainer.classList.add("backgrounds-container");
+            gameContainer.appendChild(this._backgroundsContainer);
+
+            // sprites
+            this._spritesContainer = document.createElement("div");
+            this._spritesContainer.classList.add("sprites-container");
+            gameContainer.appendChild(this._spritesContainer);
+
+            // foregrounds
+            this._foregroundsContainer = document.createElement("div");
+            this._foregroundsContainer.classList.add("foregrounds-container");
+            gameContainer.appendChild(this._foregroundsContainer);
+
+            // controls
+            this._controlsContainer = document.createElement("div");
+            this._controlsContainer.classList.add("controls-container");
+            div.appendChild(this._controlsContainer);
+
+            return div;
+        }
     }
 
-    getVariable(id: string): Variable {
-        return this.variables[id];
+    displayIn(element:string|HTMLElement) {
+        let type:string = typeof element;
+
+        if (type === "string") {
+            this.displayInDOMElementById(element as string);
+        } else if (element instanceof HTMLElement) {
+            this.displayInDOMElement(element as HTMLElement);
+        }
     }
 
-    getTrigger(id: string): BaseTrigger {
-        return this.triggers[id];
+    displayInDOMElement(container:HTMLElement):HTMLElement {
+        this._DOMElement = this.getDOMElement();
+        container.appendChild(this._DOMElement);
+        return this._DOMElement;
     }
 
-    getObject(id: string): GameUnitObject {
-        return this.objects[id];
-    }
-
-    getActionable(type: string, id: string): Actionable {
-        return;
+    displayInDOMElementById(containerId:string) {
+        this._DOMElement = this.getDOMElement();
+        let element:HTMLElement = document.getElementById(containerId);
+        element.appendChild(this._DOMElement);
     }
 }

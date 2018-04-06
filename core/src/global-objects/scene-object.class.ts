@@ -19,14 +19,6 @@ export class SceneObject {
 
     }
 
-    /*loadData(data:Object):Object {
-        var param:Object = super.loadData(data);
-        this.loadDecorations(param["backgrounds"], this._backgroundsContainer);
-        this.loadDecorations(param["foregrounds"], this._foregroundsContainer);
-        this.loadControls(param["controls"], this._controlsContainer);
-        return param;
-    }*/
-
     getDOMElement():HTMLElement {
         if (this._DOMElement) {
             return this._DOMElement;

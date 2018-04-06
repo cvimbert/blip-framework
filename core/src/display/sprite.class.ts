@@ -8,8 +8,9 @@ import {Utils} from "../common/utils.class";
 import {File} from "../files/file.class";
 import {Events} from "../common/events.class";
 import {VisibilityStatus} from "../common/statuses/visibility-status.class";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
-export class Sprite extends ImageDisplayElement implements IDisplayable {
+export class Sprite extends ImageDisplayElement implements IDisplayable, Actionable {
 
     private visible:boolean;
     private visibilities:number[] = [];
@@ -158,6 +159,18 @@ export class Sprite extends ImageDisplayElement implements IDisplayable {
             this.hide();
         } else {
             this.show();
+        }
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "show":
+                this.show();
+                break;
+
+            case "hide":
+                this.hide();
+                break;
         }
     }
 }

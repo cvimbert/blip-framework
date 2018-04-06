@@ -7,8 +7,9 @@ import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
 import {ExtendedSpritesGroup} from "../display/extended-sprites-group.class";
 import {GameUnitObject} from "../global-objects/game-unit-object.class";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
-export class Sequence extends Dispatcher {
+export class Sequence extends Dispatcher implements Actionable {
 
     // 1 2 3 4 3 2 1 2 3 4
     static LOOP_TYPE_CIRCLE:string = "circle";
@@ -129,5 +130,21 @@ export class Sequence extends Dispatcher {
 
     resetIndex() {
         this._currentIndex = -1;
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "next":
+                this.displayNext();
+                break;
+
+            case "previous":
+                this.displayPrevious();
+                break;
+
+            case "index":
+                this.displayAtIndex(+args[0]);
+                break;
+        }
     }
 }

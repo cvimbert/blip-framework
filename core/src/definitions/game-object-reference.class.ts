@@ -18,7 +18,7 @@ export class GameObjectReference {
     }
 
     create(objectsBank: {[key: string]: GameObjectDefinition}, parent: GameUnitObject | SceneUnitObject): GameUnitObject {
-        let obj: GameUnitObject = new GameUnitObject(objectsBank[this.objectId], parent, this.x, this.y);
+        let obj: GameUnitObject = new GameUnitObject(objectsBank[this.objectId], objectsBank, parent, this.x, this.y);
         obj.objectsBank = objectsBank;
         return obj;
     }

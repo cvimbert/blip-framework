@@ -29,19 +29,26 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
     animations: {[key: string]: Animation} = {};
     states: {[key: string]: SpritesGroupState} = {};
 
-    objectsBank: {[key: string]: GameObjectDefinition};
     objects: {[key: string]: GameUnitObject} = {};
 
     scripts: {[key: string]: Script} = {};
 
     constructor(
         definition: GameObjectDefinition,
-        public parent: GameUnitObject | SceneUnitObject,
+        public objectsBank: {[key: string]: GameObjectDefinition},
+        public parent: GameUnitObject | SceneUnitObject = null,
         public x: number = 0,
         public y: number = 0
     ) {
         super();
+        this.preinit(definition);
+    }
 
+    preinit(definition: GameObjectDefinition) {
+        this.initializeObject(definition);
+    }
+
+    initializeObject(definition: GameObjectDefinition) {
         for (let id in definition.sprites) {
             this.sprites[id] = definition.sprites[id].createBasicSprite(this.x, this.y);
         }
@@ -63,7 +70,7 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
         }
 
         for (let id in definition.triggers) {
-            this.triggers[id] = definition.triggers[id].create(this.parent);
+            this.triggers[id] = definition.triggers[id].create(this);
         }
 
         for (let id in definition.graphs) {
@@ -71,7 +78,7 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
         }
 
         for (let id in definition.objects) {
-            this.objects[id] = definition.objects[id].create(this.objectsBank, this.parent);
+            this.objects[id] = definition.objects[id].create(this.objectsBank, this);
         }
 
         for (let id in definition.states) {
@@ -100,11 +107,11 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
     }
 
     getSprite(id: string): Sprite {
-        return this.sprites[id];
+        return this.sprites[id] || this.parent.getSprite(id);
     }
 
     getClock(id: string): Clock {
-        return this.clocks[id];
+        return this.clocks[id] || this.parent.getClock(id);
     }
 
     getTrigger(id: string): BaseTrigger {
@@ -112,7 +119,7 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
     }
 
     getGroup(id: string): ExtendedSpritesGroup {
-        return this.groups[id];
+        return this.groups[id] || this.parent.getGroup(id);
     }
 
     getControl(id: string): Control {
@@ -120,19 +127,27 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
     }
 
     getGraph(id: string): Graph {
-        return this.graphs[id];
+        return this.graphs[id] || this.parent.getGraph(id);
     }
 
     getSequence(id: string): Sequence {
-        return this.sequences[id];
+        return this.sequences[id] || this.parent.getSequence(id);
     }
 
     getAnimation(id: string): Animation {
-        return this.animations[id];
+        return this.animations[id] || this.parent.getAnimation(id);
     }
 
     getState(id: string): SpritesGroupState {
-        return this.states[id];
+        return this.states[id] || this.parent.getState(id);
+    }
+
+    getVariable(id: string): Variable {
+        return this.variables[id] || this.parent.getVariable(id);
+    }
+
+    getSound(id: string): Sound {
+        return this.sounds[id] || this.parent.getSound(id);
     }
 
     getActionable(type: string, id: string): Actionable {
@@ -148,6 +163,21 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
 
             case "graph":
                 return this.getGraph(id);
+
+            case "sequence":
+                return this.getSequence(id);
+
+            case "sprite":
+                return this.getSprite(id);
+
+            case "state":
+                return this.getState(id);
+
+            case "variable":
+                return this.getVariable(id);
+
+            case "sound":
+                return this.getSound(id);
         }
     }
 

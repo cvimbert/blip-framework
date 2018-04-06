@@ -2,10 +2,11 @@
  * Created by Christophe on 03/03/2017.
  */
 import {File} from "../files/file.class";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
 var context:AudioContext = new AudioContext();
 
-export class Sound {
+export class Sound implements Actionable {
 
     private _buffer:AudioBuffer;
 
@@ -42,5 +43,13 @@ export class Sound {
 
     pause() {
         // useful ??
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "play":
+                this.play();
+                break;
+        }
     }
 }

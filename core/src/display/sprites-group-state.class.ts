@@ -7,8 +7,9 @@ import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {Dispatcher} from "../common/dispatcher.class";
 import {ExtendedSpritesGroup} from "./extended-sprites-group.class";
 import {GameUnitObject} from "../global-objects/game-unit-object.class";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
-export class SpritesGroupState extends Dispatcher implements IState {
+export class SpritesGroupState extends Dispatcher implements IState, Actionable {
 
     constructor(
         public group: SpritesGroup | ExtendedSpritesGroup | GameUnitObject,
@@ -28,5 +29,17 @@ export class SpritesGroupState extends Dispatcher implements IState {
 
     isVisible():boolean {
         return true;
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "show":
+                this.display();
+                break;
+
+            case "hide":
+                this.hide();
+                break;
+        }
     }
 }

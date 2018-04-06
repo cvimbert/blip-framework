@@ -13,6 +13,14 @@ export class ScriptGroup extends ParseUnit {
                 }
             ],
             next: ActionAndArguments
+        },
+        triggerScript: {
+            assertions: [
+                {
+                    expression: /^on/,
+                    values: [""]
+                }
+            ]
         }
     };
 

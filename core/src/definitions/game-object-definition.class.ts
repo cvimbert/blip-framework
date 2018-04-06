@@ -84,7 +84,7 @@ export class GameObjectDefinition {
         });
     }
 
-    create(scene: SceneUnitObject): GameUnitObject {
-        return new GameUnitObject(this, scene);
+    create(scene: SceneUnitObject, objectsBank: {[key: string]: GameObjectDefinition}): GameUnitObject {
+        return new GameUnitObject(this, objectsBank, scene);
     }
 }
