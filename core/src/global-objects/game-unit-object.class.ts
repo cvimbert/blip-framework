@@ -150,6 +150,10 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
         return this.sounds[id] || this.parent.getSound(id);
     }
 
+    getScript(id: string): Script {
+        return this.scripts[id] || this.parent.getScript(id);
+    }
+
     getActionable(type: string, id: string): Actionable {
         switch (type) {
             case "animation":
@@ -178,6 +182,9 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
 
             case "sound":
                 return this.getSound(id);
+
+            case "script":
+                return this.getScript(id);
         }
     }
 

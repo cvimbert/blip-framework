@@ -3,8 +3,10 @@ import {ScriptUnit} from "./script-unit.class";
 import {ActionOnObjectScript} from "./action-on-object-script.class";
 import {GameUnitObject} from "../global-objects/game-unit-object.class";
 import {SceneUnitObject} from "../global-objects/scene-unit-object.class";
+import {ListenTriggerScript} from "./listen-trigger-script.class";
+import {Actionable} from "./interfaces/actionable.interface";
 
-export class Script {
+export class Script implements Actionable {
 
     units: ScriptUnit[] = [];
 
@@ -18,6 +20,10 @@ export class Script {
                 case "actionOnObject":
                     this.units.push(new ActionOnObjectScript(result, context));
                     break;
+
+                case "triggerScript":
+                    this.units.push(new ListenTriggerScript(result, context));
+                    break;
             }
         }
     }
@@ -26,5 +32,13 @@ export class Script {
         this.units.forEach((unit: ScriptUnit) => {
             unit.execute();
         });
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "execute":
+                this.execute();
+                break;
+        }
     }
 }

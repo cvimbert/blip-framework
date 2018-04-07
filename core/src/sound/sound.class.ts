@@ -31,7 +31,7 @@ export class Sound implements Actionable {
     }
 
     play() {
-        var source = context.createBufferSource();
+        let source = context.createBufferSource();
         source.buffer = this._buffer;
         source.connect(context.destination);
         source.start(0);

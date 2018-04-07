@@ -71,6 +71,10 @@
         jump: "controldown", "ctrlA"
         fall: "time", 0.5
 
+    #sound
+        snd1: "../files/sounds/taken.mp3"
+        snd2: "../files/sounds/blip.mp3"
+
     #graph
         gr1: {
             #node
@@ -200,6 +204,10 @@
         control cross_bottom > enable
         control ctrlA > enable
         graph gr1 > setnode nr1p1
+
+        listen (rclick) {
+            sound snd2 > play
+        }
     }
 }
 

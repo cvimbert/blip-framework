@@ -17,10 +17,11 @@ export class ScriptGroup extends ParseUnit {
         triggerScript: {
             assertions: [
                 {
-                    expression: /^on/,
-                    values: [""]
+                    expression: /^listen[ ]*\([ ]*([A-Za-z0-9-_]+)[ ]*\)\s*{\s*/,
+                    values: ["triggerId"]
                 }
-            ]
+            ],
+            next: ScriptGroup
         }
     };
 
