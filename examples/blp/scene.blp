@@ -197,6 +197,10 @@
                     fall->nr3p4
         }
 
+    @lsound {
+        sound snd2 > play
+    }
+
     @start {
         control cross_right > enable
         control cross_left > enable
@@ -206,9 +210,11 @@
         graph gr1 > setnode nr1p1
 
         listen (rclick) {
-            sound snd2 > play
+            script lsound > execute
         }
     }
+
+
 }
 
 #instantiable elec: {
