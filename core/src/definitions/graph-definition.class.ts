@@ -18,7 +18,7 @@ export class GraphDefinition {
         });
     }
 
-    create(container: ExtendedSpritesGroup | GameUnitObject, scope: GameUnitObject): Graph {
+    create(container: GameUnitObject, scope: GameUnitObject): Graph {
 
         let nodes: {[key: string]: GraphNode} = {};
 

@@ -3,8 +3,9 @@
  */
 import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
+import {Actionable} from "../script/interfaces/actionable.interface";
 
-export class BaseTrigger extends Dispatcher {
+export class BaseTrigger extends Dispatcher implements Actionable {
 
     protected _enabled:boolean = false;
 
@@ -26,5 +27,17 @@ export class BaseTrigger extends Dispatcher {
 
     get enabled():boolean {
         return this._enabled;
+    }
+
+    executeAction(actionName: string, args: string[]) {
+        switch (actionName) {
+            case "enable":
+                this.enable();
+                break;
+
+            case "disable":
+                this.disable();
+                break;
+        }
     }
 }

@@ -1,35 +1,44 @@
 import {ParseUnit} from "./parse-unit.class";
-import {GraphLink} from "./graph-link.class";
-import {Assertions} from "../interfaces/assertions.interface";
+import {Assertions, AssertionUnit} from "../interfaces/assertions.interface";
 
 export class PropertyValue extends ParseUnit {
 
-    separator: RegExp = /^\s*,\s*|\s+/;
+    separator: AssertionUnit = {
+        expression: /^\s*,\s*|\s+/
+    };
+
+    condition: AssertionUnit = {
+        expression: /^(?:\s*(!?)\s*([A-Za-z0-9-]+)\s*\?\s*)?/,
+        values: ["negation", "conditionId"]
+    };
 
     assertions: Assertions = {
         graphLink: {
             assertions: [
                 {
-                    expression: /^([A-Za-z0-9]+)\s*-\>\s*([A-Za-z0-9]+)/,
+                    expression: /^([A-Za-z0-9]+)\s*->\s*([A-Za-z0-9]+)/,
                     values: ['triggerId', 'destNode']
                 },
+                this.separator
+            ]
+        },
+        evalExpression: {
+            assertions: [
                 {
-                    expression: this.separator
-                }
-            ],
-            next: GraphLink
+                    expression: /^([A-Za-z]+)\(([A-Za-z0-9]+)\)\s*(===|!==|>|>=|<|<=)\s*([A-Za-z0-9]+)/,
+                    values: ["type", "objectId", "operator", "value"]
+                },
+                this.separator
+            ]
         },
         string: {
             assertions: [
                 {
-                    expression: /^"([A-Za-z0-9\/\._]+)"/,
+                    expression: /^"([A-Za-z0-9\/._]+)"/,
                     values: ['value']
                 },
-                {
-                    expression: this.separator
-                }
-            ],
-            next: GraphLink
+                this.separator
+            ]
         },
         number: {
             assertions: [
@@ -37,9 +46,7 @@ export class PropertyValue extends ParseUnit {
                     expression: /^(-?[0-9]+(?:\.[0-9]*)?)/,
                     values: ['value']
                 },
-                {
-                    expression: this.separator
-                }
+                this.separator
             ]
         },
         boolean: {
@@ -48,32 +55,28 @@ export class PropertyValue extends ParseUnit {
                     expression: /^(true|false)/,
                     values: ['value']
                 },
-                {
-                    expression: this.separator
-                }
+                this.separator
             ]
         },
         free: {
             assertions: [
+                this.condition,
                 {
                     expression: /^(?:([A-Za-z0-9]+))(?=[\s+,]+)/,
                     values: ['value']
                 },
-                {
-                    expression: this.separator
-                }
+                this.separator
             ]
         },
         typed: {
             assertions: [
+                this.condition,
                 {
                     expression: /^([A-Za-z]+)\(([A-Za-z0-9]+)\)/,
                     values: ['type', 'value']
                 },
-                {
-                    expression: this.separator
-                }
+                this.separator
             ]
-        }
+        },
     };
 }

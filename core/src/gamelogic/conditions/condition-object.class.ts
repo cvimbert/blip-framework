@@ -1,7 +1,6 @@
 import {ConditionsData} from "./interfaces/conditions-data.interface";
 import {Condition} from "../condition.class";
 import {DataTemplates} from "../../data-templates.class";
-import {ExtractionResult} from "reverted-template";
 import {GameObject} from "../../display/game-object.class";
 
 export class ConditionObject {
@@ -24,8 +23,8 @@ export class ConditionObject {
             let elem:string|Object = data.conditions[key];
 
             if (typeof elem === "string") {
-                let res:ExtractionResult = DataTemplates.condition.extractResult(elem);
-                console.log(key, res);
+                /*let res:ExtractionResult = DataTemplates.condition.extractResult(elem);
+                console.log(key, res);*/
             } else {
 
             }

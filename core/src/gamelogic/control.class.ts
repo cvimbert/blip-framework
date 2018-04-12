@@ -53,6 +53,10 @@ export class Control extends Dispatcher implements Actionable{
                 this.dispatchEvent(Events.CONTROL_UP);
             }
         };
+
+        setTimeout(() => {
+            this.enable();
+        });
     }
 
     setZone(x:number, y:number, width:number, height:number) {

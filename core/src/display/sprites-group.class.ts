@@ -45,8 +45,9 @@ export class SpritesGroup extends Dispatcher implements IDisplayable {
             }
         });
 
-        let state:SpritesGroupState = new SpritesGroupState(this, sprites);
+        /*let state:SpritesGroupState = new SpritesGroupState(this, sprites);
         this.states.push(state);
-        return state;
+        return state;*/
+        return;
     }
 }

@@ -14,6 +14,7 @@ import {AnimationDefinition} from "./animation-definition.class";
 import {GroupStateDefinition} from "./group-state-definition.class";
 import {Script} from "../script/script.class";
 import {ScriptDefinition} from "./script-definition.class";
+import {ConditionDefinition} from "./condition-definition.class";
 
 export class GameObjectDefinition {
 
@@ -27,6 +28,7 @@ export class GameObjectDefinition {
     sequences: {[key: string]: SequenceDefinition} = {};
     animations: {[key: string]: AnimationDefinition} = {};
     states: {[key: string]: GroupStateDefinition} = {};
+    conditions: {[key: string]: ConditionDefinition} = {};
 
     objects: {[key: string]: GameObjectReference} = {};
 
@@ -55,16 +57,12 @@ export class GameObjectDefinition {
             this.variables[definition.results["groupName"]] = new VariableDefinition(definition);
         });
 
-        definition.getResult("bracketsGroup/typedObject@type=graph/bracketsGroup").forEach((definition: ResultUnit) => {
-            this.graphs[definition.results["groupName"]] = new GraphDefinition(definition);
-        });
-
         definition.getResult("bracketsGroup/typedObject@type=trigger/simplePropsGroup").forEach((definition: ResultUnit) => {
             this.triggers[definition.results["groupName"]] = new TriggerDefinition(definition);
         });
 
-        definition.getResult("bracketsGroup/typedObject@type=object/simplePropsGroup").forEach((definition: ResultUnit) => {
-            this.objects[definition.results["groupName"]] = new GameObjectReference(definition);
+        definition.getResult("bracketsGroup/typedObject@type=condition/simplePropsGroup").forEach((definition: ResultUnit) => {
+            this.conditions[definition.results["groupName"]] = new ConditionDefinition(definition);
         });
 
         definition.getResult("bracketsGroup/typedObject@type=state/simplePropsGroup").forEach((definition: ResultUnit) => {
@@ -81,6 +79,14 @@ export class GameObjectDefinition {
 
         definition.getResult("bracketsGroup/scriptGroup").forEach((script: ResultUnit) => {
             this.scripts[script.results["scriptName"]] = new ScriptDefinition(script);
+        });
+
+        definition.getResult("bracketsGroup/typedObject@type=object/simplePropsGroup").forEach((definition: ResultUnit) => {
+            this.objects[definition.results["groupName"]] = new GameObjectReference(definition);
+        });
+
+        definition.getResult("bracketsGroup/typedObject@type=graph/bracketsGroup").forEach((definition: ResultUnit) => {
+            this.graphs[definition.results["groupName"]] = new GraphDefinition(definition);
         });
     }
 

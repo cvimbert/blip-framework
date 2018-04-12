@@ -6,6 +6,7 @@ import {GraphNode} from "../graphs/graph-node.class";
 import {GraphLink} from "../graphs/graph-link.class";
 import {Graph} from "../graphs/graph.class";
 import {Sprite} from "../display/sprite.class";
+import {IDisplayable} from "../interfaces/IDisplayable.interface";
 
 export class GraphNodeDefinition {
 
@@ -32,8 +33,19 @@ export class GraphNodeDefinition {
         }
     }
 
-    create (group: ExtendedSpritesGroup | GameUnitObject): GraphNode {
-        let sp: Sprite = group.getSprite(this.stateId);
-        return new GraphNode(sp);
+    create (object: GameUnitObject): GraphNode {
+
+        let state: IDisplayable;
+
+        switch (this.stateType) {
+            case "object":
+                state = object.getObject(this.stateId);
+                break;
+
+            default:
+                state = object.getSprite(this.stateId);
+        }
+
+        return new GraphNode(state);
     }
 }

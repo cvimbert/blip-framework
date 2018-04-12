@@ -15,8 +15,9 @@ import {Animation} from "../spriteslogic/animation.class";
 import {SpritesGroupState} from "../display/sprites-group-state.class";
 import {Script} from "../script/script.class";
 import {Actionable} from "../script/interfaces/actionable.interface";
+import {Condition} from "../gamelogic/condition.class";
 
-export class GameUnitObject extends Dispatcher implements IDisplayable {
+export class GameUnitObject extends Dispatcher implements IDisplayable, Actionable {
 
     sprites: {[key: string]: Sprite} = {};
     clocks: {[key: string]: Clock} = {};
@@ -28,6 +29,7 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
     sequences: {[key: string]: Sequence} = {};
     animations: {[key: string]: Animation} = {};
     states: {[key: string]: SpritesGroupState} = {};
+    conditions: {[key: string]: Condition} = {};
 
     objects: {[key: string]: GameUnitObject} = {};
 
@@ -73,14 +75,6 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
             this.triggers[id] = definition.triggers[id].create(this);
         }
 
-        for (let id in definition.graphs) {
-            this.graphs[id] = definition.graphs[id].create(this, this);
-        }
-
-        for (let id in definition.objects) {
-            this.objects[id] = definition.objects[id].create(this.objectsBank, this);
-        }
-
         for (let id in definition.states) {
             this.states[id] = definition.states[id].create(this);
         }
@@ -93,17 +87,45 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
             this.animations[id] = definition.animations[id].create(this, this);
         }
 
+        for (let id in definition.objects) {
+            this.objects[id] = definition.objects[id].create(this.objectsBank, this);
+        }
+
+        for (let id in definition.graphs) {
+            this.graphs[id] = definition.graphs[id].create(this, this);
+        }
+
         for (let id in definition.scripts) {
             this.scripts[id] = definition.scripts[id].create(this);
+        }
+
+        for (let id in definition.conditions) {
+            this.conditions[id] = definition.conditions[id].create(this);
         }
     }
 
     display() {
+        let startScript: Script = this.scripts["start"];
 
+        if (startScript) {
+            startScript.execute();
+        }
     }
 
     hide() {
+        for (let id in this.sprites) {
+            this.sprites[id].hide();
+        }
 
+        for (let id in this.triggers) {
+            this.triggers[id].disable();
+        }
+
+        let nodeOutScript: Script = this.scripts["nodeout"];
+
+        if (nodeOutScript) {
+            nodeOutScript.execute();
+        }
     }
 
     getSprite(id: string): Sprite {
@@ -150,8 +172,16 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
         return this.sounds[id] || this.parent.getSound(id);
     }
 
+    getObject(id: string): GameUnitObject {
+        return this.objects[id] || this.parent.getObject(id);
+    }
+
     getScript(id: string): Script {
         return this.scripts[id] || this.parent.getScript(id);
+    }
+
+    getCondition(id: string): Condition {
+        return this.conditions[id] || this.parent.getCondition(id);
     }
 
     getActionable(type: string, id: string): Actionable {
@@ -185,10 +215,20 @@ export class GameUnitObject extends Dispatcher implements IDisplayable {
 
             case "script":
                 return this.getScript(id);
+
+            case "object":
+                return this.getObject(id);
+
+            case "trigger":
+                return this.getTrigger(id);
         }
     }
 
     executeScript(id: string) {
         this.scripts[id].execute();
+    }
+
+    executeAction(actionName: string, args: string[]) {
+
     }
 }

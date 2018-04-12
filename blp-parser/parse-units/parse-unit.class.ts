@@ -62,6 +62,7 @@ export class ParseUnit {
                 resultUnit.startIndex = this._lastPointer;
                 resultUnit.endIndex = this._pointer;
                 resultUnit.type = assertionName;
+
                 resultUnit.results = res;
 
                 this.resultUnits.push(resultUnit);
@@ -106,11 +107,13 @@ export class ParseUnit {
     evaluateGroup(group: Assertion): AssertionResult {
 
         let results: AssertionResult = {};
+        let startPointer: number = this._pointer;
 
         for (let exp of group.assertions) {
             let evaluation: RegExpExecArray = this.evaluateExpression(this.code.substring(this._pointer), exp.expression);
 
             if (!evaluation) {
+                this._pointer = startPointer;
                 return null;
             } else {
                 if (exp.values) {

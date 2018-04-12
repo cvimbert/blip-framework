@@ -5,7 +5,7 @@ export class ResultUnit {
     startIndex: number;
     endIndex: number;
 
-    results: { [key: string]: any };
+    results: { [key: string]: any } = {};
     children: ResultUnit[] = [];
 
     getResult(path: string): ResultUnit[] {

@@ -79,6 +79,10 @@ export class SceneUnitObject extends GameUnitObject {
                 this.objects[id].scripts["start"].execute();
             }
         }
+
+        if (this.scripts["start"]) {
+            this.scripts["start"].execute();
+        }
     }
 
     displaySprites() {

@@ -122,9 +122,9 @@ export class GameObject {
                 for (let stateId in param["states"]) {
                     if (param["states"].hasOwnProperty(stateId)) {
                         let sprites:Sprite[] = this.getFromDictionary(param["states"][stateId], this._spritesDictionary);
-                        let state:SpritesGroupState = new SpritesGroupState(group, sprites);
+                        /*let state:SpritesGroupState = new SpritesGroupState(group, sprites);
                         let completeStateId:string = this.getIdWithGroupPrefix(groupId, stateId);
-                        this._statesDictionary[completeStateId] = state;
+                        this._statesDictionary[completeStateId] = state;*/
                     }
                 }
 

@@ -41,9 +41,9 @@ export class ExtendedSpritesGroup extends Dispatcher implements IDisplayable {
             this.animations[id] = definition.animations[id].create(this, this.scope);
         }
 
-        for (let id in definition.graphs) {
+        /*for (let id in definition.graphs) {
             this.graphs[id] = definition.graphs[id].create(this, this.scope);
-        }
+        }*/
     }
 
     getSprite(id: string): Sprite {
