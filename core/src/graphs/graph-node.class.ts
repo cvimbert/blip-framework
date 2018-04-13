@@ -7,6 +7,8 @@ import {GraphLink} from "./graph-link.class";
 
 export class GraphNode extends Dispatcher {
 
+    id: string;
+
     constructor(
         public state:IDisplayable,
         public links:GraphLink[] = []

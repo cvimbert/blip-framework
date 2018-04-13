@@ -18,7 +18,7 @@ import {Actionable} from "../script/interfaces/actionable.interface";
 import {Condition} from "../gamelogic/condition.class";
 import {Gettable} from "../interfaces/gettable.interface";
 
-export class GameUnitObject extends Dispatcher implements IDisplayable, Actionable {
+export class GameUnitObject extends Dispatcher implements IDisplayable, Actionable, Gettable {
 
     sprites: {[key: string]: Sprite} = {};
     clocks: {[key: string]: Clock} = {};
@@ -229,6 +229,9 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
         switch (type) {
             case "variable":
                 return this.getVariable(id);
+
+            case "graph":
+                return this.getGraph(id);
         }
     }
 
@@ -238,5 +241,11 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
 
     executeAction(actionName: string, args: string[]) {
 
+    }
+
+    getProperty(propertyName: string): any {
+        switch (propertyName) {
+
+        }
     }
 }

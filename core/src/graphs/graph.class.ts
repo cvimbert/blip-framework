@@ -4,8 +4,9 @@
 import {Dispatcher} from "../common/dispatcher.class";
 import {GraphNode} from "./graph-node.class";
 import {Actionable} from "../script/interfaces/actionable.interface";
+import {Gettable} from "../interfaces/gettable.interface";
 
-export class Graph extends Dispatcher implements Actionable {
+export class Graph extends Dispatcher implements Actionable, Gettable {
     
     private _currentNode:GraphNode;
 
@@ -53,6 +54,16 @@ export class Graph extends Dispatcher implements Actionable {
             case "setnode":
                 this.setCurrentNodeIndex(args[0]);
                 break;
+        }
+    }
+
+    getProperty(propertyName: string): any {
+        switch (propertyName) {
+            case "currentNodeId":
+                return this._currentNode.id;
+
+            case "currentNode":
+                return this._currentNode;
         }
     }
 }

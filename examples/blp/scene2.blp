@@ -31,10 +31,11 @@
         bclick: "controldown", "cross_bottom"
 
     #variable
-        v1: false
+        v1: true
 
     #condition
         cond1: variable(v1) === true
+
 
     #graph
         mainPerso: {
@@ -79,6 +80,7 @@
 
     #condition
         cond1: variable(v1).value === true
+        cond2: graph(g1).currentNodeId === "n1"
 
     #state
         st1: cond1 ? s1, !cond1 ? s1Alt
@@ -88,7 +90,7 @@
             #node
                 n1:
                     s1
-                    jump -> n2
+                    cond2 ? jump -> n2
 
                 n2:
                     s2
@@ -96,6 +98,6 @@
         }
 
     @start {
-        state st1 > show
+        graph g1 > setnode n1
     }
 }

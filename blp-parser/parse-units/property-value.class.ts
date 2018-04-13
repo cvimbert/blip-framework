@@ -12,6 +12,16 @@ export class PropertyValue extends ParseUnit {
         values: ["negation", "conditionId"]
     };
 
+    operand: AssertionUnit = {
+        expression: /^/,
+        values: []
+    };
+
+    operator: AssertionUnit = {
+        expression: /^(===|!==|>|>=|<|<=)\s*/,
+        values: ["operator"]
+    };
+
     assertions: Assertions = {
         graphLink: {
             assertions: [
@@ -26,7 +36,7 @@ export class PropertyValue extends ParseUnit {
         evalExpression: {
             assertions: [
                 {
-                    expression: /^([A-Za-z]+)\(([A-Za-z0-9]+)\)(?:\.([A-Za-z0-9_]+))?\s*(===|!==|>|>=|<|<=)\s*([A-Za-z0-9]+)/,
+                    expression: /^([A-Za-z]+)\(([A-Za-z0-9]+)\)(?:\.([A-Za-z0-9_]+))?\s*(===|!==|>|>=|<|<=)\s*([A-Za-z0-9]+|(?:"[A-Za-z0-9]+"))/,
                     values: ["type", "objectId", "propertyName", "operator", "value"]
                 },
                 this.separator

@@ -20,8 +20,6 @@ export class ConditionDefinition {
         this.operator = data.results["operator"];
         this.value = data.results["value"];
         this.propertyName = data.results["propertyName"];
-
-        console.log(data);
     }
 
     create(context: GameUnitObject): Condition {
@@ -29,7 +27,14 @@ export class ConditionDefinition {
             let object: Gettable = context.getGettable(this.type, this.objectId);
             let property: any = object.getProperty(this.propertyName);
 
-            let evalStr: string = property + this.operator + this.value;
+            let value: string = this.value;
+
+            if (typeof property === "string") {
+                property = '"' + property + '"';
+            }
+
+            let evalStr: string = property + this.operator + value;
+            console.log(evalStr);
             return eval(evalStr);
         });
     }

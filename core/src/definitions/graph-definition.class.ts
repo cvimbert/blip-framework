@@ -24,6 +24,7 @@ export class GraphDefinition {
 
         for (let id in this.nodeDefinitions) {
             nodes[id] = this.nodeDefinitions[id].create(container);
+            nodes[id].id = id;
         }
 
         let graph: Graph = new Graph(nodes);
