@@ -8,6 +8,8 @@ import {BaseTrigger} from "../triggers/base-trigger.class";
 import {EventListener} from "../common/event-listener.class";
 import {Events} from "../common/events.class";
 import {Condition} from "../gamelogic/condition.class";
+import {GameUnitObject} from "../global-objects/game-unit-object.class";
+import {ConditionDef} from "../definitions/group-state-definition.class";
 
 export class GraphLink extends Dispatcher {
 
@@ -16,7 +18,8 @@ export class GraphLink extends Dispatcher {
     constructor(
         public destNode:GraphNode,
         public trigger:BaseTrigger,
-        public condition:Condition = null
+        private context: GameUnitObject,
+        public condition: ConditionDef = null
     ) {
         super();
     }
@@ -29,16 +32,22 @@ export class GraphLink extends Dispatcher {
         }
 
         this.triggerListener = this.trigger.listen(Events.TRIGGER_ACTION, () => {
-            if (!this.condition || this.condition.eval()) {
+
+            if (this.condition.conditionId) {
+
+                let condition: Condition = this.context.getCondition(this.condition.conditionId);
+
+                if (condition.eval() === !this.condition.negated) {
+                    callback(this.destNode)
+                }
+            } else {
                 callback(this.destNode)
             }
         });
     }
 
     disableTrigger() {
-        //setTimeout(() => {
-            this.trigger.disable();
-            this.trigger.deleteListener(this.triggerListener);
-        //});
+        this.trigger.disable();
+        this.trigger.deleteListener(this.triggerListener);
     }
 }

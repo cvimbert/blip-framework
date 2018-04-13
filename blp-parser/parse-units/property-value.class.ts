@@ -15,6 +15,7 @@ export class PropertyValue extends ParseUnit {
     assertions: Assertions = {
         graphLink: {
             assertions: [
+                this.condition,
                 {
                     expression: /^([A-Za-z0-9]+)\s*->\s*([A-Za-z0-9]+)/,
                     values: ['triggerId', 'destNode']

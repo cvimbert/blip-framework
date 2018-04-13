@@ -30,6 +30,9 @@
         tclick: "controldown", "cross_top"
         bclick: "controldown", "cross_bottom"
 
+    #condition
+        cond1: variable(v1) === true
+
     #graph
         mainPerso: {
             #node
@@ -39,7 +42,7 @@
 
                 nd2:
                     object(p2)
-                    rclick -> nd3
+                    cond1 ? rclick -> nd3
                     lclick -> nd1
 
                 nd3:

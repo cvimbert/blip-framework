@@ -109,7 +109,7 @@ export class GraphObject {
             linksDatas.forEach((data:LinkData) => {
                 let destNode:GraphNode = this._nodesDictionary[data.node];
                 let trigger:BaseTrigger = this.triggers.getTrigger(data.trigger);
-                currentNode.addLink(new GraphLink(destNode, trigger));
+                //currentNode.addLink(new GraphLink(destNode, trigger));
             });
         });
 
