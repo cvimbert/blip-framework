@@ -29,9 +29,9 @@ export class ExtendedSpritesGroup extends Dispatcher implements IDisplayable {
             this.sprites[id] = this.scope.getSprite(id);
         });
 
-        for (let id in definition.states) {
+        /*for (let id in definition.states) {
             this.states[id] = definition.states[id].create(this);
-        }
+        }*/
 
         for (let id in definition.sequences) {
             this.sequences[id] = definition.sequences[id].create(this);

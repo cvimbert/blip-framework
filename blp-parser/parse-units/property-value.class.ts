@@ -62,8 +62,8 @@ export class PropertyValue extends ParseUnit {
             assertions: [
                 this.condition,
                 {
-                    expression: /^(?:([A-Za-z0-9]+))(?=[\s+,]+)/,
-                    values: ['value']
+                    expression: /^(?:([A-Za-z0-9]+)(?:\s*\|\s*([A-Za-z0-9]+))?)(?=[\s+,]+)/,
+                    values: ['value', 'altValue']
                 },
                 this.separator
             ]

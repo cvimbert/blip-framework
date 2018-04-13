@@ -13,6 +13,7 @@ export class GroupStateDefinition {
 
     // or other, see later
     sprites: string[] = [];
+    altSprites: string[] = [];
     conditions: ConditionDef[] = [];
 
     constructor(
@@ -22,6 +23,7 @@ export class GroupStateDefinition {
 
         definition.children.forEach((result: ResultUnit) => {
             this.sprites.push(result.results["value"]);
+            this.altSprites.push(result.results["altValue"]);
 
             this.conditions.push({
                 conditionId: result.results["conditionId"],

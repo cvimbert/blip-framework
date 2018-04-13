@@ -23,9 +23,7 @@ export class ConditionDefinition {
 
     create(context: GameUnitObject): Condition {
         return new Condition(() => {
-
             return true;
-
         });
     }
 }
