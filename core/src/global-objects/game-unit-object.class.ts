@@ -16,6 +16,7 @@ import {SpritesGroupState} from "../display/sprites-group-state.class";
 import {Script} from "../script/script.class";
 import {Actionable} from "../script/interfaces/actionable.interface";
 import {Condition} from "../gamelogic/condition.class";
+import {Gettable} from "../interfaces/gettable.interface";
 
 export class GameUnitObject extends Dispatcher implements IDisplayable, Actionable {
 
@@ -221,6 +222,13 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
 
             case "trigger":
                 return this.getTrigger(id);
+        }
+    }
+
+    getGettable(type: string, id: string): Gettable {
+        switch (type) {
+            case "variable":
+                return this.getVariable(id);
         }
     }
 

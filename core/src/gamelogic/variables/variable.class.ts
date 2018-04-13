@@ -1,11 +1,12 @@
 import {Dispatcher} from "../../common/dispatcher.class";
 import {Events} from "../../common/events.class";
 import {Actionable} from "../../script/interfaces/actionable.interface";
+import {Gettable} from "../../interfaces/gettable.interface";
 /**
  * Created by Christophe on 03/02/2017.
  */
 
-export class Variable extends Dispatcher implements Actionable {
+export class Variable extends Dispatcher implements Actionable, Gettable {
 
     private currentValue:any;
 
@@ -77,6 +78,14 @@ export class Variable extends Dispatcher implements Actionable {
             case "decrement":
                 this.decrement();
                 break;
+        }
+    }
+
+    getProperty(propertyName: string): any {
+        switch (propertyName) {
+            case undefined:
+            case "value":
+                return this.value;
         }
     }
 }

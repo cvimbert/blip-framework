@@ -30,6 +30,9 @@
         tclick: "controldown", "cross_top"
         bclick: "controldown", "cross_bottom"
 
+    #variable
+        v1: false
+
     #condition
         cond1: variable(v1) === true
 
@@ -75,7 +78,7 @@
         v1: true
 
     #condition
-        cond1: variable(v1) === true
+        cond1: variable(v1).value === true
 
     #state
         st1: cond1 ? s1, !cond1 ? s1Alt

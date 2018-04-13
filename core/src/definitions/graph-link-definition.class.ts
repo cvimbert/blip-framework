@@ -21,8 +21,6 @@ export class GraphLinkDefinition {
             conditionId: definition.results["conditionId"],
             negated: definition.results["negation"] === "!"
         };
-
-        console.log(this);
     }
 
     create(graph: Graph, scope: GameUnitObject): GraphLink {
