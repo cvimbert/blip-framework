@@ -33,6 +33,7 @@ export class SpritesGroupState extends Dispatcher implements IState, Actionable 
                     sprite.display();
                 }
             } else {
+                console.log("oo");
                 sprite.display();
             }
         });

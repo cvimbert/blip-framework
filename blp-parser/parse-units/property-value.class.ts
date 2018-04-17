@@ -33,11 +33,11 @@ export class PropertyValue extends ParseUnit {
                 this.separator
             ]
         },
-        evalExpression: {
+        logicalExpression: {
             assertions: [
                 {
-                    expression: /^([A-Za-z]+)\(([A-Za-z0-9]+)\)(?:\.([A-Za-z0-9_]+))?\s*(===|!==|>|>=|<|<=)\s*([A-Za-z0-9]+|(?:"[A-Za-z0-9]+"))/,
-                    values: ["type", "objectId", "propertyName", "operator", "value"]
+                    expression: /^([A-Za-z0-9.()"']+)\s*(?:===|!==|>={|<=|>|<)\s*([A-Za-z0-9.()"']+)(?=\s*[\n,])/,
+                    values: ["operand1", "operand2"]
                 },
                 this.separator
             ]

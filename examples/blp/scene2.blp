@@ -36,7 +36,6 @@
     #condition
         cond1: variable(v1) === true
 
-
     #graph
         mainPerso: {
             #node
@@ -79,11 +78,11 @@
         v1: true
 
     #condition
-        cond1: variable(v1).value === true
-        cond2: graph(g1).currentNodeId === "n1"
+        cond2: graph(g1).currentNodeId === "n1ooo"
+        condB: variable(v1).value === "yop"
 
     #state
-        st1: cond1 ? s1, !cond1 ? s1Alt
+        st1: condB ? s1, !condB ? s1Alt
 
     #graph
         g1: {

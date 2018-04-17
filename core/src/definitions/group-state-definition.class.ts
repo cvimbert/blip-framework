@@ -19,8 +19,6 @@ export class GroupStateDefinition {
     constructor(
         definition: ResultUnit
     ) {
-        console.log("def", definition);
-
         definition.children.forEach((result: ResultUnit) => {
             this.sprites.push(result.results["value"]);
             this.altSprites.push(result.results["altValue"]);
