@@ -25,37 +25,37 @@
         }
 
     #trigger
-        lclick: "controldown", "cross_left"
-        rclick: "controldown", "cross_right"
-        tclick: "controldown", "cross_top"
-        bclick: "controldown", "cross_bottom"
+        lclick: control(cross_left).down
+        rclick: control(cross_right).down
+        tclick: control(cross_top).down
+        bclick: control(cross_bottom).down
 
     #variable
-        v1: true
+        position: "bas"
 
     #condition
-        cond1: variable(v1) === true
+        persoSol: variable(position).value === "bas"
 
     #graph
         mainPerso: {
             #node
                 nd1:
                     object(p1)
-                    rclick -> nd2
+                    persoSol ? rclick -> nd2
 
                 nd2:
                     object(p2)
-                    cond1 ? rclick -> nd3
-                    lclick -> nd1
+                    persoSol ? rclick -> nd3
+                    persoSol ? lclick -> nd1
 
                 nd3:
                     object(p3)
-                    rclick -> nd4
-                    lclick -> nd2
+                    persoSol ? rclick -> nd4
+                    persoSol ? lclick -> nd2
 
                 nd4:
                     object(p4)
-                    lclick -> nd3
+                    persoSol ? lclick -> nd3
         }
 
     @start {
@@ -75,21 +75,20 @@
         s2: "../files/game1/sprites/r3p1s.png", 155, 900
 
     #variable
-        v1: true
+        jumpable: true
 
     #condition
-        cond2: graph(g1).currentNodeId === "n1ooo"
-        condB: variable(v1).value === "yop"
+        jumpable: variable(jumpable).value === true
 
     #state
-        st1: condB ? s1, !condB ? s1Alt
+        st1: s1
 
     #graph
         g1: {
             #node
                 n1:
                     s1
-                    cond2 ? jump -> n2
+                    jumpable ? jump -> n2
 
                 n2:
                     s2
@@ -98,5 +97,13 @@
 
     @start {
         graph g1 > setnode n1
+
+        listen(jump) {
+            variable position > set "haut"
+        }
+
+        listen(fall) {
+            variable position > set "bas"
+        }
     }
 }

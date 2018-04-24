@@ -7,6 +7,10 @@ import {Events} from "../common/events.class";
 import {Utils} from "../common/utils.class";
 import {File} from "../files/file.class";
 import {Actionable} from "../script/interfaces/actionable.interface";
+import {BaseTrigger} from "../triggers/base-trigger.class";
+import {ControlDownTrigger} from "../triggers/controls/control-down-trigger.class";
+import {ControlUpTrigger} from "../triggers/controls/control-up-trigger.class";
+import {Triggerable} from "../interfaces/triggerable.interface";
 
 export class ControlZone {
 
@@ -18,7 +22,7 @@ export class ControlZone {
     ) {}
 }
 
-export class Control extends Dispatcher implements Actionable{
+export class Control extends Dispatcher implements Actionable, Triggerable {
 
     upHandler;
     downHandler;
@@ -148,6 +152,16 @@ export class Control extends Dispatcher implements Actionable{
             case "disable":
                 this.disable();
                 break;
+        }
+    }
+
+    getTrigger(name: string): BaseTrigger {
+        switch (name) {
+            case "down":
+                return new ControlDownTrigger(this);
+
+            case "up":
+                return new ControlUpTrigger(this);
         }
     }
 }

@@ -1,7 +1,9 @@
 /**
  * Created by Christophe on 20/03/2017.
  */
-/*export {Utils} from "./src/common/utils.class";
+export {CodeFileLoader} from "./src/definitions/code-file-loader.class";
+
+export {Utils} from "./src/common/utils.class";
 export {GameObject} from "./src/display/game-object.class";
 export {HTMLGameObject} from "./src/display/html-game-object.class";
 export {LcdDisplayer} from "./src/modules/lcd-displayer/lcd-displayer.class";
@@ -11,14 +13,13 @@ export {Condition} from "./src/gamelogic/condition.class";
 
 export {File} from "./src/files/file.class";
 export {Control} from "./src/gamelogic/control.class";
-export {Variable} from "./src/gamelogic/variable.class";
+export {Variable} from "./src/gamelogic/variables/variable.class";
 export {ConditionTypes} from "./src/gamelogic/conditions/condition-types.class";
 export {SequenceCondition} from "./src/gamelogic/conditions/sequence-condition.class";
 export {OnStateSequenceCondition} from "./src/gamelogic/conditions/sequence-conditions/onstate-sequence-condition.class";
 export {Graph} from "./src/graphs/graph.class";
 export {GraphLink} from "./src/graphs/graph-link.class";
 export {GraphNode} from "./src/graphs/graph-node.class";
-export {ICondition} from "./src/interfaces/ICondition.interface";
 export {IDisplayable} from "./src/interfaces/IDisplayable.interface";
 export {ITrigger} from "./src/interfaces/ITrigger.interface";
 export {Sound} from "./src/sound/sound.class";
@@ -45,4 +46,4 @@ export {StatusSubscription} from "./src/common/status-subscription.class";
 export {TimeUtils} from "./src/common/time-utils.class";
 
 export {TriggersObject} from "./src/triggers/triggers-object.class";
-export {GraphObject} from "./src/graphs/graph-object.class";*/
+export {GraphObject} from "./src/graphs/graph-object.class";

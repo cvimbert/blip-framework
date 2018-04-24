@@ -8,7 +8,7 @@ export class Arguments extends ParseUnit {
         argument: {
             assertions: [
                 {
-                    expression: /^([A-Za-z0-9]+)[ ]*/,
+                    expression: /^"?([A-Za-z0-9]+)"?[ ]*/,
                     values: ["value"]
                 }
             ]

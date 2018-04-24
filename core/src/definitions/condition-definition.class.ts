@@ -3,6 +3,7 @@ import {Condition} from "../gamelogic/condition.class";
 import {GameUnitObject} from "../global-objects/game-unit-object.class";
 import {Gettable} from "../interfaces/gettable.interface";
 import {Operand} from "../../../blp-parser/parse-units/logical-expression/operand.class";
+import {LogicalExpression} from "../gamelogic/conditions/logical-expression/logical-expression.class";
 
 export class ConditionDefinition {
 
@@ -26,33 +27,33 @@ export class ConditionDefinition {
         this.value = data.results["value"];
         this.propertyName = data.results["propertyName"];
 
-        let operand1Unit: Operand = new Operand();
-        operand1Unit.code = data.results["operand1"];
-        console.log("ev1", operand1Unit.evaluate());
+        console.log(data);
 
-        let operand2Unit: Operand = new Operand();
-        operand2Unit.code = data.results["operand2"];
-        console.log(data.results["operand2"]);
-        console.log("ev2", operand2Unit.evaluate());
+        if (data.type === "logicalExpression") {
+            let operand1Unit: Operand = new Operand();
+            operand1Unit.code = data.results["operand1"];
+            this.operand1 = operand1Unit.evaluate()[0];
+
+            let operand2Unit: Operand = new Operand();
+            operand2Unit.code = data.results["operand2"];
+            this.operand2 = operand2Unit.evaluate()[0];
+
+            this.operator = data.results["operator"];
+        }
     }
 
     create(context: GameUnitObject): Condition {
+
         return new Condition(() => {
 
-            return true;
+            if (this.operand1 && this.operand2 && this.operator) {
+                let expression: LogicalExpression = new LogicalExpression(this.operand1, this.operator, this.operand2);
+                return expression.evaluate(context);
+            } else {
 
-            /*let object: Gettable = context.getGettable(this.type, this.objectId);
-            let property: any = object.getProperty(this.propertyName);
-
-            let value: string = this.value;
-
-            if (typeof property === "string") {
-                property = '"' + property + '"';
+                // TODO: other cases must be implemented
+                return true;
             }
-
-            let evalStr: string = property + this.operator + value;
-            console.log(evalStr);
-            return eval(evalStr);*/
         });
     }
 }

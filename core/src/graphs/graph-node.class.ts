@@ -4,8 +4,9 @@
 import {Dispatcher} from "../common/dispatcher.class";
 import {IDisplayable} from "../interfaces/IDisplayable.interface";
 import {GraphLink} from "./graph-link.class";
+import {Gettable} from "../interfaces/gettable.interface";
 
-export class GraphNode extends Dispatcher {
+export class GraphNode extends Dispatcher implements Gettable {
 
     id: string;
 
@@ -34,5 +35,12 @@ export class GraphNode extends Dispatcher {
 
     disable() {
         this.links.forEach(link => link.disableTrigger());
+    }
+
+    getProperty(propertyName: string): any {
+        switch (propertyName) {
+            case "state":
+                return this.state;
+        }
     }
 }

@@ -17,6 +17,8 @@ import {Script} from "../script/script.class";
 import {Actionable} from "../script/interfaces/actionable.interface";
 import {Condition} from "../gamelogic/condition.class";
 import {Gettable} from "../interfaces/gettable.interface";
+import {Trigger} from "../triggers/trigger.class";
+import {Triggerable} from "../interfaces/triggerable.interface";
 
 export class GameUnitObject extends Dispatcher implements IDisplayable, Actionable, Gettable {
 
@@ -232,6 +234,13 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
 
             case "graph":
                 return this.getGraph(id);
+        }
+    }
+
+    getTriggerable(type: string, id: string): Triggerable {
+        switch (type) {
+            case "control":
+                return this.getControl(id);
         }
     }
 

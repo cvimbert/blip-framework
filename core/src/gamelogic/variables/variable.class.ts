@@ -63,6 +63,7 @@ export class Variable extends Dispatcher implements Actionable, Gettable {
                 } else if (this.type === Variable.NUMBER_TYPE) {
                     this.value = +args[0];
                 } else {
+                    console.log("h", args[0]);
                     this.value = args[0];
                 }
                 break;
@@ -83,7 +84,7 @@ export class Variable extends Dispatcher implements Actionable, Gettable {
 
     getProperty(propertyName: string): any {
         switch (propertyName) {
-            case undefined:
+            case "":
             case "value":
                 return this.value;
         }
