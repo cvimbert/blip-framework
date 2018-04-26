@@ -1,6 +1,11 @@
 /**
  * Created by Christophe on 20/03/2017.
  */
+export {SceneUnitObject} from "./src/global-objects/scene-unit-object.class";
+export {GameUnitObject} from "./src/global-objects/game-unit-object.class";
+
+export {CodeStringsLoader} from "./src/definitions/code-strings-loader.class";
+
 export {CodeFileLoader} from "./src/definitions/code-file-loader.class";
 
 export {Utils} from "./src/common/utils.class";

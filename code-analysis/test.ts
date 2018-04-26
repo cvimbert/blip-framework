@@ -8,7 +8,7 @@ import {Events} from "../core/src/common/events.class";
 import {Graph} from "../core/src/graphs/graph.class";
 import {Animation} from "../core/src/spriteslogic/animation.class";
 
-let sceneLoader: CodeFileLoader = new CodeFileLoader("../examples/blp/scene2.blp", (scene: SceneUnitObject) => {
+let sceneLoader: CodeFileLoader = new CodeFileLoader("../examples/blp/scene.blp", (scene: SceneUnitObject) => {
     // completed
 
 }, () => {

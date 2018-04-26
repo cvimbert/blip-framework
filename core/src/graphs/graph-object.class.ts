@@ -13,8 +13,6 @@ import {GraphLink} from "./graph-link.class";
 import {BaseTrigger} from "../triggers/base-trigger.class";
 import {ITrigger} from "../interfaces/ITrigger.interface";
 import {Graph} from "./graph.class";
-import {RevertedTemplate} from "reverted-template";
-import {DataTemplates} from "../data-templates.class";
 
 export class GraphObject {
 
@@ -32,7 +30,7 @@ export class GraphObject {
 
     getDataFromTextFormat(str:string):NodeData {
 
-        let data:Object = DataTemplates.graphNode.extract(str);
+        /*let data:Object = DataTemplates.graphNode.extract(str);
 
         let nodeType:string = "sprite";
 
@@ -55,7 +53,9 @@ export class GraphObject {
             links: links
         };
         
-        return value;
+        return value;*/
+
+        return;
     }
 
     loadData(data:GraphData) {

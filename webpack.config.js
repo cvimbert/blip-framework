@@ -14,9 +14,7 @@ module.exports = {
     resolve: {
         extensions: [".webpack.js", ".web.js", ".js", ".ts"],
         alias: {
-            //TweenLite: path.resolve(__dirname, 'node_modules/gsap/src/uncompressed/TweenLite.js'),
-            //draggable: path.resolve(__dirname, 'node_modules/gsap/src/uncompressed/utils/Draggable.js'),
-            //"plugins.CSSPlugin": path.resolve(__dirname, 'node_modules/gsap/src/uncompressed/plugins/CSSPlugin.js')
+
         }
     },
     module: {

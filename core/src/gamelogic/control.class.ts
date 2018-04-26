@@ -129,6 +129,11 @@ export class Control extends Dispatcher implements Actionable, Triggerable {
         }
     }
 
+    removeDocumentListeners() {
+        document.removeEventListener("keydown", this.keyDownHandler);
+        document.removeEventListener("keyup", this.keyUpHandler);
+    }
+
     enable() {
         this.sprite.DOMElement.addEventListener("mousedown", this.downHandler);
         this.sprite.DOMElement.addEventListener("mouseup", this.upHandler);

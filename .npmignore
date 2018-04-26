@@ -1,7 +1,5 @@
 node_modules
 examples
-files
-fonts
 doc
 *.ts
 !*.d.ts

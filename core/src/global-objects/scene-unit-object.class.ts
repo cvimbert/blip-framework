@@ -29,7 +29,8 @@ export class SceneUnitObject extends GameUnitObject {
 
     constructor(
         definition: SceneObjectDefinition,
-        public objectsBank: {[key: string]: GameObjectDefinition}
+        public objectsBank: {[key: string]: GameObjectDefinition},
+        public element: HTMLElement = null
     ) {
         super(definition, objectsBank);
         this.scale = definition.scale;
@@ -55,7 +56,12 @@ export class SceneUnitObject extends GameUnitObject {
             }
         }
 
-        this.displayIn(document.body);
+        if (this.element) {
+            this.displayIn(this.element);
+        } else {
+            this.displayIn(document.body);
+        }
+
         this.getDOMElement();
         this.displayDecorations();
         this.displayControls();
@@ -92,6 +98,10 @@ export class SceneUnitObject extends GameUnitObject {
                     this.objects[id].sprites[spriteId].displayInDOMElement(this._spritesContainer);
                 }
             }
+        }
+
+        for (let id in this.sprites) {
+            this.sprites[id].displayInDOMElement(this._spritesContainer);
         }
     }
 
@@ -172,5 +182,11 @@ export class SceneUnitObject extends GameUnitObject {
         this._DOMElement = this.getDOMElement();
         let element:HTMLElement = document.getElementById(containerId);
         element.appendChild(this._DOMElement);
+    }
+
+    destroy() {
+        for (let id in this.controls) {
+            this.controls[id].removeDocumentListeners();
+        }
     }
 }

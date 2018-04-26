@@ -1,6 +1,5 @@
 import {ConditionsData} from "./interfaces/conditions-data.interface";
 import {Condition} from "../condition.class";
-import {DataTemplates} from "../../data-templates.class";
 import {GameObject} from "../../display/game-object.class";
 
 export class ConditionObject {
