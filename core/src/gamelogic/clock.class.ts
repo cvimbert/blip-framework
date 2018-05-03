@@ -7,7 +7,7 @@ import {Actionable} from "../script/interfaces/actionable.interface";
 
 export class Clock extends Dispatcher implements Actionable {
 
-    private _interval:number;
+    private _interval:any;
 
     constructor(
         public period:number

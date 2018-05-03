@@ -244,6 +244,25 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
         }
     }
 
+    getSceneBounds(): { width: number, height: number } {
+
+        let ret = { width: 0, height: 0 };
+
+        for (let id in this.sprites) {
+            let bounds: { x:number, y: number } = this.sprites[id].getBoundPoint();
+
+            if (bounds.x > ret.width) {
+                ret.width = bounds.x;
+            }
+
+            if (bounds.y > ret.height) {
+                ret.height = bounds.y;
+            }
+        }
+
+        return ret;
+    }
+
     executeScript(id: string) {
         this.scripts[id].execute();
     }

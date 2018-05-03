@@ -15,5 +15,5 @@ export class Arguments extends ParseUnit {
         }
     };
 
-
+    closingExpression: RegExp = /^[ ]*[\n\r]+[ \t]*/;
 }

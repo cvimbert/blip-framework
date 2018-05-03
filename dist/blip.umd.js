@@ -77,7 +77,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(21), __webpack_require__(22)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, status_subscription_class_1, event_listener_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(22), __webpack_require__(23)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, status_subscription_class_1, event_listener_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Dispatcher = /** @class */ (function () {
@@ -438,7 +438,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(15), __webpack_require__(0), __webpack_require__(1), __webpack_require__(3), __webpack_require__(4), __webpack_require__(18), __webpack_require__(40)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_sprite_class_1, dispatcher_class_1, events_class_1, utils_class_1, file_class_1, control_down_trigger_class_1, control_up_trigger_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(17), __webpack_require__(0), __webpack_require__(1), __webpack_require__(3), __webpack_require__(4), __webpack_require__(20), __webpack_require__(40)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_sprite_class_1, dispatcher_class_1, events_class_1, utils_class_1, file_class_1, control_down_trigger_class_1, control_up_trigger_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ControlZone = /** @class */ (function () {
@@ -585,7 +585,61 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(8)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, display_element_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, dispatcher_class_1, events_class_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Clock = /** @class */ (function (_super) {
+        __extends(Clock, _super);
+        function Clock(period) {
+            var _this = _super.call(this) || this;
+            _this.period = period;
+            return _this;
+        }
+        Clock.prototype.start = function () {
+            var _this = this;
+            this.stop();
+            this._interval = setInterval(function () {
+                _this.dispatchEvent(events_class_1.Events.CLOCK_PERIOD);
+            }, this.period * 1000);
+        };
+        Clock.prototype.stop = function () {
+            if (this._interval) {
+                clearInterval(this._interval);
+                this._interval = null;
+            }
+        };
+        Clock.prototype.executeAction = function (actionName, args) {
+            switch (actionName) {
+                case "start":
+                    this.start();
+                    break;
+                case "stop":
+                    this.stop();
+                    break;
+            }
+        };
+        return Clock;
+    }(dispatcher_class_1.Dispatcher));
+    exports.Clock = Clock;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+//# sourceMappingURL=clock.class.js.map
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(9)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, display_element_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     /*const Draggable = require("draggable");
@@ -622,7 +676,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=image-display-element.js.map
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -685,60 +739,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=display-element.class.js.map
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, dispatcher_class_1, events_class_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var Clock = /** @class */ (function (_super) {
-        __extends(Clock, _super);
-        function Clock(period) {
-            var _this = _super.call(this) || this;
-            _this.period = period;
-            return _this;
-        }
-        Clock.prototype.start = function () {
-            var _this = this;
-            this.stop();
-            this._interval = setInterval(function () {
-                _this.dispatchEvent(events_class_1.Events.CLOCK_PERIOD);
-            }, this.period * 1000);
-        };
-        Clock.prototype.stop = function () {
-            if (this._interval) {
-                clearInterval(this._interval);
-                this._interval = null;
-            }
-        };
-        Clock.prototype.executeAction = function (actionName, args) {
-            switch (actionName) {
-                case "start":
-                    this.start();
-                    break;
-                case "stop":
-                    this.stop();
-                    break;
-            }
-        };
-        return Clock;
-    }(dispatcher_class_1.Dispatcher));
-    exports.Clock = Clock;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=clock.class.js.map
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -752,130 +752,254 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, dispatcher_class_1, events_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(1), __webpack_require__(7), __webpack_require__(3)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, dispatcher_class_1, events_class_1, clock_class_1, utils_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Sequence = /** @class */ (function (_super) {
-        __extends(Sequence, _super);
-        function Sequence(group, states, loopType) {
-            if (states === void 0) { states = []; }
-            if (loopType === void 0) { loopType = ""; }
+    var Animation = /** @class */ (function (_super) {
+        __extends(Animation, _super);
+        function Animation(sequence, iterations, period, interruptable) {
+            if (interruptable === void 0) { interruptable = true; }
             var _this = _super.call(this) || this;
-            _this.group = group;
-            _this.states = states;
-            _this.loopType = loopType;
-            _this._direction = 1;
-            _this._currentIndex = -1;
+            _this.sequence = sequence;
+            _this.iterations = iterations;
+            _this.period = period;
+            _this.interruptable = interruptable;
+            _this.isPlaying = false;
             return _this;
         }
-        Sequence.prototype._isIndexValid = function (index) {
-            return index >= 0 && index < this.states.length;
-        };
-        Sequence.prototype.hide = function () {
-            this.states.forEach(function (state) { return state.hide(); });
-        };
-        Sequence.prototype.displayAtIndex = function (index, forced) {
-            //if (!this._isIndexValid(index)) return false;
-            if (forced === void 0) { forced = false; }
-            if (!forced && (index <= -1 || index >= this.states.length)) {
-                return false;
+        Animation.fromData = function (data, groupId, scene) {
+            var defaults = {
+                sequence: "",
+                period: 1,
+                iterations: 1,
+                interruptable: false
+            };
+            var param = utils_class_1.Utils.verifyAndExtends(data, defaults);
+            var period;
+            if (typeof param.period === "number") {
+                period = param.period;
             }
-            if (index <= -1) {
-                if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
-                    this.reverse();
-                    this.displayAtIndex(1);
+            else {
+                period = scene.getClock(param.period);
+            }
+            var sequence = scene.getSequence(groupId, param.sequence);
+            return new Animation(sequence, param.iterations, period, param.interruptable);
+        };
+        Animation.prototype.play = function () {
+            var _this = this;
+            var occurencesCounter;
+            if (this.clockListener) {
+                this.clockListener.stoplisten();
+            }
+            if (this.interruptable === false && this.isPlaying) {
+                occurencesCounter = 0;
+                return;
+            }
+            this.sequence.reset();
+            this.sequence.displayNext(true);
+            occurencesCounter = 0;
+            this.isPlaying = true;
+            if (this.period instanceof clock_class_1.Clock) {
+                this.clockListener = this.period.listen(events_class_1.Events.CLOCK_PERIOD, function () {
+                    _this.animationAction(occurencesCounter);
+                });
+            }
+            else {
+                this.animationInterval = setInterval(function () {
+                    _this.animationAction(occurencesCounter);
+                }, this.period * 1000);
+            }
+        };
+        Animation.prototype.animationAction = function (occurencesCounter) {
+            if (this.isPlaying === false)
+                return;
+            if (!this.sequence.displayNext(occurencesCounter < this.iterations - 1)) {
+                this.dispatchEvent(events_class_1.Events.ANIMATION_ITERATION_END, occurencesCounter);
+                occurencesCounter++;
+                if (occurencesCounter >= this.iterations) {
+                    clearInterval(this.animationInterval);
+                    this.dispatchEvent(events_class_1.Events.ANIMATION_END);
+                    this.dispatchEvent(events_class_1.Events.END_PLAYING);
+                    this.isPlaying = false;
                 }
-                else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
-                    this.displayAtIndex(this.states.length - 1);
+                else {
+                    // on repart à zéro
+                    //this.sequence.resetIndex();
+                    //this.sequence.displayNext(true);
+                    //this.sequence.reverse();
                 }
-                return false;
             }
-            else if (index >= this.states.length) {
-                if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
-                    this.reverse();
-                    this.displayAtIndex(this.states.length - 2);
-                }
-                else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
-                    this.displayAtIndex(0);
-                }
-                return false;
+        };
+        Animation.prototype.stop = function () {
+            if (this.period instanceof clock_class_1.Clock) {
+                this.period.deleteListener(this.clockListener);
             }
-            this.hide();
-            this._currentIndex = index;
-            this.states[index].display();
-            this.dispatchEvent(events_class_1.Events.SEQUENCE_ENTER_STATE, this.states[index]);
-            return true;
-        };
-        Sequence.prototype.reverse = function () {
-            this._direction *= -1;
-        };
-        /*inverse() {
-            if (this._currentIndex === -1) {
-                this._currentIndex = this.states.length;
+            else {
+                clearInterval(this.animationInterval);
             }
-        }*/
-        Sequence.prototype.hasNext = function () {
-            var nextIndex = this._currentIndex + this._direction;
-            return !(nextIndex <= -1 || nextIndex >= this.states.length);
+            this.isPlaying = false;
         };
-        Sequence.prototype.displayNext = function (forced) {
-            if (forced === void 0) { forced = false; }
-            var done = this.displayAtIndex(this._currentIndex + this._direction, forced);
-            /*if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
-                this.reverse();
-            }*/
-            return done;
-        };
-        Sequence.prototype.hasPrevious = function () {
-            var previousIndex = this._currentIndex - this._direction;
-            return !(previousIndex <= -1 || previousIndex >= this.states.length);
-        };
-        Sequence.prototype.displayPrevious = function (forced) {
-            if (forced === void 0) { forced = false; }
-            var done = this.displayAtIndex(this._currentIndex - this._direction, forced);
-            /*if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
-                this.reverse();
-            }*/
-            if (!done && this.loopType === Sequence.LOOP_TYPE_RESET) {
-                this.resetIndex();
+        Animation.prototype.reset = function () {
+            this.sequence.reset();
+            if (this.animationInterval !== undefined) {
+                clearInterval(this.animationInterval);
+                this.animationInterval = undefined;
             }
-            return done;
-        };
-        Sequence.prototype.reset = function () {
-            if (this._currentIndex !== -1) {
-                this.states[this._currentIndex].hide();
+            if (this.clockListener) {
+                this.clockListener.stoplisten();
+                this.clockListener = null;
             }
-            this._currentIndex = -1;
+            this.isPlaying = false;
         };
-        Sequence.prototype.resetIndex = function () {
-            this._currentIndex = -1;
-        };
-        Sequence.prototype.executeAction = function (actionName, args) {
+        Animation.prototype.executeAction = function (actionName, args) {
             switch (actionName) {
-                case "next":
-                    this.displayNext();
-                    break;
-                case "previous":
-                    this.displayPrevious();
-                    break;
-                case "index":
-                    this.displayAtIndex(+args[0]);
+                case "play":
+                    this.play();
                     break;
             }
         };
-        // 1 2 3 4 3 2 1 2 3 4
-        Sequence.LOOP_TYPE_CIRCLE = "circle";
-        // 1 2 3 4 1 2 3 4 1 2 3 4
-        Sequence.LOOP_TYPE_RESET = "reset";
-        return Sequence;
+        return Animation;
     }(dispatcher_class_1.Dispatcher));
-    exports.Sequence = Sequence;
+    exports.Animation = Animation;
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=sequence.class.js.map
+//# sourceMappingURL=animation.class.js.map
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(49), __webpack_require__(24), __webpack_require__(50)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, parse_unit_class_1, named_property_class_1, property_value_class_1, script_group_class_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var TypedObject = /** @class */ (function (_super) {
+        __extends(TypedObject, _super);
+        function TypedObject() {
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.assertions = {
+                typedObject: {
+                    assertions: [
+                        {
+                            expression: /^#([A-Za-z0-9]+)\s*/,
+                            values: ['type']
+                        }
+                    ],
+                    next: named_property_class_1.NamedProperty
+                },
+                simplePropertyGroup: {
+                    assertions: [
+                        {
+                            expression: /^([A-Za-z0-9]+)\s*:\s*/,
+                            values: ['groupName']
+                        }
+                    ],
+                    next: property_value_class_1.PropertyValue
+                },
+                scriptGroup: {
+                    assertions: [
+                        {
+                            expression: /^@([A-Za-z0-9]+)\s*{\s*/,
+                            values: ['scriptName']
+                        }
+                    ],
+                    next: script_group_class_1.ScriptGroup
+                }
+            };
+            _this.closingExpression = /^\s*\}\s*/;
+            return _this;
+        }
+        return TypedObject;
+    }(parse_unit_class_1.ParseUnit));
+    exports.TypedObject = TypedObject;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+//# sourceMappingURL=typed-object.class.js.map
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(15), __webpack_require__(55), __webpack_require__(56), __webpack_require__(58), __webpack_require__(59), __webpack_require__(19), __webpack_require__(25), __webpack_require__(60), __webpack_require__(61), __webpack_require__(31), __webpack_require__(32), __webpack_require__(29), __webpack_require__(36), __webpack_require__(65)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprite_definition_class_1, clock_definition_class_1, group_definition_class_1, sound_definition_class_1, variable_definition_class_1, game_unit_object_class_1, graph_definition_class_1, trigger_definition_class_1, game_object_reference_class_1, sequence_definition_class_1, animation_definition_class_1, group_state_definition_class_1, script_definition_class_1, condition_definition_class_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var GameObjectDefinition = /** @class */ (function () {
+        function GameObjectDefinition(definition) {
+            var _this = this;
+            this.sprites = {};
+            this.clocks = {};
+            this.groups = {};
+            this.sounds = {};
+            this.variables = {};
+            this.graphs = {};
+            this.triggers = {};
+            this.sequences = {};
+            this.animations = {};
+            this.states = {};
+            this.conditions = {};
+            this.objects = {};
+            this.scripts = {};
+            definition.getResult("bracketsGroup/typedObject@type=sprite/simplePropsGroup").forEach(function (definition) {
+                _this.sprites[definition.results["groupName"]] = new sprite_definition_class_1.SpriteDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=clock/simplePropsGroup").forEach(function (definition) {
+                _this.clocks[definition.results["groupName"]] = new clock_definition_class_1.ClockDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=group/bracketsGroup").forEach(function (definition) {
+                _this.groups[definition.results["groupName"]] = new group_definition_class_1.GroupDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=sound/simplePropsGroup").forEach(function (definition) {
+                _this.sounds[definition.results["groupName"]] = new sound_definition_class_1.SoundDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=variable/simplePropsGroup").forEach(function (definition) {
+                _this.variables[definition.results["groupName"]] = new variable_definition_class_1.VariableDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=trigger/simplePropsGroup").forEach(function (definition) {
+                _this.triggers[definition.results["groupName"]] = new trigger_definition_class_1.TriggerDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=condition/simplePropsGroup").forEach(function (definition) {
+                _this.conditions[definition.results["groupName"]] = new condition_definition_class_1.ConditionDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=state/simplePropsGroup").forEach(function (definition) {
+                _this.states[definition.results["groupName"]] = new group_state_definition_class_1.GroupStateDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=sequence/simplePropsGroup").forEach(function (definition) {
+                _this.sequences[definition.results["groupName"]] = new sequence_definition_class_1.SequenceDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=animation/simplePropsGroup").forEach(function (definition) {
+                _this.animations[definition.results["groupName"]] = new animation_definition_class_1.AnimationDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/scriptGroup").forEach(function (script) {
+                _this.scripts[script.results["scriptName"]] = new script_definition_class_1.ScriptDefinition(script);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=object/simplePropsGroup").forEach(function (definition) {
+                _this.objects[definition.results["groupName"]] = new game_object_reference_class_1.GameObjectReference(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=graph/bracketsGroup").forEach(function (definition) {
+                _this.graphs[definition.results["groupName"]] = new graph_definition_class_1.GraphDefinition(definition);
+            });
+        }
+        GameObjectDefinition.prototype.create = function (scene, objectsBank) {
+            return new game_unit_object_class_1.GameUnitObject(this, objectsBank, scene);
+        };
+        return GameObjectDefinition;
+    }());
+    exports.GameObjectDefinition = GameObjectDefinition;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+//# sourceMappingURL=game-object-definition.class.js.map
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -929,7 +1053,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=graph-node.class.js.map
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -1003,10 +1127,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=graph.class.js.map
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(14), __webpack_require__(4), __webpack_require__(15), __webpack_require__(29)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprite_class_1, file_class_1, control_sprite_class_1, decoration_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(16), __webpack_require__(4), __webpack_require__(17), __webpack_require__(28)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprite_class_1, file_class_1, control_sprite_class_1, decoration_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var SpriteDefinition = /** @class */ (function () {
@@ -1035,7 +1159,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=sprite-definition.class.js.map
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -1048,7 +1172,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(7), __webpack_require__(3), __webpack_require__(4), __webpack_require__(1), __webpack_require__(28)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, image_display_element_1, utils_class_1, file_class_1, events_class_1, visibility_status_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(8), __webpack_require__(3), __webpack_require__(4), __webpack_require__(1), __webpack_require__(27)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, image_display_element_1, utils_class_1, file_class_1, events_class_1, visibility_status_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Sprite = /** @class */ (function (_super) {
@@ -1189,7 +1313,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=sprite.class.js.map
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -1202,7 +1326,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, image_display_element_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(8)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, image_display_element_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ControlSprite = /** @class */ (function (_super) {
@@ -1235,7 +1359,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=control-sprite.class.js.map
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -1248,121 +1372,130 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(1), __webpack_require__(9), __webpack_require__(3)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, dispatcher_class_1, events_class_1, clock_class_1, utils_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(0), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, dispatcher_class_1, events_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Animation = /** @class */ (function (_super) {
-        __extends(Animation, _super);
-        function Animation(sequence, iterations, period, interruptable) {
-            if (interruptable === void 0) { interruptable = true; }
+    var Sequence = /** @class */ (function (_super) {
+        __extends(Sequence, _super);
+        function Sequence(group, states, loopType) {
+            if (states === void 0) { states = []; }
+            if (loopType === void 0) { loopType = ""; }
             var _this = _super.call(this) || this;
-            _this.sequence = sequence;
-            _this.iterations = iterations;
-            _this.period = period;
-            _this.interruptable = interruptable;
-            _this.isPlaying = false;
+            _this.group = group;
+            _this.states = states;
+            _this.loopType = loopType;
+            _this._direction = 1;
+            _this._currentIndex = -1;
             return _this;
         }
-        Animation.fromData = function (data, groupId, scene) {
-            var defaults = {
-                sequence: "",
-                period: 1,
-                iterations: 1,
-                interruptable: false
-            };
-            var param = utils_class_1.Utils.verifyAndExtends(data, defaults);
-            var period;
-            if (typeof param.period === "number") {
-                period = param.period;
-            }
-            else {
-                period = scene.getClock(param.period);
-            }
-            var sequence = scene.getSequence(groupId, param.sequence);
-            return new Animation(sequence, param.iterations, period, param.interruptable);
+        Sequence.prototype._isIndexValid = function (index) {
+            return index >= 0 && index < this.states.length;
         };
-        Animation.prototype.play = function () {
-            var _this = this;
-            var occurencesCounter;
-            if (this.clockListener) {
-                this.clockListener.stoplisten();
-            }
-            if (this.interruptable === false && this.isPlaying) {
-                occurencesCounter = 0;
-                return;
-            }
-            this.sequence.reset();
-            this.sequence.displayNext(true);
-            occurencesCounter = 0;
-            this.isPlaying = true;
-            if (this.period instanceof clock_class_1.Clock) {
-                this.clockListener = this.period.listen(events_class_1.Events.CLOCK_PERIOD, function () {
-                    _this.animationAction(occurencesCounter);
-                });
-            }
-            else {
-                this.animationInterval = setInterval(function () {
-                    _this.animationAction(occurencesCounter);
-                }, this.period * 1000);
-            }
+        Sequence.prototype.hide = function () {
+            this.states.forEach(function (state) { return state.hide(); });
         };
-        Animation.prototype.animationAction = function (occurencesCounter) {
-            if (this.isPlaying === false)
-                return;
-            if (!this.sequence.displayNext(occurencesCounter < this.iterations - 1)) {
-                this.dispatchEvent(events_class_1.Events.ANIMATION_ITERATION_END, occurencesCounter);
-                occurencesCounter++;
-                if (occurencesCounter >= this.iterations) {
-                    clearInterval(this.animationInterval);
-                    this.dispatchEvent(events_class_1.Events.ANIMATION_END);
-                    this.dispatchEvent(events_class_1.Events.END_PLAYING);
-                    this.isPlaying = false;
+        Sequence.prototype.displayAtIndex = function (index, forced) {
+            //if (!this._isIndexValid(index)) return false;
+            if (forced === void 0) { forced = false; }
+            if (!forced && (index <= -1 || index >= this.states.length)) {
+                return false;
+            }
+            if (index <= -1) {
+                if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                    this.reverse();
+                    this.displayAtIndex(1);
                 }
-                else {
-                    // on repart à zéro
-                    //this.sequence.resetIndex();
-                    //this.sequence.displayNext(true);
-                    //this.sequence.reverse();
+                else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
+                    this.displayAtIndex(this.states.length - 1);
                 }
+                return false;
             }
+            else if (index >= this.states.length) {
+                if (this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                    this.reverse();
+                    this.displayAtIndex(this.states.length - 2);
+                }
+                else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
+                    this.displayAtIndex(0);
+                }
+                return false;
+            }
+            this.hide();
+            this._currentIndex = index;
+            this.states[index].display();
+            this.dispatchEvent(events_class_1.Events.SEQUENCE_ENTER_STATE, this.states[index]);
+            return true;
         };
-        Animation.prototype.stop = function () {
-            if (this.period instanceof clock_class_1.Clock) {
-                this.period.deleteListener(this.clockListener);
-            }
-            else {
-                clearInterval(this.animationInterval);
-            }
-            this.isPlaying = false;
+        Sequence.prototype.reverse = function () {
+            this._direction *= -1;
         };
-        Animation.prototype.reset = function () {
-            this.sequence.reset();
-            if (this.animationInterval !== undefined) {
-                clearInterval(this.animationInterval);
-                this.animationInterval = undefined;
+        /*inverse() {
+            if (this._currentIndex === -1) {
+                this._currentIndex = this.states.length;
             }
-            if (this.clockListener) {
-                this.clockListener.stoplisten();
-                this.clockListener = null;
-            }
-            this.isPlaying = false;
+        }*/
+        Sequence.prototype.hasNext = function () {
+            var nextIndex = this._currentIndex + this._direction;
+            return !(nextIndex <= -1 || nextIndex >= this.states.length);
         };
-        Animation.prototype.executeAction = function (actionName, args) {
+        Sequence.prototype.displayNext = function (forced) {
+            if (forced === void 0) { forced = false; }
+            var done = this.displayAtIndex(this._currentIndex + this._direction, forced);
+            /*if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                this.reverse();
+            }*/
+            return done;
+        };
+        Sequence.prototype.hasPrevious = function () {
+            var previousIndex = this._currentIndex - this._direction;
+            return !(previousIndex <= -1 || previousIndex >= this.states.length);
+        };
+        Sequence.prototype.displayPrevious = function (forced) {
+            if (forced === void 0) { forced = false; }
+            var done = this.displayAtIndex(this._currentIndex - this._direction, forced);
+            /*if (!done && this.loopType === Sequence.LOOP_TYPE_CIRCLE) {
+                this.reverse();
+            }*/
+            if (!done && this.loopType === Sequence.LOOP_TYPE_RESET) {
+                this.resetIndex();
+            }
+            return done;
+        };
+        Sequence.prototype.reset = function () {
+            if (this._currentIndex !== -1) {
+                this.states[this._currentIndex].hide();
+            }
+            this._currentIndex = -1;
+        };
+        Sequence.prototype.resetIndex = function () {
+            this._currentIndex = -1;
+        };
+        Sequence.prototype.executeAction = function (actionName, args) {
             switch (actionName) {
-                case "play":
-                    this.play();
+                case "next":
+                    this.displayNext();
+                    break;
+                case "previous":
+                    this.displayPrevious();
+                    break;
+                case "index":
+                    this.displayAtIndex(+args[0]);
                     break;
             }
         };
-        return Animation;
+        // 1 2 3 4 3 2 1 2 3 4
+        Sequence.LOOP_TYPE_CIRCLE = "circle";
+        // 1 2 3 4 1 2 3 4 1 2 3 4
+        Sequence.LOOP_TYPE_RESET = "reset";
+        return Sequence;
     }(dispatcher_class_1.Dispatcher));
-    exports.Animation = Animation;
+    exports.Sequence = Sequence;
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=animation.class.js.map
+//# sourceMappingURL=sequence.class.js.map
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -1568,7 +1701,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=game-unit-object.class.js.map
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -1581,7 +1714,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(36), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_trigger_class_1, events_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(35), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_trigger_class_1, events_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ControlDownTrigger = /** @class */ (function (_super) {
@@ -1597,7 +1730,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=control-down-trigger.class.js.map
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -1637,44 +1770,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=time-trigger.class.js.map
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var Expressions = /** @class */ (function () {
-        function Expressions() {
-        }
-        // template variable
-        Expressions.variable = /\$[A-Za-z0-9]+/g;
-        // left bracket
-        Expressions.leftBracket = /\[\n*/;
-        // right bracket
-        Expressions.rightBracket = /\n*\]/;
-        // used to split groups
-        Expressions.groupSplitter = /\n+|;+/;
-        // array group
-        Expressions.arrayGroup = /^\[.*\]$/;
-        // or
-        Expressions.or = /\s*\|\s*/;
-        // optional
-        Expressions.optional = /\s*\*.*\*\s*/g;
-        // right option
-        Expressions.leftOption = /\*\n*/;
-        // right option
-        Expressions.rightOption = /\n*\*/;
-        // content format
-        Expressions.content = /([A-Za-z0-9]+)/;
-        return Expressions;
-    }());
-    exports.Expressions = Expressions;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=expressions.class.js.map
-
-/***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
@@ -1700,7 +1796,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=status-subscription.class.js.map
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
@@ -1726,66 +1822,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 //# sourceMappingURL=event-listener.class.js.map
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(49), __webpack_require__(24), __webpack_require__(50)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, parse_unit_class_1, named_property_class_1, property_value_class_1, script_group_class_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var TypedObject = /** @class */ (function (_super) {
-        __extends(TypedObject, _super);
-        function TypedObject() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.assertions = {
-                typedObject: {
-                    assertions: [
-                        {
-                            expression: /^#([A-Za-z0-9]+)\s*/,
-                            values: ['type']
-                        }
-                    ],
-                    next: named_property_class_1.NamedProperty
-                },
-                simplePropertyGroup: {
-                    assertions: [
-                        {
-                            expression: /^([A-Za-z0-9]+)\s*:\s*/,
-                            values: ['groupName']
-                        }
-                    ],
-                    next: property_value_class_1.PropertyValue
-                },
-                scriptGroup: {
-                    assertions: [
-                        {
-                            expression: /^@([A-Za-z0-9]+)\s*{\s*/,
-                            values: ['scriptName']
-                        }
-                    ],
-                    next: script_group_class_1.ScriptGroup
-                }
-            };
-            _this.closingExpression = /^\s*\}\s*/;
-            return _this;
-        }
-        return TypedObject;
-    }(parse_unit_class_1.ParseUnit));
-    exports.TypedObject = TypedObject;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=typed-object.class.js.map
 
 /***/ }),
 /* 24 */
@@ -1913,80 +1949,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(13), __webpack_require__(55), __webpack_require__(56), __webpack_require__(58), __webpack_require__(59), __webpack_require__(17), __webpack_require__(26), __webpack_require__(60), __webpack_require__(61), __webpack_require__(32), __webpack_require__(33), __webpack_require__(30), __webpack_require__(37), __webpack_require__(65)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprite_definition_class_1, clock_definition_class_1, group_definition_class_1, sound_definition_class_1, variable_definition_class_1, game_unit_object_class_1, graph_definition_class_1, trigger_definition_class_1, game_object_reference_class_1, sequence_definition_class_1, animation_definition_class_1, group_state_definition_class_1, script_definition_class_1, condition_definition_class_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var GameObjectDefinition = /** @class */ (function () {
-        function GameObjectDefinition(definition) {
-            var _this = this;
-            this.sprites = {};
-            this.clocks = {};
-            this.groups = {};
-            this.sounds = {};
-            this.variables = {};
-            this.graphs = {};
-            this.triggers = {};
-            this.sequences = {};
-            this.animations = {};
-            this.states = {};
-            this.conditions = {};
-            this.objects = {};
-            this.scripts = {};
-            definition.getResult("bracketsGroup/typedObject@type=sprite/simplePropsGroup").forEach(function (definition) {
-                _this.sprites[definition.results["groupName"]] = new sprite_definition_class_1.SpriteDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=clock/simplePropsGroup").forEach(function (definition) {
-                _this.clocks[definition.results["groupName"]] = new clock_definition_class_1.ClockDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=group/bracketsGroup").forEach(function (definition) {
-                _this.groups[definition.results["groupName"]] = new group_definition_class_1.GroupDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=sound/simplePropsGroup").forEach(function (definition) {
-                _this.sounds[definition.results["groupName"]] = new sound_definition_class_1.SoundDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=variable/simplePropsGroup").forEach(function (definition) {
-                _this.variables[definition.results["groupName"]] = new variable_definition_class_1.VariableDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=trigger/simplePropsGroup").forEach(function (definition) {
-                _this.triggers[definition.results["groupName"]] = new trigger_definition_class_1.TriggerDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=condition/simplePropsGroup").forEach(function (definition) {
-                _this.conditions[definition.results["groupName"]] = new condition_definition_class_1.ConditionDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=state/simplePropsGroup").forEach(function (definition) {
-                _this.states[definition.results["groupName"]] = new group_state_definition_class_1.GroupStateDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=sequence/simplePropsGroup").forEach(function (definition) {
-                _this.sequences[definition.results["groupName"]] = new sequence_definition_class_1.SequenceDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=animation/simplePropsGroup").forEach(function (definition) {
-                _this.animations[definition.results["groupName"]] = new animation_definition_class_1.AnimationDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/scriptGroup").forEach(function (script) {
-                _this.scripts[script.results["scriptName"]] = new script_definition_class_1.ScriptDefinition(script);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=object/simplePropsGroup").forEach(function (definition) {
-                _this.objects[definition.results["groupName"]] = new game_object_reference_class_1.GameObjectReference(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=graph/bracketsGroup").forEach(function (definition) {
-                _this.graphs[definition.results["groupName"]] = new graph_definition_class_1.GraphDefinition(definition);
-            });
-        }
-        GameObjectDefinition.prototype.create = function (scene, objectsBank) {
-            return new game_unit_object_class_1.GameUnitObject(this, objectsBank, scene);
-        };
-        return GameObjectDefinition;
-    }());
-    exports.GameObjectDefinition = GameObjectDefinition;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=game-object-definition.class.js.map
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(53), __webpack_require__(12)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, graph_node_definition_class_1, graph_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(53), __webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, graph_node_definition_class_1, graph_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var GraphDefinition = /** @class */ (function () {
@@ -2023,7 +1986,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=graph-definition.class.js.map
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -2080,7 +2043,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=graph-link.class.js.map
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
@@ -2100,7 +2063,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=visibility-status.class.js.map
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -2113,7 +2076,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(7), __webpack_require__(4), __webpack_require__(3)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, image_display_element_1, file_class_1, utils_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(8), __webpack_require__(4), __webpack_require__(3)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, image_display_element_1, file_class_1, utils_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Decoration = /** @class */ (function (_super) {
@@ -2143,10 +2106,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=decoration.class.js.map
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(31)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprites_group_state_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(30)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprites_group_state_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var GroupStateDefinition = /** @class */ (function () {
@@ -2180,7 +2143,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=group-state-definition.class.js.map
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -2247,10 +2210,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=sprites-group-state.class.js.map
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(10)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sequence_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sequence_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var SequenceDefinition = /** @class */ (function () {
@@ -2293,10 +2256,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=sequence-definition.class.js.map
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(16)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, animation_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(10)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, animation_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var AnimationDefinition = /** @class */ (function () {
@@ -2328,7 +2291,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=animation-definition.class.js.map
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
@@ -2379,7 +2342,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=sound.class.js.map
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -2485,7 +2448,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=variable.class.js.map
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -2526,7 +2489,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=control-trigger.class.js.map
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(62)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, script_class_1) {
@@ -2547,7 +2510,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=script-definition.class.js.map
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
@@ -2566,7 +2529,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=script-unit.class.js.map
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -2591,6 +2554,49 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 //# sourceMappingURL=condition.class.js.map
 
 /***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(15), __webpack_require__(69), __webpack_require__(12)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprite_definition_class_1, control_definition_class_1, game_object_definition_class_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var SceneObjectDefinition = /** @class */ (function (_super) {
+        __extends(SceneObjectDefinition, _super);
+        function SceneObjectDefinition(definition) {
+            var _this = _super.call(this, definition) || this;
+            _this.backgrounds = {};
+            _this.controls = {};
+            _this.scale = 1;
+            var scaleRes = definition.getResult("bracketsGroup/simplePropertyGroup@groupName=scale/number");
+            if (scaleRes.length > 0) {
+                _this.scale = +scaleRes[0].results["value"];
+            }
+            definition.getResult("bracketsGroup/typedObject@type=background/simplePropsGroup").forEach(function (definition) {
+                _this.backgrounds[definition.results["groupName"]] = new sprite_definition_class_1.SpriteDefinition(definition);
+            });
+            definition.getResult("bracketsGroup/typedObject@type=control/bracketsGroup").forEach(function (definition) {
+                _this.controls[definition.results["groupName"]] = new control_definition_class_1.ControlDefinition(definition);
+            });
+            return _this;
+        }
+        return SceneObjectDefinition;
+    }(game_object_definition_class_1.GameObjectDefinition));
+    exports.SceneObjectDefinition = SceneObjectDefinition;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+//# sourceMappingURL=scene-object-definition.class.js.map
+
+/***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2604,7 +2610,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(36), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_trigger_class_1, events_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(35), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_trigger_class_1, events_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ControlUpTrigger = /** @class */ (function (_super) {
@@ -2623,7 +2629,159 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(14), __webpack_require__(3), __webpack_require__(42), __webpack_require__(29), __webpack_require__(6), __webpack_require__(10), __webpack_require__(9), __webpack_require__(16)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprite_class_1, utils_class_1, sprites_group_class_1, decoration_class_1, control_class_1, sequence_class_1, clock_class_1, animation_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(6), __webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_class_1, game_unit_object_class_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var SceneUnitObject = /** @class */ (function (_super) {
+        __extends(SceneUnitObject, _super);
+        function SceneUnitObject(definition, objectsBank) {
+            var _this = _super.call(this, definition, objectsBank) || this;
+            _this.objectsBank = objectsBank;
+            _this.scale = 1;
+            //
+            _this.backgrounds = [];
+            _this.controls = {};
+            _this.controlSprites = {};
+            _this.scale = definition.scale;
+            for (var id in definition.backgrounds) {
+                _this.backgrounds.push(definition.backgrounds[id].createDecorationSprite());
+            }
+            for (var id in definition.controls) {
+                var controls = definition.controls[id].create();
+                if (controls instanceof control_class_1.Control) {
+                    _this.controls[id] = controls;
+                    _this.controlSprites[id] = controls.sprite;
+                }
+                else {
+                    for (var zoneId in controls) {
+                        if (!_this.controlSprites[id]) {
+                            _this.controlSprites[id] = controls[zoneId].sprite;
+                        }
+                        _this.controls[id + "_" + zoneId] = controls[zoneId];
+                    }
+                }
+            }
+            _this.displayIn(document.body);
+            _this.getDOMElement();
+            _this.displayDecorations();
+            _this.displayControls();
+            // TODO temp
+            setTimeout(function () {
+                _this.initialize();
+            });
+            _this.initializeObject(definition);
+            return _this;
+        }
+        SceneUnitObject.prototype.preinit = function () {
+            // must be empty for override
+        };
+        SceneUnitObject.prototype.initialize = function () {
+            // objects initialization
+            for (var id in this.objects) {
+                if (this.objects[id].scripts["start"]) {
+                    this.objects[id].scripts["start"].execute();
+                }
+            }
+            if (this.scripts["start"]) {
+                this.scripts["start"].execute();
+            }
+        };
+        SceneUnitObject.prototype.displaySprites = function () {
+            for (var id in this.objects) {
+                for (var spriteId in this.objects[id].sprites) {
+                    if (this.objects[id].sprites.hasOwnProperty(spriteId)) {
+                        this.objects[id].sprites[spriteId].displayInDOMElement(this._spritesContainer);
+                    }
+                }
+            }
+        };
+        SceneUnitObject.prototype.displayDecorations = function () {
+            var _this = this;
+            this.backgrounds.forEach(function (sprite) {
+                sprite.displayInDOMElement(_this._backgroundsContainer);
+            });
+        };
+        SceneUnitObject.prototype.displayControls = function () {
+            for (var id in this.controlSprites) {
+                this.controlSprites[id].displayInDOMElement(this._controlsContainer);
+            }
+        };
+        SceneUnitObject.prototype.getControl = function (id) {
+            return this.controls[id];
+        };
+        // for display
+        SceneUnitObject.prototype.getDOMElement = function () {
+            if (this._DOMElement) {
+                return this._DOMElement;
+            }
+            else {
+                var div = document.createElement("div");
+                div.className = "game-scene";
+                this._DOMElement = div;
+                var gameContainer = document.createElement("div");
+                gameContainer.className = "game-container";
+                div.appendChild(gameContainer);
+                gameContainer.style.transform = "scale(" + this.scale + ")";
+                //backgrounds
+                this._backgroundsContainer = document.createElement("div");
+                this._backgroundsContainer.classList.add("backgrounds-container");
+                gameContainer.appendChild(this._backgroundsContainer);
+                // sprites
+                this._spritesContainer = document.createElement("div");
+                this._spritesContainer.classList.add("sprites-container");
+                gameContainer.appendChild(this._spritesContainer);
+                // foregrounds
+                this._foregroundsContainer = document.createElement("div");
+                this._foregroundsContainer.classList.add("foregrounds-container");
+                gameContainer.appendChild(this._foregroundsContainer);
+                // controls
+                this._controlsContainer = document.createElement("div");
+                this._controlsContainer.classList.add("controls-container");
+                div.appendChild(this._controlsContainer);
+                return div;
+            }
+        };
+        SceneUnitObject.prototype.displayIn = function (element) {
+            var type = typeof element;
+            if (type === "string") {
+                this.displayInDOMElementById(element);
+            }
+            else if (element instanceof HTMLElement) {
+                this.displayInDOMElement(element);
+            }
+        };
+        SceneUnitObject.prototype.displayInDOMElement = function (container) {
+            this._DOMElement = this.getDOMElement();
+            container.appendChild(this._DOMElement);
+            return this._DOMElement;
+        };
+        SceneUnitObject.prototype.displayInDOMElementById = function (containerId) {
+            this._DOMElement = this.getDOMElement();
+            var element = document.getElementById(containerId);
+            element.appendChild(this._DOMElement);
+        };
+        return SceneUnitObject;
+    }(game_unit_object_class_1.GameUnitObject));
+    exports.SceneUnitObject = SceneUnitObject;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+//# sourceMappingURL=scene-unit-object.class.js.map
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(16), __webpack_require__(3), __webpack_require__(43), __webpack_require__(28), __webpack_require__(6), __webpack_require__(18), __webpack_require__(7), __webpack_require__(10)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprite_class_1, utils_class_1, sprites_group_class_1, decoration_class_1, control_class_1, sequence_class_1, clock_class_1, animation_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var GameObject = /** @class */ (function () {
@@ -2828,7 +2986,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=game-object.class.js.map
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -2888,7 +3046,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=sprites-group.class.js.map
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -2901,7 +3059,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(8), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, display_element_class_1, events_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(9), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, display_element_class_1, events_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Seg7Displayer = /** @class */ (function (_super) {
@@ -2962,7 +3120,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=seg7-displayer.class.js.map
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
@@ -2983,28 +3141,13 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=sequence-condition.class.js.map
 
 /***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var GroupType;
-    (function (GroupType) {
-        GroupType[GroupType["BASIC"] = 0] = "BASIC";
-        GroupType[GroupType["ARRAY"] = 1] = "ARRAY";
-    })(GroupType = exports.GroupType || (exports.GroupType = {}));
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=group-type.enum.js.map
-
-/***/ }),
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(47), __webpack_require__(3), __webpack_require__(41), __webpack_require__(73), __webpack_require__(74), __webpack_require__(43), __webpack_require__(9), __webpack_require__(39), __webpack_require__(4), __webpack_require__(6), __webpack_require__(35), __webpack_require__(75), __webpack_require__(44), __webpack_require__(76), __webpack_require__(12), __webpack_require__(27), __webpack_require__(11), __webpack_require__(34), __webpack_require__(16), __webpack_require__(10), __webpack_require__(5), __webpack_require__(19), __webpack_require__(77), __webpack_require__(78), __webpack_require__(79), __webpack_require__(80), __webpack_require__(15), __webpack_require__(8), __webpack_require__(7), __webpack_require__(14), __webpack_require__(42), __webpack_require__(31), __webpack_require__(22), __webpack_require__(1), __webpack_require__(81), __webpack_require__(21), __webpack_require__(82), __webpack_require__(83), __webpack_require__(84)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, code_file_loader_class_1, utils_class_1, game_object_class_1, html_game_object_class_1, lcd_displayer_class_1, seg7_displayer_class_1, clock_class_1, condition_class_1, file_class_1, control_class_1, variable_class_1, condition_types_class_1, sequence_condition_class_1, onstate_sequence_condition_class_1, graph_class_1, graph_link_class_1, graph_node_class_1, sound_class_1, animation_class_1, sequence_class_1, base_trigger_class_1, time_trigger_class_1, trigger_class_1, states_collision_trigger_class_1, conditional_sprites_group_state_class_1, conditional_sprites_group_state_set_class_1, control_sprite_class_1, display_element_class_1, image_display_element_1, sprite_class_1, sprites_group_class_1, sprites_group_state_class_1, event_listener_class_1, events_class_1, status_class_1, status_subscription_class_1, time_utils_class_1, triggers_object_class_1, graph_object_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(47), __webpack_require__(71), __webpack_require__(3), __webpack_require__(42), __webpack_require__(72), __webpack_require__(73), __webpack_require__(44), __webpack_require__(7), __webpack_require__(38), __webpack_require__(4), __webpack_require__(6), __webpack_require__(34), __webpack_require__(74), __webpack_require__(45), __webpack_require__(75), __webpack_require__(14), __webpack_require__(26), __webpack_require__(13), __webpack_require__(33), __webpack_require__(10), __webpack_require__(18), __webpack_require__(5), __webpack_require__(21), __webpack_require__(76), __webpack_require__(77), __webpack_require__(78), __webpack_require__(79), __webpack_require__(17), __webpack_require__(9), __webpack_require__(8), __webpack_require__(16), __webpack_require__(43), __webpack_require__(30), __webpack_require__(23), __webpack_require__(1), __webpack_require__(80), __webpack_require__(22), __webpack_require__(81), __webpack_require__(82), __webpack_require__(83)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, code_strings_loader_class_1, code_file_loader_class_1, utils_class_1, game_object_class_1, html_game_object_class_1, lcd_displayer_class_1, seg7_displayer_class_1, clock_class_1, condition_class_1, file_class_1, control_class_1, variable_class_1, condition_types_class_1, sequence_condition_class_1, onstate_sequence_condition_class_1, graph_class_1, graph_link_class_1, graph_node_class_1, sound_class_1, animation_class_1, sequence_class_1, base_trigger_class_1, time_trigger_class_1, trigger_class_1, states_collision_trigger_class_1, conditional_sprites_group_state_class_1, conditional_sprites_group_state_set_class_1, control_sprite_class_1, display_element_class_1, image_display_element_1, sprite_class_1, sprites_group_class_1, sprites_group_state_class_1, event_listener_class_1, events_class_1, status_class_1, status_subscription_class_1, time_utils_class_1, triggers_object_class_1, graph_object_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.CodeStringsLoader = code_strings_loader_class_1.CodeStringsLoader;
     exports.CodeFileLoader = code_file_loader_class_1.CodeFileLoader;
     exports.Utils = utils_class_1.Utils;
     exports.GameObject = game_object_class_1.GameObject;
@@ -3052,49 +3195,36 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(23), __webpack_require__(25), __webpack_require__(69), __webpack_require__(72)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, typed_object_class_1, game_object_definition_class_1, scene_object_definition_class_1, scene_unit_object_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(11), __webpack_require__(12), __webpack_require__(39), __webpack_require__(41)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, typed_object_class_1, game_object_definition_class_1, scene_object_definition_class_1, scene_unit_object_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var CodeFileLoader = /** @class */ (function () {
-        function CodeFileLoader(filePath, onCompleted, onError) {
+    var CodeStringsLoader = /** @class */ (function () {
+        function CodeStringsLoader(files, onCompleted) {
             if (onCompleted === void 0) { onCompleted = null; }
-            if (onError === void 0) { onError = null; }
             this.onCompleted = onCompleted;
-            this.onError = onError;
-            this.loadFromFile(filePath);
+            this.parseCode(files);
         }
-        CodeFileLoader.prototype.loadFromFile = function (filePath) {
-            var _this = this;
-            var req = new XMLHttpRequest();
-            req.open("GET", filePath, true);
-            req.onreadystatechange = function () {
-                if (req.readyState === XMLHttpRequest.DONE) {
-                    if (req.status === 200) {
-                        _this.parseCode(req.responseText);
-                    }
-                }
-                else {
-                }
-            };
-            req.send();
-        };
-        CodeFileLoader.prototype.parseCode = function (code) {
-            var baseUnit = new typed_object_class_1.TypedObject();
-            baseUnit.code = code;
-            var results = baseUnit.evaluate();
-            console.log(results);
+        CodeStringsLoader.prototype.parseCode = function (files) {
+            var cr = [];
+            for (var _i = 0, files_1 = files; _i < files_1.length; _i++) {
+                var file = files_1[_i];
+                var baseUnit = new typed_object_class_1.TypedObject();
+                baseUnit.code = file;
+                var results = baseUnit.evaluate();
+                cr = cr.concat(results);
+            }
             var scene;
             var objectsBank = {};
-            for (var _i = 0, results_1 = results; _i < results_1.length; _i++) {
-                var result = results_1[_i];
+            for (var _a = 0, cr_1 = cr; _a < cr_1.length; _a++) {
+                var result = cr_1[_a];
                 if (result.results["type"] === "instantiable") {
                     var definition = new game_object_definition_class_1.GameObjectDefinition(result);
                     var id = result.children[0].results["groupName"];
                     objectsBank[id] = definition;
                 }
             }
-            for (var _a = 0, results_2 = results; _a < results_2.length; _a++) {
-                var result = results_2[_a];
+            for (var _b = 0, cr_2 = cr; _b < cr_2.length; _b++) {
+                var result = cr_2[_b];
                 if (result.results["type"] === "scene") {
                     var definition = new scene_object_definition_class_1.SceneObjectDefinition(result);
                     scene = new scene_unit_object_class_1.SceneUnitObject(definition, objectsBank);
@@ -3104,12 +3234,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             console.log(scene);
             this.onCompleted(scene);
         };
-        return CodeFileLoader;
+        return CodeStringsLoader;
     }());
-    exports.CodeFileLoader = CodeFileLoader;
+    exports.CodeStringsLoader = CodeStringsLoader;
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=code-file-loader.class.js.map
+//# sourceMappingURL=code-strings-loader.class.js.map
 
 /***/ }),
 /* 48 */
@@ -3179,7 +3309,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(24), __webpack_require__(23)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, parse_unit_class_1, property_value_class_1, typed_object_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(2), __webpack_require__(24), __webpack_require__(11)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, parse_unit_class_1, property_value_class_1, typed_object_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var NamedProperty = /** @class */ (function (_super) {
@@ -3352,7 +3482,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(54), __webpack_require__(11)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, graph_link_definition_class_1, graph_node_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(54), __webpack_require__(13)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, graph_link_definition_class_1, graph_node_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var GraphNodeDefinition = /** @class */ (function () {
@@ -3394,7 +3524,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(27)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, graph_link_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(26)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, graph_link_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var GraphLinkDefinition = /** @class */ (function () {
@@ -3421,7 +3551,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(9)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, clock_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, clock_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ClockDefinition = /** @class */ (function () {
@@ -3442,7 +3572,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(30), __webpack_require__(32), __webpack_require__(33), __webpack_require__(26), __webpack_require__(57)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, group_state_definition_class_1, sequence_definition_class_1, animation_definition_class_1, graph_definition_class_1, extended_sprites_group_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(29), __webpack_require__(31), __webpack_require__(32), __webpack_require__(25), __webpack_require__(57)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, group_state_definition_class_1, sequence_definition_class_1, animation_definition_class_1, graph_definition_class_1, extended_sprites_group_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var GroupDefinition = /** @class */ (function () {
@@ -3558,7 +3688,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(34), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sound_class_1, file_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(33), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sound_class_1, file_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var SoundDefinition = /** @class */ (function () {
@@ -3580,7 +3710,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(35)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, variable_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(34)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, variable_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var VariableDefinition = /** @class */ (function () {
@@ -3612,7 +3742,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(18), __webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_down_trigger_class_1, time_trigger_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(20), __webpack_require__(21)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_down_trigger_class_1, time_trigger_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var TriggerDefinition = /** @class */ (function () {
@@ -3658,7 +3788,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(17)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, game_unit_object_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(19)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, game_unit_object_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var GameObjectReference = /** @class */ (function () {
@@ -3736,7 +3866,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(38)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, script_unit_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(37)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, script_unit_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ActionOnObjectScript = /** @class */ (function (_super) {
@@ -3775,7 +3905,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(38), __webpack_require__(37), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, script_unit_class_1, script_definition_class_1, events_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(37), __webpack_require__(36), __webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, script_unit_class_1, script_definition_class_1, events_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ListenTriggerScript = /** @class */ (function (_super) {
@@ -3804,7 +3934,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(39), __webpack_require__(66), __webpack_require__(68)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, condition_class_1, operand_class_1, logical_expression_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(38), __webpack_require__(66), __webpack_require__(68)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, condition_class_1, operand_class_1, logical_expression_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ConditionDefinition = /** @class */ (function () {
@@ -4002,50 +4132,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(13), __webpack_require__(70), __webpack_require__(25)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sprite_definition_class_1, control_definition_class_1, game_object_definition_class_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var SceneObjectDefinition = /** @class */ (function (_super) {
-        __extends(SceneObjectDefinition, _super);
-        function SceneObjectDefinition(definition) {
-            var _this = _super.call(this, definition) || this;
-            _this.backgrounds = {};
-            _this.controls = {};
-            _this.scale = 1;
-            var scaleRes = definition.getResult("bracketsGroup/simplePropertyGroup@groupName=scale/number");
-            if (scaleRes.length > 0) {
-                _this.scale = +scaleRes[0].results["value"];
-            }
-            definition.getResult("bracketsGroup/typedObject@type=background/simplePropsGroup").forEach(function (definition) {
-                _this.backgrounds[definition.results["groupName"]] = new sprite_definition_class_1.SpriteDefinition(definition);
-            });
-            definition.getResult("bracketsGroup/typedObject@type=control/bracketsGroup").forEach(function (definition) {
-                _this.controls[definition.results["groupName"]] = new control_definition_class_1.ControlDefinition(definition);
-            });
-            return _this;
-        }
-        return SceneObjectDefinition;
-    }(game_object_definition_class_1.GameObjectDefinition));
-    exports.SceneObjectDefinition = SceneObjectDefinition;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=scene-object-definition.class.js.map
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(6), __webpack_require__(13), __webpack_require__(71)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_class_1, sprite_definition_class_1, control_zone_definition_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(6), __webpack_require__(15), __webpack_require__(70)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_class_1, sprite_definition_class_1, control_zone_definition_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var ControlDefinition = /** @class */ (function () {
@@ -4083,7 +4170,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=control-definition.class.js.map
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_class_1) {
@@ -4108,6 +4195,69 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=control-zone-definition.class.js.map
 
 /***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(11), __webpack_require__(12), __webpack_require__(39), __webpack_require__(41)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, typed_object_class_1, game_object_definition_class_1, scene_object_definition_class_1, scene_unit_object_class_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var CodeFileLoader = /** @class */ (function () {
+        function CodeFileLoader(filePath, onCompleted, onError) {
+            if (onCompleted === void 0) { onCompleted = null; }
+            if (onError === void 0) { onError = null; }
+            this.onCompleted = onCompleted;
+            this.onError = onError;
+            this.loadFromFile(filePath);
+        }
+        CodeFileLoader.prototype.loadFromFile = function (filePath) {
+            var _this = this;
+            var req = new XMLHttpRequest();
+            req.open("GET", filePath, true);
+            req.onreadystatechange = function () {
+                if (req.readyState === XMLHttpRequest.DONE) {
+                    if (req.status === 200) {
+                        _this.parseCode(req.responseText);
+                    }
+                }
+                else {
+                }
+            };
+            req.send();
+        };
+        CodeFileLoader.prototype.parseCode = function (code) {
+            var baseUnit = new typed_object_class_1.TypedObject();
+            baseUnit.code = code;
+            var results = baseUnit.evaluate();
+            console.log(results);
+            var scene;
+            var objectsBank = {};
+            for (var _i = 0, results_1 = results; _i < results_1.length; _i++) {
+                var result = results_1[_i];
+                if (result.results["type"] === "instantiable") {
+                    var definition = new game_object_definition_class_1.GameObjectDefinition(result);
+                    var id = result.children[0].results["groupName"];
+                    objectsBank[id] = definition;
+                }
+            }
+            for (var _a = 0, results_2 = results; _a < results_2.length; _a++) {
+                var result = results_2[_a];
+                if (result.results["type"] === "scene") {
+                    var definition = new scene_object_definition_class_1.SceneObjectDefinition(result);
+                    scene = new scene_unit_object_class_1.SceneUnitObject(definition, objectsBank);
+                }
+            }
+            scene.displaySprites();
+            console.log(scene);
+            this.onCompleted(scene);
+        };
+        return CodeFileLoader;
+    }());
+    exports.CodeFileLoader = CodeFileLoader;
+}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+//# sourceMappingURL=code-file-loader.class.js.map
+
+/***/ }),
 /* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4121,159 +4271,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(6), __webpack_require__(17)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_class_1, game_unit_object_class_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var SceneUnitObject = /** @class */ (function (_super) {
-        __extends(SceneUnitObject, _super);
-        function SceneUnitObject(definition, objectsBank) {
-            var _this = _super.call(this, definition, objectsBank) || this;
-            _this.objectsBank = objectsBank;
-            _this.scale = 1;
-            //
-            _this.backgrounds = [];
-            _this.controls = {};
-            _this.controlSprites = {};
-            _this.scale = definition.scale;
-            for (var id in definition.backgrounds) {
-                _this.backgrounds.push(definition.backgrounds[id].createDecorationSprite());
-            }
-            for (var id in definition.controls) {
-                var controls = definition.controls[id].create();
-                if (controls instanceof control_class_1.Control) {
-                    _this.controls[id] = controls;
-                    _this.controlSprites[id] = controls.sprite;
-                }
-                else {
-                    for (var zoneId in controls) {
-                        if (!_this.controlSprites[id]) {
-                            _this.controlSprites[id] = controls[zoneId].sprite;
-                        }
-                        _this.controls[id + "_" + zoneId] = controls[zoneId];
-                    }
-                }
-            }
-            _this.displayIn(document.body);
-            _this.getDOMElement();
-            _this.displayDecorations();
-            _this.displayControls();
-            // TODO temp
-            setTimeout(function () {
-                _this.initialize();
-            });
-            _this.initializeObject(definition);
-            return _this;
-        }
-        SceneUnitObject.prototype.preinit = function () {
-            // must be empty for override
-        };
-        SceneUnitObject.prototype.initialize = function () {
-            // objects initialization
-            for (var id in this.objects) {
-                if (this.objects[id].scripts["start"]) {
-                    this.objects[id].scripts["start"].execute();
-                }
-            }
-            if (this.scripts["start"]) {
-                this.scripts["start"].execute();
-            }
-        };
-        SceneUnitObject.prototype.displaySprites = function () {
-            for (var id in this.objects) {
-                for (var spriteId in this.objects[id].sprites) {
-                    if (this.objects[id].sprites.hasOwnProperty(spriteId)) {
-                        this.objects[id].sprites[spriteId].displayInDOMElement(this._spritesContainer);
-                    }
-                }
-            }
-        };
-        SceneUnitObject.prototype.displayDecorations = function () {
-            var _this = this;
-            this.backgrounds.forEach(function (sprite) {
-                sprite.displayInDOMElement(_this._backgroundsContainer);
-            });
-        };
-        SceneUnitObject.prototype.displayControls = function () {
-            for (var id in this.controlSprites) {
-                this.controlSprites[id].displayInDOMElement(this._controlsContainer);
-            }
-        };
-        SceneUnitObject.prototype.getControl = function (id) {
-            return this.controls[id];
-        };
-        // for display
-        SceneUnitObject.prototype.getDOMElement = function () {
-            if (this._DOMElement) {
-                return this._DOMElement;
-            }
-            else {
-                var div = document.createElement("div");
-                div.className = "game-scene";
-                this._DOMElement = div;
-                var gameContainer = document.createElement("div");
-                gameContainer.className = "game-container";
-                div.appendChild(gameContainer);
-                gameContainer.style.transform = "scale(" + this.scale + ")";
-                //backgrounds
-                this._backgroundsContainer = document.createElement("div");
-                this._backgroundsContainer.classList.add("backgrounds-container");
-                gameContainer.appendChild(this._backgroundsContainer);
-                // sprites
-                this._spritesContainer = document.createElement("div");
-                this._spritesContainer.classList.add("sprites-container");
-                gameContainer.appendChild(this._spritesContainer);
-                // foregrounds
-                this._foregroundsContainer = document.createElement("div");
-                this._foregroundsContainer.classList.add("foregrounds-container");
-                gameContainer.appendChild(this._foregroundsContainer);
-                // controls
-                this._controlsContainer = document.createElement("div");
-                this._controlsContainer.classList.add("controls-container");
-                div.appendChild(this._controlsContainer);
-                return div;
-            }
-        };
-        SceneUnitObject.prototype.displayIn = function (element) {
-            var type = typeof element;
-            if (type === "string") {
-                this.displayInDOMElementById(element);
-            }
-            else if (element instanceof HTMLElement) {
-                this.displayInDOMElement(element);
-            }
-        };
-        SceneUnitObject.prototype.displayInDOMElement = function (container) {
-            this._DOMElement = this.getDOMElement();
-            container.appendChild(this._DOMElement);
-            return this._DOMElement;
-        };
-        SceneUnitObject.prototype.displayInDOMElementById = function (containerId) {
-            this._DOMElement = this.getDOMElement();
-            var element = document.getElementById(containerId);
-            element.appendChild(this._DOMElement);
-        };
-        return SceneUnitObject;
-    }(game_unit_object_class_1.GameUnitObject));
-    exports.SceneUnitObject = SceneUnitObject;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=scene-unit-object.class.js.map
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(41)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, game_object_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(42)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, game_object_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var HTMLGameObject = /** @class */ (function (_super) {
@@ -4368,7 +4366,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=html-game-object.class.js.map
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -4381,7 +4379,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(43), __webpack_require__(8)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, seg7_displayer_class_1, display_element_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(44), __webpack_require__(9)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, seg7_displayer_class_1, display_element_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var LcdDisplayer = /** @class */ (function (_super) {
@@ -4446,7 +4444,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=lcd-displayer.class.js.map
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -4468,7 +4466,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 //# sourceMappingURL=condition-types.class.js.map
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -4481,7 +4479,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(44)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sequence_condition_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(45)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, sequence_condition_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var OnStateSequenceCondition = /** @class */ (function (_super) {
@@ -4497,7 +4495,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=onstate-sequence-condition.class.js.map
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -4572,7 +4570,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=trigger.class.js.map
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -4585,7 +4583,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(5), __webpack_require__(28)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, base_trigger_class_1, visibility_status_class_1) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(5), __webpack_require__(27)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, base_trigger_class_1, visibility_status_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var StatesCollisionTrigger = /** @class */ (function (_super) {
@@ -4627,7 +4625,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=states-collision-trigger.class.js.map
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -4659,7 +4657,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=conditional-sprites-group-state.class.js.map
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = (this && this.__extends) || (function () {
@@ -4709,7 +4707,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __extends = 
 //# sourceMappingURL=conditional-sprites-group-state-set.class.js.map
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports) {
@@ -4729,7 +4727,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=status.class.js.map
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -4751,10 +4749,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 //# sourceMappingURL=time-utils.class.js.map
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(18), __webpack_require__(19), __webpack_require__(40)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_down_trigger_class_1, time_trigger_class_1, control_up_trigger_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(20), __webpack_require__(21), __webpack_require__(40)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, control_down_trigger_class_1, time_trigger_class_1, control_up_trigger_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var TriggersObject = /** @class */ (function () {
@@ -4799,10 +4797,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 //# sourceMappingURL=triggers-object.class.js.map
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(11), __webpack_require__(12), __webpack_require__(85)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, graph_node_class_1, graph_class_1, data_templates_class_1) {
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(13), __webpack_require__(14)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, graph_node_class_1, graph_class_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var GraphObject = /** @class */ (function () {
@@ -4813,24 +4811,31 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             this.loadData(data);
         }
         GraphObject.prototype.getDataFromTextFormat = function (str) {
-            var data = data_templates_class_1.DataTemplates.graphNode.extract(str);
-            var nodeType = "sprite";
-            var links = [];
-            data[1].forEach(function (linkData) {
-                var data = {
+            /*let data:Object = DataTemplates.graphNode.extract(str);
+    
+            let nodeType:string = "sprite";
+    
+            let links:LinkData[] = [];
+    
+            data[1].forEach((linkData:Object) => {
+                let data:LinkData = {
                     node: linkData["$nodeId"],
                     trigger: linkData["$triggerId"]
                 };
+    
                 links.push(data);
             });
-            var value = {
+    
+            let value:NodeData = {
                 state: {
                     type: nodeType,
                     ref: data[0]["$spriteId"]
                 },
                 links: links
             };
-            return value;
+            
+            return value;*/
+            return;
         };
         GraphObject.prototype.loadData = function (data) {
             var _this = this;
@@ -4886,292 +4891,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
 }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 //# sourceMappingURL=graph-object.class.js.map
-
-/***/ }),
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(86)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, reverted_template_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var DataTemplates = /** @class */ (function () {
-        function DataTemplates() {
-        }
-        DataTemplates.graphNode = new reverted_template_1.RevertedTemplate("sprite($spriteId)|$spriteId;[*$conditionId:*$triggerId->$nodeId]");
-        DataTemplates.condition = new reverted_template_1.RevertedTemplate("$type($applyTo)$variables");
-        return DataTemplates;
-    }());
-    exports.DataTemplates = DataTemplates;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=data-templates.class.js.map
-
-/***/ }),
-/* 86 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(87)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, reverted_template_class_1) {
-    "use strict";
-    function __export(m) {
-        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-    }
-    Object.defineProperty(exports, "__esModule", { value: true });
-    __export(reverted_template_class_1);
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-/* 87 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(20), __webpack_require__(88), __webpack_require__(45)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, expressions_class_1, template_group_class_1, group_type_enum_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var RevertedTemplate = /** @class */ (function () {
-        function RevertedTemplate(templateText, contentFormat) {
-            if (contentFormat === void 0) { contentFormat = "([A-Za-z0-9]+)"; }
-            var _this = this;
-            this.groups = [];
-            var groupLines = this.getGroups(templateText);
-            groupLines.forEach(function (line) {
-                _this.groups.push(new template_group_class_1.TemplateGroup(line, contentFormat));
-            });
-        }
-        RevertedTemplate.prototype.getGroups = function (text) {
-            text = text.replace(expressions_class_1.Expressions.leftBracket, "[");
-            text = text.replace(expressions_class_1.Expressions.rightBracket, "]");
-            return this.splitGroups(text);
-        };
-        RevertedTemplate.prototype.splitGroups = function (text) {
-            return text.split(expressions_class_1.Expressions.groupSplitter).filter(function (line) {
-                return line !== "";
-            });
-        };
-        RevertedTemplate.prototype.extract = function (text) {
-            var result = [];
-            var lineIndex = 0;
-            var lines = this.splitGroups(text);
-            var currentLine;
-            for (var _i = 0, _a = this.groups; _i < _a.length; _i++) {
-                var group = _a[_i];
-                if (group.type === group_type_enum_1.GroupType.BASIC) {
-                    currentLine = lines[lineIndex];
-                    if (group.test(currentLine)) {
-                        result.push(group.extractFirstMatchingContent(currentLine));
-                        lineIndex++;
-                    }
-                    else {
-                        this.incomplete(lineIndex, result);
-                    }
-                }
-                else if (group.type === group_type_enum_1.GroupType.ARRAY) {
-                    var groupArray = [];
-                    currentLine = lines[lineIndex];
-                    while (group.test(currentLine)) {
-                        groupArray.push(group.extractFirstMatchingContent(currentLine));
-                        lineIndex++;
-                        currentLine = lines[lineIndex];
-                    }
-                    if (groupArray.length > 0) {
-                        result.push(groupArray);
-                    }
-                    else {
-                        this.incomplete(lineIndex, result);
-                    }
-                }
-            }
-            return result;
-        };
-        RevertedTemplate.prototype.incomplete = function (lineIndex, result) {
-            console.warn("Error parsing template line " + (lineIndex + 1) + ", incomplete result");
-            return result;
-        };
-        return RevertedTemplate;
-    }());
-    exports.RevertedTemplate = RevertedTemplate;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=reverted-template.class.js.map
-
-/***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(45), __webpack_require__(20), __webpack_require__(89)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, group_type_enum_1, expressions_class_1, template_expression_class_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var TemplateGroup = /** @class */ (function () {
-        function TemplateGroup(textLine, contentFormat) {
-            if (contentFormat === void 0) { contentFormat = null; }
-            var _this = this;
-            this.textLine = textLine;
-            this.expressions = [];
-            this.type = group_type_enum_1.GroupType.BASIC;
-            this.optional = false;
-            if (expressions_class_1.Expressions.arrayGroup.test(textLine)) {
-                this.type = group_type_enum_1.GroupType.ARRAY;
-                // brackets deletion
-                textLine = textLine.replace(expressions_class_1.Expressions.leftBracket, "");
-                textLine = textLine.replace(expressions_class_1.Expressions.rightBracket, "");
-            }
-            var expressionStrings = textLine.split(expressions_class_1.Expressions.or);
-            expressionStrings.forEach(function (expression) {
-                _this.expressions.push(new template_expression_class_1.TemplateExpression(expression, contentFormat));
-            });
-        }
-        TemplateGroup.prototype.test = function (text) {
-            for (var _i = 0, _a = this.expressions; _i < _a.length; _i++) {
-                var expression = _a[_i];
-                if (expression.test(text)) {
-                    return true;
-                }
-            }
-            return false;
-        };
-        TemplateGroup.prototype.extractFirstMatchingContent = function (text) {
-            for (var _i = 0, _a = this.expressions; _i < _a.length; _i++) {
-                var expression = _a[_i];
-                var content = expression.extract(text);
-                if (content) {
-                    return content;
-                }
-            }
-            return null;
-        };
-        return TemplateGroup;
-    }());
-    exports.TemplateGroup = TemplateGroup;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=template-group.class.js.map
-
-/***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__(20), __webpack_require__(90)], __WEBPACK_AMD_DEFINE_RESULT__ = (function (require, exports, expressions_class_1, escapeStringRegexp) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var TemplateExpression = /** @class */ (function () {
-        function TemplateExpression(expressionText, contentFormat, isOptional) {
-            if (contentFormat === void 0) { contentFormat = null; }
-            if (isOptional === void 0) { isOptional = false; }
-            this.expressionText = expressionText;
-            this.isOptional = isOptional;
-            this.variables = [];
-            this.optionalExpressions = [];
-            // variables extraction
-            var regExpText = expressionText;
-            regExpText = escapeStringRegexp(regExpText);
-            if (!isOptional) {
-                regExpText = "^" + regExpText + "$";
-            }
-            // here for optional expressions
-            var optionsRes = expressions_class_1.Expressions.optional.exec(expressionText);
-            while (optionsRes) {
-                expressionText = expressionText.replace(optionsRes[0], "");
-                var subExpText = optionsRes[0].replace(/\*/g, "");
-                var replacement = "(" + escapeStringRegexp(optionsRes[0].substring(1, optionsRes[0].length - 1)) + ")?";
-                regExpText = regExpText.replace(escapeStringRegexp(optionsRes[0]), replacement);
-                this.optionalExpressions.push(new TemplateExpression(subExpText, contentFormat, true));
-                optionsRes = expressions_class_1.Expressions.optional.exec(expressionText);
-            }
-            // TODO: ne pas utiliser regExpText ici
-            var res = expressions_class_1.Expressions.variable.exec(regExpText);
-            while (res) {
-                regExpText = regExpText.replace("\\" + res[0], contentFormat);
-                res = expressions_class_1.Expressions.variable.exec(regExpText);
-            }
-            // TODO: idem, mais avec seulement l'expression sans les valeurs optionnelles
-            res = expressions_class_1.Expressions.variable.exec(expressionText);
-            while (res) {
-                this.variables.push(res[0]);
-                res = expressions_class_1.Expressions.variable.exec(expressionText);
-            }
-            this.expressionRegExp = new RegExp(regExpText);
-            this.contentRegExp = new RegExp(contentFormat);
-            expressionText = expressionText.replace(expressions_class_1.Expressions.optional, "");
-        }
-        TemplateExpression.prototype.test = function (text) {
-            return this.expressionRegExp.test(text);
-        };
-        TemplateExpression.prototype.exec = function (text) {
-            return this.expressionRegExp.exec(text);
-        };
-        TemplateExpression.prototype.extract = function (text) {
-            // TODO: vérifier l'utilité de cleanExpressionText
-            var cleanExpressionText = this.expressionText.replace(expressions_class_1.Expressions.optional, "");
-            //console.log(cleanExpressionText);
-            if (this.test(text)) {
-                var values_1 = {};
-                var extractionText_1 = text;
-                console.log(extractionText_1);
-                // les expressions optionnelles
-                this.optionalExpressions.forEach(function (expression) {
-                    values_1 = expression.extract(text);
-                    if (values_1) {
-                        extractionText_1 = extractionText_1.replace(expression.expressionRegExp, '');
-                    }
-                    // suppression de extractionText de la valeur testée
-                    console.log("->", expression);
-                });
-                values_1 = !values_1 ? {} : values_1;
-                var tab = cleanExpressionText.split(expressions_class_1.Expressions.variable);
-                for (var i = 0; i < tab.length - 1; i++) {
-                    var variable = this.variables[i];
-                    var textElem = tab[i];
-                    var nextTextElem = tab[i + 1];
-                    // attention : index à 0 si textElem === "" (par défaut, if suivant inutile)
-                    var elemStartIndex = void 0;
-                    if (textElem !== "") {
-                        elemStartIndex = extractionText_1.indexOf(textElem);
-                    }
-                    else {
-                        elemStartIndex = 0;
-                    }
-                    extractionText_1 = extractionText_1.substring(elemStartIndex + textElem.length);
-                    var elemEndIndex = void 0;
-                    if (nextTextElem !== "") {
-                        elemEndIndex = extractionText_1.indexOf(nextTextElem);
-                    }
-                    else {
-                        // end of string
-                        elemEndIndex = extractionText_1.length;
-                    }
-                    values_1[variable] = extractionText_1.slice(0, elemEndIndex);
-                    extractionText_1 = extractionText_1.substr(elemEndIndex);
-                }
-                return values_1;
-            }
-            else {
-                return null;
-            }
-        };
-        return TemplateExpression;
-    }());
-    exports.TemplateExpression = TemplateExpression;
-}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-//# sourceMappingURL=template-expression.class.js.map
-
-/***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
-
-module.exports = function (str) {
-	if (typeof str !== 'string') {
-		throw new TypeError('Expected a string');
-	}
-
-	return str.replace(matchOperatorsRe, '\\$&');
-};
-
 
 /***/ })
 /******/ ]);

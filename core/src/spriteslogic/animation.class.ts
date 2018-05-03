@@ -16,7 +16,7 @@ export class Animation extends Dispatcher implements Playable, Actionable {
 
     isPlaying:boolean = false;
     
-    private animationInterval:number;
+    private animationInterval:any;
     private clockListener:EventListener;
 
 

@@ -173,4 +173,12 @@ export class Sprite extends ImageDisplayElement implements IDisplayable, Actiona
                 break;
         }
     }
+
+    getBoundPoint(): { x: number, y: number } {
+        console.log(this._DOMElement);
+        return {
+            x: this._DOMElement.clientWidth + this.x,
+            y: this._DOMElement.clientHeight + this.y
+        }
+    }
 }

@@ -133,6 +133,9 @@ export class Sequence extends Dispatcher implements Actionable {
     }
 
     executeAction(actionName: string, args: string[]) {
+
+        console.log(actionName);
+
         switch (actionName) {
             case "next":
                 this.displayNext();
