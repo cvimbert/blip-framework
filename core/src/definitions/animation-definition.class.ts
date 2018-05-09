@@ -10,8 +10,8 @@ export class AnimationDefinition {
     period: number;
     clockId: string;
 
-    iterations: number;
-    interruptable: boolean;
+    iterations: number = 1;
+    interruptable: boolean = false;
 
     constructor(
         definition: ResultUnit

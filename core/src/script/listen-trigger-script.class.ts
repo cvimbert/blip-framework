@@ -9,22 +9,24 @@ import {Events} from "../common/events.class";
 
 export class ListenTriggerScript extends ScriptUnit {
 
+    triggerId: string;
     trigger: BaseTrigger;
     script: Script;
 
     constructor(
         result: ResultUnit,
-        context: GameUnitObject | SceneUnitObject
+        private context: GameUnitObject | SceneUnitObject
     ) {
         super(result);
-        this.trigger = context.getTrigger(result.results["triggerId"]);
+        this.triggerId = result.results["triggerId"];
+        this.trigger = context.getTrigger(this.triggerId);
 
         let scriptDefinition: ScriptDefinition = new ScriptDefinition(result);
         this.script = scriptDefinition.create(context);
     }
 
     execute() {
-        this.trigger.listen(Events.TRIGGER_ACTION, () => {
+        this.context.bindedListeners[this.triggerId] = this.trigger.listen(Events.TRIGGER_ACTION, () => {
             this.script.execute();
         });
     }

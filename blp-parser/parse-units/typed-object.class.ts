@@ -36,5 +36,5 @@ export class TypedObject extends ParseUnit {
         }
     };
 
-    closingExpression: RegExp = /^\s*\}\s*/;
+    closingExpression: RegExp = /^\s*}\s*/;
 }

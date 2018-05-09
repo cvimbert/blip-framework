@@ -92,17 +92,7 @@ export class SceneUnitObject extends GameUnitObject {
     }
 
     displaySprites() {
-        for (let id in this.objects) {
-            for (let spriteId in this.objects[id].sprites) {
-                if (this.objects[id].sprites.hasOwnProperty(spriteId)) {
-                    this.objects[id].sprites[spriteId].displayInDOMElement(this._spritesContainer);
-                }
-            }
-        }
-
-        for (let id in this.sprites) {
-            this.sprites[id].displayInDOMElement(this._spritesContainer);
-        }
+        this.addToScene(this._spritesContainer);
     }
 
     displayDecorations() {

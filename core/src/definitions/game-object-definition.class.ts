@@ -37,6 +37,10 @@ export class GameObjectDefinition {
     constructor(
         definition: ResultUnit
     ) {
+        definition.getResult("bracketsGroup/typedObject@type=object/simplePropsGroup").forEach((definition: ResultUnit) => {
+            this.objects[definition.results["groupName"]] = new GameObjectReference(definition);
+        });
+
         definition.getResult("bracketsGroup/typedObject@type=sprite/simplePropsGroup").forEach((definition: ResultUnit) => {
             this.sprites[definition.results["groupName"]] = new SpriteDefinition(definition);
         });
@@ -81,9 +85,7 @@ export class GameObjectDefinition {
             this.scripts[script.results["scriptName"]] = new ScriptDefinition(script);
         });
 
-        definition.getResult("bracketsGroup/typedObject@type=object/simplePropsGroup").forEach((definition: ResultUnit) => {
-            this.objects[definition.results["groupName"]] = new GameObjectReference(definition);
-        });
+
 
         definition.getResult("bracketsGroup/typedObject@type=graph/bracketsGroup").forEach((definition: ResultUnit) => {
             this.graphs[definition.results["groupName"]] = new GraphDefinition(definition);

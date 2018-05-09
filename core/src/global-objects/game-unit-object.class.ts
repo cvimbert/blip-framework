@@ -19,6 +19,7 @@ import {Condition} from "../gamelogic/condition.class";
 import {Gettable} from "../interfaces/gettable.interface";
 import {Trigger} from "../triggers/trigger.class";
 import {Triggerable} from "../interfaces/triggerable.interface";
+import {EventListener} from "../../";
 
 export class GameUnitObject extends Dispatcher implements IDisplayable, Actionable, Gettable {
 
@@ -37,6 +38,8 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
     objects: {[key: string]: GameUnitObject} = {};
 
     scripts: {[key: string]: Script} = {};
+
+    bindedListeners: {[key: string]: EventListener} = {};
 
     constructor(
         definition: GameObjectDefinition,
@@ -78,6 +81,10 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
             this.triggers[id] = definition.triggers[id].create(this);
         }
 
+        for (let id in definition.objects) {
+            this.objects[id] = definition.objects[id].create(this.objectsBank, this);
+        }
+
         for (let id in definition.states) {
             this.states[id] = definition.states[id].create(this);
         }
@@ -90,9 +97,7 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
             this.animations[id] = definition.animations[id].create(this, this);
         }
 
-        for (let id in definition.objects) {
-            this.objects[id] = definition.objects[id].create(this.objectsBank, this);
-        }
+
 
         for (let id in definition.graphs) {
             this.graphs[id] = definition.graphs[id].create(this, this);
@@ -115,6 +120,19 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
         }
     }
 
+    addToScene(container:any) {
+        for (let id in this.sprites) {
+            this.sprites[id].displayInDOMElement(container);
+        }
+
+        for (let id in this.objects) {
+            this.objects[id].addToScene(container);
+        }
+
+        // temporary
+        // this.display();
+    }
+
     hide() {
         for (let id in this.sprites) {
             this.sprites[id].hide();
@@ -128,6 +146,12 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
 
         if (nodeOutScript) {
             nodeOutScript.execute();
+        }
+
+        let exitScript: Script = this.scripts["exit"];
+
+        if (exitScript) {
+            exitScript.execute();
         }
     }
 
@@ -268,7 +292,11 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
     }
 
     executeAction(actionName: string, args: string[]) {
-
+        switch (actionName) {
+            case "execute":
+                this.executeScript(args[0]);
+                break;
+        }
     }
 
     getProperty(propertyName: string): any {

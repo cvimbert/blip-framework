@@ -19,6 +19,7 @@ export class Sequence extends Dispatcher implements Actionable {
 
     private _direction:number = 1;
     private _currentIndex:number = -1;
+    private _currentState: IDisplayable;
 
     constructor(
         public group:SpritesGroup|ExtendedSpritesGroup|GameUnitObject,
@@ -33,7 +34,9 @@ export class Sequence extends Dispatcher implements Actionable {
     }
 
     hide() {
-        this.states.forEach(state => state.hide());
+        this.states.forEach(state =>  {
+            state.hide();
+        });
     }
 
     displayAtIndex(index:number, forced:boolean = false):boolean {
@@ -68,8 +71,13 @@ export class Sequence extends Dispatcher implements Actionable {
 
         this.hide();
 
+        if (this._currentState) {
+            this._currentState.hide();
+        }
+
         this._currentIndex = index;
-        this.states[index].display();
+        this._currentState = this.states[index];
+        this._currentState.display();
 
         this.dispatchEvent(Events.SEQUENCE_ENTER_STATE, this.states[index]);
 
@@ -123,6 +131,7 @@ export class Sequence extends Dispatcher implements Actionable {
     reset() {
         if (this._currentIndex !== -1) {
             this.states[this._currentIndex].hide();
+            this._currentState = null;
         }
 
         this._currentIndex = -1;

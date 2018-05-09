@@ -5,6 +5,7 @@ import {GameUnitObject} from "../global-objects/game-unit-object.class";
 import {SceneUnitObject} from "../global-objects/scene-unit-object.class";
 import {ListenTriggerScript} from "./listen-trigger-script.class";
 import {Actionable} from "./interfaces/actionable.interface";
+import {StopListenTriggerScript} from "./stop-listen-trigger-script";
 
 export class Script implements Actionable {
 
@@ -12,9 +13,11 @@ export class Script implements Actionable {
 
     constructor(
         results: ResultUnit,
-        context: GameUnitObject | SceneUnitObject
+        context: GameUnitObject
     ) {
         for (let result of results.children) {
+
+            console.log(result.type);
 
             switch (result.type) {
                 case "actionOnObject":
@@ -23,6 +26,10 @@ export class Script implements Actionable {
 
                 case "triggerScript":
                     this.units.push(new ListenTriggerScript(result, context));
+                    break;
+
+                case "stopListenTrigger":
+                    this.units.push(new StopListenTriggerScript(result, context));
                     break;
             }
         }

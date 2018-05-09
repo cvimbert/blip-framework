@@ -20,6 +20,7 @@ export class GroupStateDefinition {
         definition: ResultUnit
     ) {
         definition.children.forEach((result: ResultUnit) => {
+
             this.sprites.push(result.results["value"]);
             this.altSprites.push(result.results["altValue"]);
 

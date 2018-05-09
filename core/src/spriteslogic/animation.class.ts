@@ -19,16 +19,19 @@ export class Animation extends Dispatcher implements Playable, Actionable {
     private animationInterval:any;
     private clockListener:EventListener;
 
+    private occurencesCounter: number;
+
 
     constructor(
         public sequence: Sequence,
-        public iterations: number,
+        public iterations: number = 1,
         public period: number | Clock,
-        public interruptable: boolean = true
+        public interruptable: boolean = false
     ) {
         super();
     }
 
+    // no more useful
     static fromData(data:AnimationData, groupId:string, scene:GameObject):Animation {
 
         let defaults:AnimationData = {
@@ -54,44 +57,44 @@ export class Animation extends Dispatcher implements Playable, Actionable {
     }
 
     play() {
-        let occurencesCounter;
+        //let occurencesCounter;
 
         if (this.clockListener) {
             this.clockListener.stoplisten();
         }
 
         if (this.interruptable === false && this.isPlaying) {
-            occurencesCounter = 0;
+            this.occurencesCounter = 0;
             return;
         }
 
         this.sequence.reset();
         this.sequence.displayNext(true);
 
-        occurencesCounter = 0;
+        this.occurencesCounter = 0;
 
         this.isPlaying = true;
 
         if (this.period instanceof Clock) {
             this.clockListener = (this.period as Clock).listen(Events.CLOCK_PERIOD, () => {
-                this.animationAction(occurencesCounter);
+                this.animationAction();
             });
         } else {
             this.animationInterval = setInterval(() => {
-                this.animationAction(occurencesCounter);
+                this.animationAction();
             }, this.period * 1000);
         }
 
     }
 
-    animationAction(occurencesCounter:number) {
+    animationAction() {
         if (this.isPlaying === false) return;
 
-        if (!this.sequence.displayNext(occurencesCounter < this.iterations - 1)) {
-            this.dispatchEvent(Events.ANIMATION_ITERATION_END, occurencesCounter);
-            occurencesCounter++;
+        if (!this.sequence.displayNext(this.occurencesCounter < this.iterations - 1)) {
+            this.dispatchEvent(Events.ANIMATION_ITERATION_END, this.occurencesCounter);
+            this.occurencesCounter++;
 
-            if (occurencesCounter >= this.iterations) {
+            if (this.occurencesCounter >= this.iterations) {
 
                 clearInterval(this.animationInterval);
 
@@ -101,8 +104,8 @@ export class Animation extends Dispatcher implements Playable, Actionable {
             }
             else {
                 // on repart à zéro
-                //this.sequence.resetIndex();
-                //this.sequence.displayNext(true);
+                this.sequence.resetIndex();
+                this.sequence.displayNext(true);
                 //this.sequence.reverse();
             }
         }
@@ -137,7 +140,12 @@ export class Animation extends Dispatcher implements Playable, Actionable {
     executeAction(actionName: string, args: string[]) {
         switch (actionName) {
             case "play":
+                // this.interruptable = false;
                 this.play();
+                break;
+
+            case "stop":
+                this.stop();
                 break;
         }
     }

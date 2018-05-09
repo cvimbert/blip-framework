@@ -26,7 +26,7 @@ export class SequenceDefinition {
         }
     }
 
-    create(group: ExtendedSpritesGroup | GameUnitObject) {
+    create(group: GameUnitObject) {
         let states: IDisplayable[] = [];
 
         this.states.forEach((id: string, index: number) => {
@@ -37,6 +37,10 @@ export class SequenceDefinition {
 
                 case "state":
                     states.push(group.getState(id));
+                    break;
+
+                case "object":
+                    states.push(group.getObject(id));
                     break;
             }
         });

@@ -22,6 +22,14 @@ export class ScriptGroup extends ParseUnit {
                 }
             ],
             next: ScriptGroup
+        },
+        stopListenTrigger: {
+            assertions: [
+                {
+                    expression: /^stoplisten[ ]*\([ ]*([A-Za-z0-9-_]+)[ ]*\)\s*/,
+                    values: ["triggerId"]
+                }
+            ]
         }
     };
 

@@ -16,5 +16,5 @@ export class ActionAndArguments extends ParseUnit {
         }
     };
 
-    closingExpression: RegExp = /^[ ]*[\n\r]+[ \t]*/;
+    closingExpression: RegExp = /^[ ]*[\n\r]+[ \t\n\r]*/;
 }
