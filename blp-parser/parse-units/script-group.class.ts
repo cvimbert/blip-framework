@@ -30,6 +30,14 @@ export class ScriptGroup extends ParseUnit {
                     values: ["triggerId"]
                 }
             ]
+        },
+        simpleCommand: {
+            assertions: [
+                {
+                    expression: /^([A-Za-z0-9-_]+)(?:[ ]+([A-Za-z0-9-_ ]+))?\s*/,
+                    values: ["commandName", "args"]
+                }
+            ]
         }
     };
 

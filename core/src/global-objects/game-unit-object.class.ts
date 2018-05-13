@@ -97,8 +97,6 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
             this.animations[id] = definition.animations[id].create(this, this);
         }
 
-
-
         for (let id in definition.graphs) {
             this.graphs[id] = definition.graphs[id].create(this, this);
         }
@@ -258,6 +256,7 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
 
             case "graph":
                 return this.getGraph(id);
+
         }
     }
 
@@ -265,6 +264,15 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
         switch (type) {
             case "control":
                 return this.getControl(id);
+
+            case "clock":
+                return this.getClock(id);
+
+            case "sequence":
+                return this.getSequence(id);
+
+            case "state":
+                return this.getState(id);
         }
     }
 
@@ -295,6 +303,19 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
         switch (actionName) {
             case "execute":
                 this.executeScript(args[0]);
+                break;
+
+            case "hide":
+                this.hide();
+                break;
+
+            case "randomAction":
+                let rndVal: number = Math.floor(Math.random() * args.length);
+                this.executeScript(args[rndVal]);
+                break;
+
+            case "console":
+                console.log("!!!!MSG", args);
                 break;
         }
     }

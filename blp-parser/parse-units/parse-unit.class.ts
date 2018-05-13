@@ -32,6 +32,9 @@ export class ParseUnit {
 
     evaluate(newPointer: number = null): ResultUnit[] {
 
+        // for comments
+        this.code = this.code.replace(/^[\t ]*\/\/.+$/g, "");
+
         if (newPointer) {
             this._pointer = newPointer;
         }

@@ -1,6 +1,8 @@
 /**
  * Created by Christophe on 20/03/2017.
  */
+export {ClockTickTrigger} from "./src/triggers/clocks/clock-tick-trigger.class";
+
 export {SceneUnitObject} from "./src/global-objects/scene-unit-object.class";
 export {GameUnitObject} from "./src/global-objects/game-unit-object.class";
 

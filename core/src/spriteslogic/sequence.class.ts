@@ -8,8 +8,11 @@ import {Events} from "../common/events.class";
 import {ExtendedSpritesGroup} from "../display/extended-sprites-group.class";
 import {GameUnitObject} from "../global-objects/game-unit-object.class";
 import {Actionable} from "../script/interfaces/actionable.interface";
+import {Triggerable} from "../interfaces/triggerable.interface";
+import {BaseTrigger} from "../../";
+import {SequenceEndTrigger} from "../triggers/sequences/sequence-end-trigger.class";
 
-export class Sequence extends Dispatcher implements Actionable {
+export class Sequence extends Dispatcher implements Actionable, Triggerable {
 
     // 1 2 3 4 3 2 1 2 3 4
     static LOOP_TYPE_CIRCLE:string = "circle";
@@ -65,6 +68,8 @@ export class Sequence extends Dispatcher implements Actionable {
             } else if (this.loopType === Sequence.LOOP_TYPE_RESET) {
                 this.displayAtIndex(0);
             }
+
+            this.dispatchEvent(Events.SEQUENCE_ENDING);
 
             return false;
         }
@@ -143,8 +148,6 @@ export class Sequence extends Dispatcher implements Actionable {
 
     executeAction(actionName: string, args: string[]) {
 
-        console.log(actionName);
-
         switch (actionName) {
             case "next":
                 this.displayNext();
@@ -157,6 +160,13 @@ export class Sequence extends Dispatcher implements Actionable {
             case "index":
                 this.displayAtIndex(+args[0]);
                 break;
+        }
+    }
+
+    getTrigger(name: string): BaseTrigger {
+        switch (name) {
+            case "end":
+                return new SequenceEndTrigger(this);
         }
     }
 }

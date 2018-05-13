@@ -27,8 +27,6 @@ export class ConditionDefinition {
         this.value = data.results["value"];
         this.propertyName = data.results["propertyName"];
 
-        console.log(data);
-
         if (data.type === "logicalExpression") {
             let operand1Unit: Operand = new Operand();
             operand1Unit.code = data.results["operand1"];

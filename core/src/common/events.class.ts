@@ -22,4 +22,6 @@ export class Events {
     static HIDDEN:string = "hidden";
 
     static TRIGGER_ACTION:string = "trigger_action";
+
+    static SEQUENCE_ENDING: string = "sequence_ending";
 }

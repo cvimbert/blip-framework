@@ -94,7 +94,7 @@ export class Animation extends Dispatcher implements Playable, Actionable {
             this.dispatchEvent(Events.ANIMATION_ITERATION_END, this.occurencesCounter);
             this.occurencesCounter++;
 
-            if (this.occurencesCounter >= this.iterations) {
+            if (this.iterations && this.occurencesCounter >= this.iterations) {
 
                 clearInterval(this.animationInterval);
 
@@ -106,7 +106,6 @@ export class Animation extends Dispatcher implements Playable, Actionable {
                 // on repart à zéro
                 this.sequence.resetIndex();
                 this.sequence.displayNext(true);
-                //this.sequence.reverse();
             }
         }
     }

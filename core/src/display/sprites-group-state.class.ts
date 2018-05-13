@@ -11,8 +11,11 @@ import {Actionable} from "../script/interfaces/actionable.interface";
 import {ConditionDef} from "../definitions/group-state-definition.class";
 import {Sprite} from "./sprite.class";
 import {Condition} from "../gamelogic/condition.class";
+import {BaseTrigger, Events} from "../../";
+import {Triggerable} from "../interfaces/triggerable.interface";
+import {StateEnteringTrigger} from "../triggers/states/state-entering-trigger.class";
 
-export class SpritesGroupState extends Dispatcher implements IState, Actionable {
+export class SpritesGroupState extends Dispatcher implements IState, Actionable, Triggerable {
 
     constructor(
         public group: GameUnitObject,
@@ -24,6 +27,9 @@ export class SpritesGroupState extends Dispatcher implements IState, Actionable 
 
     display() {
         this.group.hide();
+
+        this.dispatchEvent(Events.DISPLAYED);
+
         this.sprites.forEach((sprite: Sprite, index: number) => {
 
             if (this.conditions[index].conditionId) {
@@ -55,6 +61,13 @@ export class SpritesGroupState extends Dispatcher implements IState, Actionable 
             case "hide":
                 this.hide();
                 break;
+        }
+    }
+
+    getTrigger(name: string): BaseTrigger {
+        switch (name) {
+            case "displayed":
+                return new StateEnteringTrigger(this);
         }
     }
 }

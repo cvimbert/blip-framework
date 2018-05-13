@@ -4,8 +4,11 @@
 import {Dispatcher} from "../common/dispatcher.class";
 import {Events} from "../common/events.class";
 import {Actionable} from "../script/interfaces/actionable.interface";
+import {Triggerable} from "../interfaces/triggerable.interface";
+import {BaseTrigger} from "../../";
+import {ClockTickTrigger} from "../triggers/clocks/clock-tick-trigger.class";
 
-export class Clock extends Dispatcher implements Actionable {
+export class Clock extends Dispatcher implements Actionable, Triggerable {
 
     private _interval:any;
 
@@ -27,6 +30,13 @@ export class Clock extends Dispatcher implements Actionable {
         if (this._interval) {
             clearInterval(this._interval);
             this._interval = null;
+        }
+    }
+
+    getTrigger(name: string): BaseTrigger {
+        switch (name) {
+            case "tick":
+                return new ClockTickTrigger(this);
         }
     }
 
