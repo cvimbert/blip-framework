@@ -139,7 +139,7 @@ export class Animation extends Dispatcher implements Playable, Actionable {
     executeAction(actionName: string, args: string[]) {
         switch (actionName) {
             case "play":
-                // this.interruptable = false;
+                this.interruptable = false;
                 this.play();
                 break;
 

@@ -80,15 +80,24 @@ export class SceneUnitObject extends GameUnitObject {
 
     initialize() {
         // objects initialization
+        this.initScripts();
+
         for (let id in this.objects) {
-            if (this.objects[id].scripts["start"]) {
-                this.objects[id].scripts["start"].execute();
-            }
+            this.objects[id].initScripts();
+
+            setTimeout(() => {
+                if (this.objects[id].scripts["start"]) {
+                    this.objects[id].scripts["start"].execute();
+                }
+            });
+
         }
 
-        if (this.scripts["start"]) {
-            this.scripts["start"].execute();
-        }
+        setTimeout(() => {
+            if (this.scripts["start"]) {
+                this.scripts["start"].execute();
+            }
+        });
     }
 
     displaySprites() {
@@ -178,5 +187,7 @@ export class SceneUnitObject extends GameUnitObject {
         for (let id in this.controls) {
             this.controls[id].removeDocumentListeners();
         }
+
+        super.destroy();
     }
 }

@@ -42,7 +42,7 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
     bindedListeners: {[key: string]: EventListener} = {};
 
     constructor(
-        definition: GameObjectDefinition,
+        private definition: GameObjectDefinition,
         public objectsBank: {[key: string]: GameObjectDefinition},
         public parent: GameUnitObject | SceneUnitObject = null,
         public x: number = 0,
@@ -77,10 +77,6 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
             this.groups[id] = definition.groups[id].create(this);
         }
 
-        for (let id in definition.triggers) {
-            this.triggers[id] = definition.triggers[id].create(this);
-        }
-
         for (let id in definition.objects) {
             this.objects[id] = definition.objects[id].create(this.objectsBank, this);
         }
@@ -101,12 +97,29 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
             this.graphs[id] = definition.graphs[id].create(this, this);
         }
 
-        for (let id in definition.scripts) {
-            this.scripts[id] = definition.scripts[id].create(this);
-        }
+
 
         for (let id in definition.conditions) {
             this.conditions[id] = definition.conditions[id].create(this);
+        }
+
+
+
+        for (let id in this.definition.triggers) {
+            this.triggers[id] = this.definition.triggers[id].create(this);
+        }
+
+    }
+
+    initScripts() {
+        console.log("init");
+        for (let id in this.definition.scripts) {
+            console.log("i", id);
+            this.scripts[id] = this.definition.scripts[id].create(this);
+        }
+
+        for (let id in this.objects) {
+            this.objects[id].initScripts();
         }
     }
 
@@ -323,6 +336,12 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
     getProperty(propertyName: string): any {
         switch (propertyName) {
 
+        }
+    }
+
+    destroy() {
+        for (let id in this.clocks) {
+            this.clocks[id].stop();
         }
     }
 }

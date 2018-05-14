@@ -35,6 +35,7 @@ export class Variable extends Dispatcher implements Actionable, Gettable {
     }
 
     increment() {
+        console.log("inc");
         if (this.type === Variable.NUMBER_TYPE) {
             this.value += 1;
         }

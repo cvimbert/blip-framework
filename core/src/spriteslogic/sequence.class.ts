@@ -43,9 +43,13 @@ export class Sequence extends Dispatcher implements Actionable, Triggerable {
     }
 
     displayAtIndex(index:number, forced:boolean = false):boolean {
-        //if (!this._isIndexValid(index)) return false;
 
         if (!forced && (index <= -1 || index >= this.states.length)){
+
+            if (index >= this.states.length) {
+                this.dispatchEvent(Events.SEQUENCE_ENDING);
+            }
+
             return false;
         }
 
@@ -69,7 +73,7 @@ export class Sequence extends Dispatcher implements Actionable, Triggerable {
                 this.displayAtIndex(0);
             }
 
-            this.dispatchEvent(Events.SEQUENCE_ENDING);
+
 
             return false;
         }
