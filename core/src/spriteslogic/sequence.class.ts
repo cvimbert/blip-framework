@@ -78,14 +78,16 @@ export class Sequence extends Dispatcher implements Actionable, Triggerable {
             return false;
         }
 
-        this.hide();
+        // this.hide();
 
-        if (this._currentState) {
+        let newState: IDisplayable = this.states[index];
+
+        if (this._currentState && newState !== this._currentState) {
             this._currentState.hide();
         }
 
         this._currentIndex = index;
-        this._currentState = this.states[index];
+        this._currentState = newState;
         this._currentState.display();
 
         this.dispatchEvent(Events.SEQUENCE_ENTER_STATE, this.states[index]);

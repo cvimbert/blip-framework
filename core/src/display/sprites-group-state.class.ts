@@ -26,7 +26,7 @@ export class SpritesGroupState extends Dispatcher implements IState, Actionable,
     }
 
     display() {
-        this.group.hide();
+        this.group.hide(false);
 
         this.dispatchEvent(Events.DISPLAYED);
 
@@ -45,7 +45,7 @@ export class SpritesGroupState extends Dispatcher implements IState, Actionable,
     }
 
     hide() {
-        this.group.hide();
+        this.group.hide(false);
     }
 
     isVisible():boolean {

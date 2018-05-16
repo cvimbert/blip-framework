@@ -112,9 +112,7 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
     }
 
     initScripts() {
-        console.log("init");
         for (let id in this.definition.scripts) {
-            console.log("i", id);
             this.scripts[id] = this.definition.scripts[id].create(this);
         }
 
@@ -139,20 +137,24 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
         for (let id in this.objects) {
             this.objects[id].addToScene(container);
         }
-
-        // temporary
-        // this.display();
     }
 
-    hide() {
+    hide(executeOutScripts: boolean = true) {
         for (let id in this.sprites) {
             this.sprites[id].hide();
         }
 
-        for (let id in this.triggers) {
+        // useful ??
+        /*for (let id in this.triggers) {
             this.triggers[id].disable();
-        }
+        }*/
 
+        if (executeOutScripts) {
+            this.executeOutScripts();
+        }
+    }
+
+    executeOutScripts() {
         let nodeOutScript: Script = this.scripts["nodeout"];
 
         if (nodeOutScript) {
