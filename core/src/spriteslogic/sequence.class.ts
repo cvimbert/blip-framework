@@ -11,8 +11,9 @@ import {Actionable} from "../script/interfaces/actionable.interface";
 import {Triggerable} from "../interfaces/triggerable.interface";
 import {BaseTrigger} from "../../";
 import {SequenceEndTrigger} from "../triggers/sequences/sequence-end-trigger.class";
+import {Gettable} from "../interfaces/gettable.interface";
 
-export class Sequence extends Dispatcher implements Actionable, Triggerable {
+export class Sequence extends Dispatcher implements Actionable, Triggerable, Gettable {
 
     // 1 2 3 4 3 2 1 2 3 4
     static LOOP_TYPE_CIRCLE:string = "circle";
@@ -173,6 +174,13 @@ export class Sequence extends Dispatcher implements Actionable, Triggerable {
         switch (name) {
             case "end":
                 return new SequenceEndTrigger(this);
+        }
+    }
+
+    getProperty(propertyName: string): any {
+        switch (propertyName) {
+            case "index":
+                return this._currentIndex;
         }
     }
 }

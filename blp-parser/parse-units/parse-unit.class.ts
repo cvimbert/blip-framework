@@ -75,7 +75,6 @@ export class ParseUnit {
                 }
 
                 if (this.assertions[assertionName].next) {
-                    //console.log("->", assertionName);
                     let unit: ParseUnit = new this.assertions[assertionName].next();
                     unit.code = this.code;
                     unit.parent = this;
@@ -83,22 +82,18 @@ export class ParseUnit {
 
                     return unit.evaluate();
                 } else {
-                    //console.log("<->", assertionName);
                     return this.evaluate(this._pointer);
                 }
             }
         }
 
         if (this.parent) {
-            //console.log("<-");
-
             if (this.resultUnits) {
                 this.parent.resultUnits[this.parent.resultUnits.length - 1].endIndex = this._pointer - 1;
             }
 
             return this.parent.evaluate(this._pointer);
         } else {
-            console.log("EOP");
             return this.resultUnits;
         }
     }

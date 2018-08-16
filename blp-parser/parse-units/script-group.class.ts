@@ -23,6 +23,15 @@ export class ScriptGroup extends ParseUnit {
             ],
             next: ScriptGroup
         },
+        conditionalScript: {
+            assertions: [
+                {
+                    expression: /^if[ ]*\([ ]*([A-Za-z0-9-_]+)[ ]*\)\s*{\s*/,
+                    values: ["conditionId"]
+                }
+            ],
+            next: ScriptGroup
+        },
         stopListenTrigger: {
             assertions: [
                 {

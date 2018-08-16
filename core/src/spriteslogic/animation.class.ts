@@ -11,8 +11,11 @@ import {Utils} from "../common/utils.class";
 import {AnimationData} from "./animation-data.interface";
 import {Playable} from "../interfaces/playable.interface";
 import {Actionable} from "../script/interfaces/actionable.interface";
+import {Triggerable} from "../interfaces/triggerable.interface";
+import {BaseTrigger} from "../../";
+import {AnimationFinishedTrigger} from "../triggers/animations/animation-finished-trigger.class";
 
-export class Animation extends Dispatcher implements Playable, Actionable {
+export class Animation extends Dispatcher implements Playable, Actionable, Triggerable {
 
     isPlaying:boolean = false;
     
@@ -146,6 +149,13 @@ export class Animation extends Dispatcher implements Playable, Actionable {
             case "stop":
                 this.stop();
                 break;
+        }
+    }
+
+    getTrigger(name: string): BaseTrigger {
+        switch (name) {
+            case "finished":
+                return new AnimationFinishedTrigger(this);
         }
     }
 }

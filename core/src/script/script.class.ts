@@ -7,6 +7,7 @@ import {ListenTriggerScript} from "./listen-trigger-script.class";
 import {Actionable} from "./interfaces/actionable.interface";
 import {StopListenTriggerScript} from "./stop-listen-trigger-script";
 import {SimpleCommandScript} from "./simple-command-script.class";
+import {ConditionalScript} from "./conditional-script.class";
 
 export class Script implements Actionable {
 
@@ -33,6 +34,10 @@ export class Script implements Actionable {
 
                 case "simpleCommand":
                     this.units.push(new SimpleCommandScript(result, context));
+                    break;
+
+                case "conditionalScript":
+                    this.units.push(new ConditionalScript(result, context));
                     break;
             }
         }

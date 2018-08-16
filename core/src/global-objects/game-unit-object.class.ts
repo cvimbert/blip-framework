@@ -41,6 +41,8 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
 
     bindedListeners: {[key: string]: EventListener} = {};
 
+    randomActionUniqueData: string[];
+
     constructor(
         private definition: GameObjectDefinition,
         public objectsBank: {[key: string]: GameObjectDefinition},
@@ -272,6 +274,9 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
             case "graph":
                 return this.getGraph(id);
 
+            case "sequence":
+                return this.getSequence(id);
+
         }
     }
 
@@ -288,6 +293,9 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
 
             case "state":
                 return this.getState(id);
+
+            case "animation":
+                return this.getAnimation(id);
         }
     }
 
@@ -327,6 +335,21 @@ export class GameUnitObject extends Dispatcher implements IDisplayable, Actionab
             case "randomAction":
                 let rndVal: number = Math.floor(Math.random() * args.length);
                 this.executeScript(args[rndVal]);
+                break;
+
+            case "randomActionUnique":
+                // not good, but do the job anyway
+                if (!this.randomActionUniqueData || this.randomActionUniqueData.length === 0) {
+                    this.randomActionUniqueData = JSON.parse(JSON.stringify(args));
+                }
+
+                rndVal = Math.floor(Math.random() * this.randomActionUniqueData.length);
+                this.executeScript(this.randomActionUniqueData[rndVal]);
+                this.randomActionUniqueData.splice(rndVal, 1);
+                break;
+
+            case "reinitRandom":
+                this.randomActionUniqueData = null;
                 break;
 
             case "console":
